@@ -4,9 +4,9 @@
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include <stdio.h><br>
+#include <readline/readline.h><br>
+#include <readline/history.h><br>
 
 char *readline (const char **prompt*);
 
@@ -103,10 +103,10 @@ En cas d'erreur : **-1 + errno**
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
-#include <sys/types.h>
-#include <sys/time.h>
-#include <sys/resource.h>
-#include <sys/wait.h>
+#include <sys/types.h><br>
+#include <sys/time.h><br>
+#include <sys/resource.h><br>
+#include <sys/wait.h><br>
 
 pid_t wait3(int *status, int options, struct rusage *rusage);
 pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);
@@ -135,27 +135,43 @@ int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact)
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
 
-En cas de succes : **0**
-<br>En cas d'erreur : **Code d'erreur non nul**
+En cas de succes : **0**<br>
+En cas d'erreur : **-1**
 
-
-<h2 style="text-align:center;background: #101080">PTHREAD_MUTEX_UNLOCK</h2>
+<h2 style="text-align:center;background: #101080">SIGEMPTYSET</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
-#include <pthread.h>
+#include <signal.h>
 
-int pthread_mutex_unlock(pthread_mutex_t *mutex)
+int sigemptyset(sigset_t *set);
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
 
-Deverrouille *mutex*. Celui-ci est **suppose verrouille** (Sinon undefined behavior), et ce par le **meme thread** qui l'a verrouille.
+Initialise un **ensemble de signaux** a vide.<br>
+- **set** : Pointeur vers l'ensemble des signaux a intialiser.
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
 
-En cas de succes : **0**
-<br>En cas d'erreur : **Code d'erreur non nul**
+En cas de succes : **0**<br>
+En cas d'erreur : **-1**
 
+<h2 style="text-align:center;background: #101080">SIGADDSET</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <signal.h>
+
+int sigaddset(sigset_t *set, int signo);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Ajoute un **signal specifique** a un **ensemble de signaux** a initialise.
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **0**<br>
+En cas d'erreur : **-1**
 
 <h2 style="text-align:center;background: #101080">KILL</h2>
 
@@ -185,137 +201,411 @@ int kill(pid_t pid, int sig);
 En cas de succes (au moins 1 signal envoye) : **0**<br>
 En cas d'echec : **-1** + **errno**
 
-<h2 style="text-align:center;background: #101080">WAITPID</h2>
+<h2 style="text-align:center;background: #101080">GETCWD</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
-#include <sys/wait.h>
+#include <unistd.h>
 
-pid_t waitpid(pid_t pid, int *status, int options); 
+char *getcwd(char *buf, size_t size);
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
 
-**Attend que le processus *pid* change d'etat.**
+**pwd**
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
 
-En cas de succes : **PID du fils** dont l'etat a change est renvoye ; si WHNOHANG etait specifie et qu'aucun fils specifie par *pid* n'a change d'etat, **0** est renvoye.<br>
-En cas d'echec : **-1**
+En cas de succes : **buf est renvoyé**<br>
+En cas d'echec : **NULL + errno + buf undefined**
 
-<h2 style="text-align:center;background: #be0000ff">SEMAPHORE</h2>
-
-<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #be0000ff; color: #be0000ff;">DESCRIPTION</h3>
-
-sémaphore = mécanisme de **synchronisation** utilisé pour gérer l’accès à des ressources partagées entre **processus** (et éventuellement threads)
-
-Un sémaphore repose sur un **compteur entier** représentant le nombre de ressources disponibles.
-
-Un sémaphore peut être dans plusieurs états :
-- Compteur > 0 : accès possible
-- Compteur = 0 : accès bloqué (processus en attente)
-
-Deux opérations atomiques :
-- **P (wait)** : décrémente le compteur  
-  → si le compteur devient négatif, le processus est **bloqué**
-- **V (signal)** : incrémente le compteur  
-  → réveille un processus en attente s’il y en a un
-
-Contrairement au mutex :
-- un sémaphore **n’a pas de notion de propriétaire**
-- plusieurs processus peuvent accéder à la ressource simultanément (selon la valeur du compteur)
-
-<h2 style="text-align:center;background: #101080">SEM_OPEN</h2>
+<h2 style="text-align:center;background: #101080">CHDIR</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
-#include <fcntl.h>           /* Pour les constantes O_* */<br>
-#include <sys/stat.h>        /* Pour les constantes « mode » */<br>
-#include <semaphore.h>
+#include <unistd.h>
 
-sem_t *sem_open(const char *name, int oflag, mode_t mode, unsigned int value);
+int chdir(const char *path);
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
 
-**Initialiser et ouvrir un semaphore nomme.**<br> 
-Le semaphore est identifie par *name*<br>
-*oflag* -> **O_CREAT** | **O_EXCL**
-*mode* -> Permissions a placer sur le nouveau semaphore.
-*value* -> Valeur initiale du nouveau semaphore.
+**cd**
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
 
-En cas de succes : **Adresse du nouveau semaphore**
-En cas d'echec : **SEM_FAILED** + **errno**
-
-<h2 style="text-align:center;background: #101080">SEM_OPEN</h2>
-
-<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
-
-#include <semaphore.h>
-
-int sem_close(sem_t *sem);
-
-<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
-
-**Ferme et libere le semaphore *sem*.**
-
-<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
-
-En cas de succes : **0**
+En cas de succes : **0**<br>
 En cas d'echec : **-1** + **errno**
 
-<h2 style="text-align:center;background: #101080">SEM_POST</h2>
+<h2 style="text-align:center;background: #be0000ff">STRUCT sSTAT</h2>
+
+*<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #be0000ff; color: #be0000ff;">struct stat</h3>*
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Nom</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="color:red;">dev_t</td>
+      <td>st_dev</td>
+      <td style="color:#6a9955;">// ID du périphérique contenant le fichier</td>
+    </tr>
+    <tr>
+      <td style="color:red;">ino_t</td>
+      <td>st_ino</td>
+      <td style="color:#6a9955;">// numéro d'inode</td>
+    </tr>
+    <tr>
+      <td style="color:red;">mode_t</td>
+      <td>st_mode</td>
+      <td style="color:#6a9955;">// mode (permissions et type)</td>
+    </tr>
+    <tr>
+      <td style="color:red;">nlink_t</td>
+      <td>st_nlink</td>
+      <td style="color:#6a9955;">// nombre de liens physiques</td>
+    </tr>
+    <tr>
+      <td style="color:red;">uid_t</td>
+      <td>st_uid</td>
+      <td style="color:#6a9955;">// propriétaire</td>
+    </tr>
+    <tr>
+      <td style="color:red;">gid_t</td>
+      <td>st_gid</td>
+      <td style="color:#6a9955;">// groupe</td>
+    </tr>
+    <tr>
+      <td style="color:red;">dev_t</td>
+      <td>st_rdev</td>
+      <td style="color:#6a9955;">// périphérique spécial (si fichier spécial)</td>
+    </tr>
+    <tr>
+      <td style="color:red;">off_t</td>
+      <td>st_size</td>
+      <td style="color:#6a9955;">// taille du fichier en octets</td>
+    </tr>
+    <tr>
+      <td style="color:red;">blksize_t</td>
+      <td>st_blksize</td>
+      <td style="color:#6a9955;">// taille optimale des blocs pour I/O</td>
+    </tr>
+    <tr>
+      <td style="color:red;">blkcnt_t</td>
+      <td>st_blocks</td>
+      <td style="color:#6a9955;">// nombre de blocs alloués</td>
+    </tr>
+    <tr>
+      <td style="color:red;">time_t</td>
+      <td>st_atime</td>
+      <td style="color:#6a9955;">// date du dernier accès</td>
+    </tr>
+    <tr>
+      <td style="color:red;">time_t</td>
+      <td>st_mtime</td>
+      <td style="color:#6a9955;">// date de la dernière modification</td>
+    </tr>
+    <tr>
+      <td style="color:red;">time_t</td>
+      <td>st_ctime</td>
+      <td style="color:#6a9955;">// date du dernier changement de l’inode</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 style="text-align:center;background: #101080">STAT</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
-#include <semaphore.h>
+#include <sys/stat.h><br>
+#include <sys/types.h>
 
-int sem_post(sem_t *sem);
+int stat(const char *pathname, struct stat *statbuf);
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
 
-**Incremente (deverouille) le semaphore *sem*.**<br>
-Si a la suite de cet increment, sem value > 0 : un autre processus/thread qui attend (*sem_wait*) sera reveille et procedera au verrouillage du semaphore
+**Stock les informations** du fichier/repertoire *pathname* dans *statbuf*<br>
+Si *pathname* est un **lien symbolique** : retourne les informations **du lien symbolique lui-meme**
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
 
-En cas de succes : **0**
+En cas de succes : **0**<br>
 En cas d'echec : **-1** + **errno**
 
-<h2 style="text-align:center;background: #101080">SEM_WAIT</h2>
+<h2 style="text-align:center;background: #101080">LSTAT</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
-#include <semaphore.h>
+#include <sys/types.h><br>
+#include <sys/stat.h><br>
+#include <unistd.h>
 
-int sem_wait(sem_t *sem);
+int lstat(const char *pathname, struct stat *statbuf);
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
 
-**Decremente (verouille) le semaphore *sem*.**<br>
-Si sem value > 0 : La decrementation s'effecture et la fonction revient *immediatement*.<br>
-si sem value = 0 : L'appel bloque jusqu'a ce qu'il devienne disponible pour effectuer la decrementation (sem value > 0). **Ou alors** un gestionnaire de signaux interromp l'appel (kill). 
+Stock les informations du fichier/repertoire **pathname** dans *statbuf*.<br>
+Si *pathname* est un **lien symbolique** : retourne les informations **du fichier cible**
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
 
-En cas de succes : **0**
+En cas de succes : **0**<br>
 En cas d'echec : **-1** + **errno**
 
-<h2 style="text-align:center;background: #101080">SEM_UNLICK</h2>
+<h2 style="text-align:center;background: #101080">FSTAT</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
-#include <semaphore.h>
+#include <sys/types.h><br>
+#include <sys/stat.h><br>
+#include <unistd.h><br>
 
-int sem_unlink(const char *name);
+int fstat(int fd, struct stat *statbuf);
+
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
 
-**Supprime un semaphore nomme.**<br>
-Supprime le semaphore reference par *name*.<br>
-Le nom est immediatement supprime mais le semaphore est detruit une fois que tous les autres processus qui l'avaient ouvert l'ont ferme.
+Stock les informations d'un fichier **deja ouvert**, identifie par *fd*, dans *statbuf*.<br>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
 
-En cas de succes : **0**
+En cas de succes : **0**<br>
+En cas d'echec : **-1** + **errno**
+
+<h2 style="text-align:center;background: #101080">UNLINK</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <unistd.h>
+
+int unlink(const char *pathname);   
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+**Supprime *pathname*** si il n'est ouvert par aucun processus. Sinon **attend** que le fichier soit fermer pour le supprimer.
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **0**<br>
+En cas d'echec : **-1** + **errno**
+
+<h2 style="text-align:center;background: #be0000ff">STRUCT DIR</h2>
+
+*<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #be0000ff; color: #be0000ff;">struct dirent</h3>*
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Nom</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="color:red;">ino_t</td>
+      <td>d_ino</td>
+      <td style="color:#6a9955;">// numéro d'inode</td>
+    </tr>
+    <tr>
+      <td style="color:red;">off_t</td>
+      <td>d_off</td>
+      <td style="color:#6a9955;">// offset dans le répertoire</td>
+    </tr>
+    <tr>
+      <td style="color:red;">unsigned short</td>
+      <td>d_reclen</td>
+      <td style="color:#6a9955;">// longueur de cette structure</td>
+    </tr>
+    <tr>
+      <td style="color:red;">unsigned char</td>
+      <td>d_type</td>
+      <td style="color:#6a9955;">// type de fichier</td>
+    </tr>
+    <tr>
+      <td style="color:red;">char</td>
+      <td>d_name[]</td>
+      <td style="color:#6a9955;">// nom de l'entrée</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<h2 style="text-align:center;background: #101080">OPENDIR</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <dirent.h>
+
+DIR *opendir(const char *name);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Ouvre le repertoire *name*
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **Pointeur sur le flux repertoire**<br>
+En cas d'echec : **NULL**
+
+<h2 style="text-align:center;background: #101080">READDIR</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <dirent.h>
+
+struct dirent *readdir(DIR *dirp);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Consulte le repertoire
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **Pointeur sur *struct dirent***<br>
+En cas d'echec OU fin de repertoire : **NULL**
+
+<h2 style="text-align:center;background: #101080">CLOSEDIR</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <dirent.h>
+
+int closedir(DIR *dir);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Ferme le repertoire *dir*
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **0***<br>
+En cas d'echec : **-1** + **errno**
+
+<h2 style="text-align:center;background: #101080">ISATTY</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <unistd.h>
+
+int isatty(int fd);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Verifie si *fd* se rapporte a un terminal.
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+Est connecte a un terminal : **1***<br>
+N'est pas connecte a un terminal : **0**
+
+<h2 style="text-align:center;background: #101080">TTYNAME</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <unistd.h>
+
+char *ttyname(int fd);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Obtient le nom du terminal associe a *fd*.
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **Nom du terminal***<br>
+En cas d'echec : **NULL + errno**
+
+<h2 style="text-align:center;background: #101080">TTYSLOT</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <unistd.h>
+
+int ttyslot(void);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Retourne le numero du terminal associe a **stdin**<br>
+Ce numero correspond a l'entree dans `/etc/ttys` ou `/dev/ttyX`<br>
+**Determine quel terminal est utilise par le processus courant** 
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+**\>= 0** : Numero de slot du terminal<br>
+**-1** : Erreur (aucun terminal associe a **stdin**)
+
+<h2 style="text-align:center;background: #101080">IOCTL</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <sys/ioctl.h>
+
+int ioctl(int d, int requête, ...);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Permet de **controler les peripheriques**.<br>
+Fonction **generique** qui permet d'envoyer des **commandes specifiques a un peripherique ou a un fichier special**<br>
+- **fd** : Descripteur de fichier ouvert
+- **reques** : Numero de commande specifique au peripherique.
+- **Argument optionnel** : Depend de la commande
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **>= 0** selon la commande<br>
+En cas d'echec : **-1** + **errno**
+
+<h2 style="text-align:center;background: #101080">GETENV</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <stdlib.h>
+
+char *getenv(const char *name);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Lire une variable d'environnement.<br>
+Rechercher *name* dans la liste des **variables d'environnement**
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **Pointeur sur la valeur correspondante**<br>
+En cas d'echec : **NULL** si 0 correspondance
+
+<h2 style="text-align:center;background: #101080">TCSETATTR</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <termios.h>
+#include <unistd.h>
+
+int tcsetattr(int fd, int optional_actions, const struct termios *termios_p);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Modifie les attributs du terminal ouvert par *fd*.<br>
+- `fd` : Terminal concerne
+- `optional_actions` :
+	- `TCSANOW` — Immediatement
+	- `TCSADRAIN` — Apres vidage des sorties en attente
+	- `TCSAFLUSH` — Apres vidage des sorties et suppression des entrees en attente
+- `termio_p` : Pointeur vers une structure `struct termios` contenant les nouveaux parametres<br>
+
+La structure `struct termios` contient des champs pour :
+- Modes d'entree (`c_iflag`)
+- Modes de sortie (`c_oflag`)
+- Modes de controle (`c_cflag`)
+- Modes locaux (`c_lflag`)
+- Caracteres speciaux (`c_cc`)
+
+Exemple : Activer ou desactiver l'echo des caracteres, configurer le mode canonique/ non canonique, etc.
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **0**<br>
 En cas d'echec : **-1** + **errno**
