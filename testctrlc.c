@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   testctrlc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:02 by afournie          #+#    #+#             */
-/*   Updated: 2026/02/02 16:55:29 by afournie         ###   ########.fr       */
+/*   Updated: 2026/02/07 17:19:25 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = -1;
+	while (s1[++i] && s2[i])
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+char	*ft_strdup(const char *src)
+{
+	size_t	i;
+	size_t	len;
+	char	*dup_str;
+
+	len = 0;
+	while (src[len])
+		len++;
+	dup_str = malloc(len + 1);
+	if (!dup_str)
+		return (NULL);
+	dup_str[len] = '\0';
+	i = -1;
+	while (src[++i])
+		dup_str[i] = src[i];
+	return (dup_str);
+}
 
 void	ctrlc_handler(int sig, siginfo_t *info, void *context)
 {
@@ -64,6 +94,7 @@ void	exec_cmd(char *rl)
 
 void	prompt(void)
 {
+	char	*last_rl;
 	char	*rl;
 
 	while (1)
@@ -71,7 +102,10 @@ void	prompt(void)
 		rl = readline("Prompt > ");
 		if (!rl)
 			exit(0);
-		add_history(rl);
+		if (last_rl)
+			if (ft_strcmp(rl, "") && ft_strcmp(rl, last_rl))
+				add_history(rl);
+		last_rl = ft_strdup(rl);
 		exec_cmd(rl);
 	}
 }
