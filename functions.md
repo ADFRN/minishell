@@ -1,6 +1,6 @@
 <h1 style="text-align:center">Fonctions</h1>
 
-<h2 style="text-align:center;background: #101080">READLINE</h2>
+<h2 style="text-align:center; background: #101080; color: white; color: white">READLINE</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -12,13 +12,13 @@ char *readline (const char **prompt*);
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
 
-Obtient une ligne d'un utilisateur avec l'edition	
+Obtient une ligne d'un utilisateur avec l'edition
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
 
 Renvoie le contenue de la ligne lu.
 
-<h2 style="text-align:center;background: #101080">RL_CLEAR_HISTORY</h2>
+<h2 style="text-align:center;background: #101080; color: white">RL_CLEAR_HISTORY</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -28,7 +28,7 @@ void rl_clear_history(void);
 
 Supprime tout l'historique des textes lus par readline.
 
-<h2 style="text-align:center;background: #101080">ADD_HISTORY</h2>
+<h2 style="text-align:center;background: #101080; color: white">ADD_HISTORY</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -38,7 +38,7 @@ void add_history(char *str);
 
 Ajoute *str* dans l'historique (accessible avec les fleches comme sur le terminal)
 
-<h2 style="text-align:center;background: #101080">RL_ON_NEW_LINE</h2>
+<h2 style="text-align:center;background: #101080; color: white">RL_ON_NEW_LINE</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -48,7 +48,7 @@ void rl_on_new_line(void);
 
 Previent a la routine d'update qu'on est sur une nouvelle ligne (generalement apres avoir sorti une nouvelle ligne)
 
-<h2 style="text-align:center;background: #101080">RL_REPLACE_LINE</h2>
+<h2 style="text-align:center;background: #101080; color: white">RL_REPLACE_LINE</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -64,7 +64,7 @@ Remplace le contenu de la **ligne courante** par *str*.<br>
  - != 0 -> La pile d'annulation interne de readline est **effacee**.
  - == 0 -> L'operation est ajoutee a l'**historique des undo** (annulation possibles).
 
-<h2 style="text-align:center;background: #101080">RL_REDISPLAY</h2>
+<h2 style="text-align:center;background: #101080; color: white">RL_REDISPLAY</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -82,7 +82,7 @@ Force *readline* a **reafficher la ligne courante** sur l'ecran.<br>
 
 **0**
 
-<h2 style="text-align:center;background: #101080">ACCESS</h2>
+<h2 style="text-align:center;background: #101080; color: white">ACCESS</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -97,9 +97,9 @@ Verifie les permissions d'un utilisateur sur un fichier (X_OK, W_OK), possible d
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
 
 En cas de succes : **0**<br>
-En cas d'erreur : **-1 + errno** 
+En cas d'erreur : **-1 + errno**
 
-<h2 style="text-align:center;background: #101080">WAIT3 / WAIT4</h2>
+<h2 style="text-align:center;background: #101080; color: white">WAIT3 / WAIT4</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -121,13 +121,13 @@ Similaire a waitpid(), mais renvoient en plus des informations sur l'**utilisati
 
 Comme waitpid()
 
-<h2 style="text-align:center;background: #101080">SIGACTION</h2>
+<h2 style="text-align:center;background: #101080; color: white">SIGACTION</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
 #include <signal.h>
 
-int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact); 
+int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
 
@@ -138,7 +138,7 @@ int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact)
 En cas de succes : **0**<br>
 En cas d'erreur : **-1**
 
-<h2 style="text-align:center;background: #101080">SIGEMPTYSET</h2>
+<h2 style="text-align:center;background: #101080; color: white">SIGEMPTYSET</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -156,7 +156,7 @@ Initialise un **ensemble de signaux** a vide.<br>
 En cas de succes : **0**<br>
 En cas d'erreur : **-1**
 
-<h2 style="text-align:center;background: #101080">SIGADDSET</h2>
+<h2 style="text-align:center;background: #101080; color: white">SIGADDSET</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -173,7 +173,7 @@ Ajoute un **signal specifique** a un **ensemble de signaux** a initialise.
 En cas de succes : **0**<br>
 En cas d'erreur : **-1**
 
-<h2 style="text-align:center;background: #101080">KILL</h2>
+<h2 style="text-align:center;background: #101080; color: white">KILL</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -184,16 +184,16 @@ int kill(pid_t pid, int sig);
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
 
-**Envoie un signal à un processus**  
+**Envoie un signal à un processus**
 
   >**pid \> 0** -> Signal envoye **au processus indique par *pid***
-  
+
   >**pid == 0** -> Signal envoye a **tous les processus appartenant au meme groupe que le processus appelant.**
-  
+
   >**pid == -1** -> Signal envoye a **tous les processus auquels le processus appelant a la permission d'envoyer des signaux** (sauf PID 1 (init))
-  
+
   >**pid < -1 ->** Signal envoye a **tous les processus du groupe dont l'id est *-pid***
-  
+
   >**sig == 0 ->** Aucun signal n'est envoye mais **les conditions d'erreurs** sont verifiees; utile pour **verifier l'existence** d'un id de processus ou de groupe de processus.
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
@@ -201,7 +201,7 @@ int kill(pid_t pid, int sig);
 En cas de succes (au moins 1 signal envoye) : **0**<br>
 En cas d'echec : **-1** + **errno**
 
-<h2 style="text-align:center;background: #101080">GETCWD</h2>
+<h2 style="text-align:center;background: #101080; color: white">GETCWD</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -218,7 +218,7 @@ char *getcwd(char *buf, size_t size);
 En cas de succes : **buf est renvoyé**<br>
 En cas d'echec : **NULL + errno + buf undefined**
 
-<h2 style="text-align:center;background: #101080">CHDIR</h2>
+<h2 style="text-align:center;background: #101080; color: white">CHDIR</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -235,7 +235,7 @@ int chdir(const char *path);
 En cas de succes : **0**<br>
 En cas d'echec : **-1** + **errno**
 
-<h2 style="text-align:center;background: #be0000ff">STRUCT sSTAT</h2>
+<h2 style="text-align:center;background: #be0000ff; color: white">STRUCT STAT</h2>
 
 *<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #be0000ff; color: #be0000ff;">struct stat</h3>*
 
@@ -316,7 +316,7 @@ En cas d'echec : **-1** + **errno**
   </tbody>
 </table>
 
-<h2 style="text-align:center;background: #101080">STAT</h2>
+<h2 style="text-align:center;background: #101080; color: white">STAT</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -335,7 +335,7 @@ Si *pathname* est un **lien symbolique** : retourne les informations **du lien s
 En cas de succes : **0**<br>
 En cas d'echec : **-1** + **errno**
 
-<h2 style="text-align:center;background: #101080">LSTAT</h2>
+<h2 style="text-align:center;background: #101080; color: white">LSTAT</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -355,7 +355,7 @@ Si *pathname* est un **lien symbolique** : retourne les informations **du fichie
 En cas de succes : **0**<br>
 En cas d'echec : **-1** + **errno**
 
-<h2 style="text-align:center;background: #101080">FSTAT</h2>
+<h2 style="text-align:center;background: #101080; color: white">FSTAT</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -375,13 +375,13 @@ Stock les informations d'un fichier **deja ouvert**, identifie par *fd*, dans *s
 En cas de succes : **0**<br>
 En cas d'echec : **-1** + **errno**
 
-<h2 style="text-align:center;background: #101080">UNLINK</h2>
+<h2 style="text-align:center;background: #101080; color: white">UNLINK</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
 #include <unistd.h>
 
-int unlink(const char *pathname);   
+int unlink(const char *pathname);
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
 
@@ -392,7 +392,7 @@ int unlink(const char *pathname);
 En cas de succes : **0**<br>
 En cas d'echec : **-1** + **errno**
 
-<h2 style="text-align:center;background: #be0000ff">STRUCT DIR</h2>
+<h2 style="text-align:center;background: #be0000ff; color: white">STRUCT DIR</h2>
 
 *<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #be0000ff; color: #be0000ff;">struct dirent</h3>*
 
@@ -433,8 +433,7 @@ En cas d'echec : **-1** + **errno**
   </tbody>
 </table>
 
-
-<h2 style="text-align:center;background: #101080">OPENDIR</h2>
+<h2 style="text-align:center;background: #101080; color: white">OPENDIR</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -451,7 +450,7 @@ Ouvre le repertoire *name*
 En cas de succes : **Pointeur sur le flux repertoire**<br>
 En cas d'echec : **NULL**
 
-<h2 style="text-align:center;background: #101080">READDIR</h2>
+<h2 style="text-align:center;background: #101080; color: white">READDIR</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -468,7 +467,7 @@ Consulte le repertoire
 En cas de succes : **Pointeur sur *struct dirent***<br>
 En cas d'echec OU fin de repertoire : **NULL**
 
-<h2 style="text-align:center;background: #101080">CLOSEDIR</h2>
+<h2 style="text-align:center;background: #101080; color: white">CLOSEDIR</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -485,7 +484,7 @@ Ferme le repertoire *dir*
 En cas de succes : **0***<br>
 En cas d'echec : **-1** + **errno**
 
-<h2 style="text-align:center;background: #101080">ISATTY</h2>
+<h2 style="text-align:center;background: #101080; color: white">ISATTY</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -502,7 +501,7 @@ Verifie si *fd* se rapporte a un terminal.
 Est connecte a un terminal : **1***<br>
 N'est pas connecte a un terminal : **0**
 
-<h2 style="text-align:center;background: #101080">TTYNAME</h2>
+<h2 style="text-align:center;background: #101080; color: white">TTYNAME</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -519,7 +518,7 @@ Obtient le nom du terminal associe a *fd*.
 En cas de succes : **Nom du terminal***<br>
 En cas d'echec : **NULL + errno**
 
-<h2 style="text-align:center;background: #101080">TTYSLOT</h2>
+<h2 style="text-align:center;background: #101080; color: white">TTYSLOT</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -531,14 +530,14 @@ int ttyslot(void);
 
 Retourne le numero du terminal associe a **stdin**<br>
 Ce numero correspond a l'entree dans `/etc/ttys` ou `/dev/ttyX`<br>
-**Determine quel terminal est utilise par le processus courant** 
+**Determine quel terminal est utilise par le processus courant**
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
 
 **\>= 0** : Numero de slot du terminal<br>
 **-1** : Erreur (aucun terminal associe a **stdin**)
 
-<h2 style="text-align:center;background: #101080">IOCTL</h2>
+<h2 style="text-align:center;background: #101080; color: white">IOCTL</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -559,7 +558,7 @@ Fonction **generique** qui permet d'envoyer des **commandes specifiques a un per
 En cas de succes : **>= 0** selon la commande<br>
 En cas d'echec : **-1** + **errno**
 
-<h2 style="text-align:center;background: #101080">GETENV</h2>
+<h2 style="text-align:center;background: #101080; color: white">GETENV</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -577,7 +576,60 @@ Rechercher *name* dans la liste des **variables d'environnement**
 En cas de succes : **Pointeur sur la valeur correspondante**<br>
 En cas d'echec : **NULL** si 0 correspondance
 
-<h2 style="text-align:center;background: #101080">TCSETATTR</h2>
+<h2 style="text-align:center;background: #be0000ff; color: white">STRUCT TERMIOS</h2>
+
+*<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #be0000ff; color: #be0000ff;">struct termios</h3>*
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Nom</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="color:red;">tcflag_t</td>
+      <td>c_iflag</td>
+      <td style="color:#6a9955;">// modes d’entrée</td>
+    </tr>
+    <tr>
+      <td style="color:red;">tcflag_t</td>
+      <td>c_oflag</td>
+      <td style="color:#6a9955;">// modes de sortie</td>
+    </tr>
+    <tr>
+      <td style="color:red;">tcflag_t</td>
+      <td>c_cflag</td>
+      <td style="color:#6a9955;">// modes de contrôle</td>
+    </tr>
+    <tr>
+      <td style="color:red;">tcflag_t</td>
+      <td>c_lflag</td>
+      <td style="color:#6a9955;">// modes locaux</td>
+    </tr>
+    <tr>
+      <td style="color:red;">cc_t</td>
+      <td>c_cc[NCCS]</td>
+      <td style="color:#6a9955;">// caractères de contrôle</td>
+    </tr>
+	<tr>
+      <td style="color:red;">speed_t</td>
+      <td>c_ispeed</td>
+      <td style="color:#6a9955;">// vitesse d’entrée</td>
+    </tr>
+	<tr>
+      <td style="color:red;">speed_t</td>
+      <td>c_ospeed</td>
+      <td style="color:#6a9955;">// vitesse de sortie</td>
+    </tr>
+  </tbody>
+</table>
+
+Pour plus de details voir la [documentation](https://manpagesfr.free.fr/man/man3/termios.3.html)
+
+<h2 style="text-align:center;background: #101080; color: white">TCSETATTR</h2>
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
 
@@ -589,6 +641,9 @@ int tcsetattr(int fd, int optional_actions, const struct termios *termios_p);
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
 
 Modifie les attributs du terminal ouvert par *fd*.<br>
+
+<h4>Paramètres</h4>
+
 - `fd` : Terminal concerne
 - `optional_actions` :
 	- `TCSANOW` — Immediatement
@@ -596,16 +651,191 @@ Modifie les attributs du terminal ouvert par *fd*.<br>
 	- `TCSAFLUSH` — Apres vidage des sorties et suppression des entrees en attente
 - `termio_p` : Pointeur vers une structure `struct termios` contenant les nouveaux parametres<br>
 
-La structure `struct termios` contient des champs pour :
-- Modes d'entree (`c_iflag`)
-- Modes de sortie (`c_oflag`)
-- Modes de controle (`c_cflag`)
-- Modes locaux (`c_lflag`)
-- Caracteres speciaux (`c_cc`)
-
 Exemple : Activer ou desactiver l'echo des caracteres, configurer le mode canonique/ non canonique, etc.
 
 <h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
 
 En cas de succes : **0**<br>
 En cas d'echec : **-1** + **errno**
+
+<h2 style="text-align:center;background: #101080; color: white">TCGETATTR</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <termios.h>
+
+int tcgetattr(int fd, struct termios *termios_p);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Recupere les parametres du terminal associe a un descripteur de fichier **fd**.
+
+<h4>Paramètres</h4>
+
+- `fd` doit referencer un **terminal** (souvent STDIN / STDOUT / STDERR)
+- `termios_p` pointe vers une structure **struct termios** que la fonction va remplir avec la configuration actuelle du terminal.
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **0**<br>
+En cas d'echec : **-1** + **errno**
+
+<h2 style="text-align:center;background: #101080; color: white">TGETENT</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <termcap.h>
+
+int tgetent(char *bp, const char *name);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Charge la description termcap d'un terminal donne et la rend disponible pour les autres fonctions termcap (tgetstr, tgetnum, tgetflag, etc...).
+
+<h4>Paramètres</h4>
+
+- `bp` est un **buffer optionnel** (peut etre **NULL**) ou la description du terminal peut etre stockee.
+- `name` est le **nom du terminal** (souvent la variable d'environnement **TERM**, ex : *"xterm-256color"*)
+
+!!! a `tgetent` doit être appelé une seule fois, au début
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **1**<br>
+En cas d'echec : **0 ou -1**
+
+<h2 style="text-align:center;background: #101080; color: white">TGETFLAG</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <termcap.h>
+
+int tgetflag(const char *id);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Permet de savoir si le terminal courant supporte une **capacite booleene**.
+
+<h4>Paramètre</h4>
+
+- `id` identifiant a 2 caracteres de la capacite **termcap** (ex : `am`, `bs`, `km`) -> Voir significations avec mister GPT
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **1**<br>
+En cas d'echec : **0**
+
+<h2 style="text-align:center;background: #101080; color: white">TGETNUM</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <termcap.h>
+
+int tgetnum(const char *id);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Permet de recuperer une **capacite numerique** du terminal courant.<br>
+
+Une capacite numerique correspond a une **valeur entiere** decrivant une propriete du terminal :
+- Nombre de colonne
+- Nombre de ligne
+- Délais, tailles, limites diverses
+
+<h4>Paramètre</h4>
+
+- `id` identifiant a 2 caracteres de la capacite numerique (ex : `co`, `li`, `it`) -> Voir significations avec mister GPT
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **1**<br>
+En cas d'echec : **0**
+
+<h2 style="text-align:center;background: #101080; color: white">TGETSTR</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <termcap.h>
+
+char *tgetstr(const char *id, char **area);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Permet de recuperer une **capacite sous forme de chaîne de caractères**, generalement une **séquence d’échappement** utilisee pour controler le terminal.
+
+Exemple de ce que ca retourne :
+- Effacer l'ecran
+- Deplacer le curseur
+- Activer un mode d'affichage
+- Reinitialiser des attributs
+
+<h4>Paramètres</h4>
+
+- `id` identifiant a 2 caracteres de la capacite numerique (ex : `cl`, `cm`, `so`, `me`) -> Voir significations avec mister GPT
+- `area` **zone de stockage** :
+	- `area == NULL` : La chaine retourner est stocke dans une zone statique interne.
+	Simple, mais non sur si tu appelles tgetstr plusieurs fois
+	- `area != NULL` : `tgetstr` copie la chaine daans `area`.
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **char \***<br>
+En cas d'echec : **NULL**
+
+<h2 style="text-align:center;background: #101080; color: white">TGOTO</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <termcap.h>
+
+char *tgoto(const char *cap, int col, int row);
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Permet de constuire une **sequence de deplacement du curseur**, a partir de la capacite termcap `cm`.
+
+En gros :
+- `cm` décrit **comment** déplacer le curseur
+- `tgoto` insère les **coordonnées** (colonne, ligne)
+- Le résultat est une chaine **chaîne prête à être envoyée au terminal**
+
+!!! a `tgoto` ne fait **rien** tout seul, elle genere une chaine qu'il faut utiliser apres avec `write` ou `tputs`.
+
+<h4>Paramètres</h4>
+
+- `cap` : chaine generer par `tgetstr("cm", ...)`
+- `col` : position horizontal (X)
+- `row` : position vertical (Y)
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **char \***<br>
+En cas d'echec : **NULL**
+
+<h2 style="text-align:center;background: #101080; color: white">TPUTS</h2>
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">PROTOTYPE</h3>
+
+#include <termcap.h>
+
+int tputs(const char *str, int affcnt, int (*putc)(int));
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">DESCRIPTION</h3>
+
+Affiche une séquence de contrôle termcap sur le terminal, en respectant les délais éventuels nécessaires au matériel.
+
+<h4>Paramètres</h4>
+
+- `str`
+	- Chaine a afficher
+	- Generalement retourner par `tgetstr` ou `tgoto`
+- `affcnt`
+	- Nombre de ligne affecter par la commande (**1** 90% du temps)
+	- Sert a calculer les delais
+- `putc`
+	- Pointeur vers une fonction qui ecrit un caractere. (**ft_putchar** probablement)
+
+<h3 style="padding: 0.5em 3em; background: #aaaaaaff; border: solid 2px #101080; color: #101080;">VALEUR RENVOYEE</h3>
+
+En cas de succes : **0**<br>
+En cas d'echec : **-1**
