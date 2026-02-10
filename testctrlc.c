@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:02 by afournie          #+#    #+#             */
-/*   Updated: 2026/02/07 17:19:25 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/02/10 15:28:51 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,9 @@ void	exec_cmd(char *rl)
 	if (j == 3)
 		printf("pwd:%s\n", getcwd(NULL, 0));
 }
+/****************************************************/
 
+/****************************************************/
 void	prompt(void)
 {
 	char	*last_rl;
@@ -106,6 +108,8 @@ void	prompt(void)
 			if (ft_strcmp(rl, "") && ft_strcmp(rl, last_rl))
 				add_history(rl);
 		last_rl = ft_strdup(rl);
+		printf("count_words(%s) = %d\n", rl, count_words(rl));
+		// print_each_words(rl);
 		exec_cmd(rl);
 	}
 }
