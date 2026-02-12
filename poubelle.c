@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 16:45:24 by afournie          #+#    #+#             */
-/*   Updated: 2026/02/12 13:50:56 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/02/12 14:42:00 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 // un genre de ls -a trouvee sur stackoverflow
 // a voir si c'est utile
-int	ls()
+int	ls(void)
 {
 	DIR				*dirp;
 	struct dirent	*dp;
@@ -26,9 +26,11 @@ int	ls()
 		perror("opendir()");
 		exit(1);
 	}
-	while ((dp = readdir(dirp)))
+	dp = readdir(dirp);
+	while (readdir(dirp))
 	{
 		puts(dp->d_name);
+		dp = readdir(dirp);
 	}
 	if (errno)
 	{

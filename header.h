@@ -6,14 +6,14 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:42:48 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/02/12 14:02:35 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/02/12 14:43:33 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEADER_H
 # define HEADER_H
 
-#include <signal.h>
+# include <signal.h>
 
 /*			utils.c			*/
 int		ft_strcmp(const char *s1, const char *s2);
@@ -31,6 +31,5 @@ void	exec_cmd(char *rl);
 
 /*			cmd_executer.c	*/
 void	exec_cmd(char *rl);
-
 
 #endif

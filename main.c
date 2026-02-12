@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/02/12 14:01:26 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/02/12 14:43:58 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	shell_prompt(void)
 				add_history(rl);
 		last_rl = ft_strdup(rl);
 		exec_cmd(rl);
+		printf("%s\n", rl);
 	}
 }
 
