@@ -6,13 +6,11 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:28:54 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/02/10 15:29:08 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/02/12 14:02:47 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 int	count_words(char *str)
 {
