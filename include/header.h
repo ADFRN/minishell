@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:42:48 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/02/12 14:43:33 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/05 13:53:01 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,23 @@
 # define HEADER_H
 
 # include <signal.h>
+# include <stdbool.h>
+
+typedef enum	e_state
+{
+	DEFAULT,
+	IN_SINGLE_QUOTE,
+	IN_DOUBLE_QUOTE
+} t_state;
 
 /*			utils.c			*/
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strdup(const char *src);
 
-/*			parser.c		*/
+/*			lexer.c		*/
+bool	check_quotes(char *str);
 int		count_words(char *str);
-char	**split_words(char *rl);
+char	**lexer(char *rl);
 void	print_each_words(char *rl);
 
 /*			testctrlc.c		*/
