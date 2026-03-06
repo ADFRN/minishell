@@ -1,41 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   poubelle.c                                         :+:      :+:    :+:   */
+/*   cmd_executer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/02 16:45:24 by afournie          #+#    #+#             */
-/*   Updated: 2026/02/12 14:42:00 by ttiprez          ###   ########.fr       */
+/*   Created: 2026/02/12 14:02:17 by ttiprez           #+#    #+#             */
+/*   Updated: 2026/02/12 14:43:53 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dirent.h>
-#include <errno.h>
+#include <stdio.h>
+#include <unistd.h>
 
-// un genre de ls -a trouvee sur stackoverflow
-// a voir si c'est utile
-int	ls(void)
+void	exec_cmd(char *rl)
 {
-	DIR				*dirp;
-	struct dirent	*dp;
+	int	i;
+	int	j;
 
-	dirp = opendir(".");
-	if (!dirp)
+	i = 0;
+	j = 0;
+	while (rl[i])
 	{
-		perror("opendir()");
-		exit(1);
+		if (i == 0 && rl[i] == 'p')
+			j++;
+		if (i == 1 && rl[i] == 'w')
+			j++;
+		if (i == 2 && rl[i] == 'd')
+			j++;
+		i++;
 	}
-	dp = readdir(dirp);
-	while (readdir(dirp))
-	{
-		puts(dp->d_name);
-		dp = readdir(dirp);
-	}
-	if (errno)
-	{
-		perror("readdir()");
-		exit(1);
-	}
-	return (0);
+	if (j == 3)
+		printf("pwd:%s\n", getcwd(NULL, 0));
 }
