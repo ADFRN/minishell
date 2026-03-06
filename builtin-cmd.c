@@ -6,73 +6,11 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 13:25:55 by afournie          #+#    #+#             */
-/*   Updated: 2026/03/05 16:12:09 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/06 15:08:27 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
-#include <linux/limits.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-int	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strdup(const char *s)
-{
-	int		i;
-	int		size;
-	char	*new;
-
-	i = 0;
-	size = ft_strlen(s);
-	new = malloc(sizeof(char) * (size + 1));
-	if (!new)
-		return (NULL);
-	while (s[i])
-	{
-		new[i] = s[i];
-		i++;
-	}
-	new[i] = '\0';
-	return (new);
-}
-
-char	*ft_strjoin(const char *s1, const char *s2)
-{
-	int		len;
-	char	*new;
-	int		i;
-	int		j;
-
-	if (!s1 || !s2)
-		return (NULL);
-	i = -1;
-	j = 0;
-	len = (ft_strlen(s1) + ft_strlen(s2));
-	new = malloc(sizeof(char) * (len + 1));
-	if (!new)
-		return (NULL);
-	while (s1[++i])
-		new[i] = s1[i];
-	while (s2[j])
-	{
-		new[i] = s2[j];
-		i++;
-		j++;
-	}
-	new[i] = '\0';
-	return (new);
-}
+#include "includes/minishell.h"
 
 void	echo_cmd(char *s)
 {
@@ -110,6 +48,7 @@ char	*pwd_cmd(void)
 		return (NULL);
 	}
 }
+
 void	cd_cmd(char *s)
 {
 	char	*path;
@@ -127,15 +66,33 @@ void	cd_cmd(char *s)
 		dest = ft_strjoin("/", s);
 		path = pwd_cmd();
 		absolute_path = ft_strjoin(path, dest);
-		printf("absolute_path: %s\n", absolute_path);
 		if (chdir(path) == -1)
 			perror("Error :");
 	}
 }
 
-int	main(int ac, char **av)
+char	*get_env(char *s, char **envp)
 {
-	printf("%s", pwd_cmd());
-	cd_cmd(av[1]);
-	return (0);
+	int	i;
+
+	i = -1;
+	while (envp[++i])
+		if (ft_strncmp(envp[i], s, 5) == 0)
+			return (&envp[i][5]);
+	return (NULL);
 }
+
+// int	main(int ac, char **av, char **envp)
+// {
+// 	int		i;
+// 	char	**envcpy;
+
+// 	i = 0;
+// 	envcpy = env_cpy(envp);
+// 	while (envp[i])
+// 	{
+// 		printf("%d: %s\n", i, envp[i]);
+// 		i++;
+// 	}
+// 	return (0);
+// }
