@@ -6,7 +6,7 @@
 #    By: afournie <afournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/05 13:53:45 by afournie          #+#    #+#              #
-#    Updated: 2026/03/06 15:34:11 by afournie         ###   ########.fr        #
+#    Updated: 2026/03/06 15:35:49 by afournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,11 +46,6 @@ LIBFT       = $(LIBFT_DIR)/libft.a
 INC         = -I includes -I $(LIBFT_DIR)
 
 SRCS        = main.c \
-              utils.c \
-              envcpy.c \
-              parser.c \
-              builtin-cmd.c \
-              cmd_executer.c
 
 OBJS        = $(SRCS:.c=.o)
 TOTAL_FILES := $(words $(SRCS))
