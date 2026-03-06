@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 14:51:05 by afournie          #+#    #+#             */
-/*   Updated: 2026/03/06 15:06:28 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/06 17:20:40 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
-# include <stdlib.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>

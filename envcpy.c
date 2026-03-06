@@ -6,11 +6,11 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 14:49:15 by afournie          #+#    #+#             */
-/*   Updated: 2026/03/06 14:55:41 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/06 17:23:11 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "minishell.h"
 
 int	count_env_vars(char **envp)
 {

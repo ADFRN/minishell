@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:02:53 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/06 15:17:51 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/06 17:23:32 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 bool	have_valid_quotes(char *str)
 {

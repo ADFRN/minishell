@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   testctrlc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:02 by afournie          #+#    #+#             */
-/*   Updated: 2026/02/12 14:39:35 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/06 17:41:09 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <signal.h>
+#include "header.h"
 
 void	ctrlc_handler(int sig, siginfo_t *info, void *context)
 {

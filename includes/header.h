@@ -3,25 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:42:48 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/06 15:17:07 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/06 17:41:05 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEADER_H
 # define HEADER_H
 
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
 
-typedef enum	e_state
+typedef enum e_state
 {
 	DEFAULT,
 	IN_SINGLE_QUOTE,
 	IN_DOUBLE_QUOTE
-} t_state;
+}		t_state;
 
 /*			utils.c			*/
 char	*get_path(char **envp);
