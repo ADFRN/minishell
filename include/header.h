@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:42:48 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/06 14:08:01 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/06 15:17:07 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@ int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strdup(const char *src);
 
 /*			lexer.c		*/
-bool	check_quotes(char *str);
-int		count_words(char *str);
-char	**lexer(char *rl);
+char	**lexer(char *rl, int i);
 void	print_each_words(char *rl);
+
+/*			lexer_utils.c		*/
+bool	have_valid_quotes(char *str);
+void	free_split(char **splitted_words);
+void	print_split(char **splitted_words);
 
 /*			testctrlc.c		*/
 void	ctrlc_handler(int sig, siginfo_t *info, void *context);
