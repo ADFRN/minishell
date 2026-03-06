@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin-cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 13:25:55 by afournie          #+#    #+#             */
-/*   Updated: 2026/03/05 13:50:14 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/06 13:15:02 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <stdio.h>
 
 void	echo_cmd(char *s)
 {
@@ -38,8 +39,8 @@ void	cd_cmd(char *s)
 // 	getcwd();
 // }
 
-int	main(int ac, char **av)
-{
-	echo(av[1]);
-	return (0);
-}
+//int	main(int ac, char **av)
+//{
+//	echo_cmd(av[1]);
+//	return (0);
+//}

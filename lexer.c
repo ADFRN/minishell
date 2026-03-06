@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:28:54 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/05 14:03:22 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/06 14:22:47 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,31 @@ int	count_words(char *str)
 	int		nb_words;
 	t_state	state;
 
-	state = DEFAULT;
+	i = 0;
 	nb_words = 0;
-	i = -1;
-	while (str[++i])
+	state = DEFAULT;
+	while (str[i])
 	{
-		if (state == DEFAULT)
+		while (str[i] && str[i] == ' ')
+			i++;
+		if (str[i])
 		{
-			if ((str[i + 1] == ' ' || !str[i + 1]) && (str[i] != ' '))
-				nb_words++;	
+			nb_words++;
+			while (str[i] && (state != DEFAULT || str[i] != ' '))
+			{
+				if (state == DEFAULT)
+				{
+					if (str[i] == '\'')
+						state = IN_SINGLE_QUOTE;
+					else if (str[i] == '\"')
+						state = IN_DOUBLE_QUOTE;
+				}
+				else if (state == IN_SINGLE_QUOTE && str[i] == '\'')
+					state = DEFAULT;
+				else if (state == IN_DOUBLE_QUOTE && str[i] == '\"')
+					state = DEFAULT;
+				i++;
+			}
 		}
 	}
 	return (nb_words);

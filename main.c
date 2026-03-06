@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/05 13:52:47 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/06 14:08:34 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-static void	shell_prompt(void)
+static void	shell_prompt()
 {
 	char	*rl;
 
@@ -33,7 +33,7 @@ static void	shell_prompt(void)
 	}
 }
 
-int	main(void)
+int	main(int ac, char **av, char **envp)
 {
 	init_signal();
 	shell_prompt();
