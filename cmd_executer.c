@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_executer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:02:17 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/02/12 14:43:53 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/09 11:14:12 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
+#include "includes/minishell.h"
 
 void	exec_cmd(char *rl)
 {

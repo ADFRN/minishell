@@ -6,15 +6,11 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:02:53 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 11:00:02 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/09 15:06:05 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
-
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "includes/header.h"
 
 bool	have_valid_quotes(char *str)
 {

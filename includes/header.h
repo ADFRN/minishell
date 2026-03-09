@@ -6,22 +6,26 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:42:48 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 14:52:26 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/09 15:05:21 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEADER_H
 # define HEADER_H
 
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
 
-typedef enum	e_state
+typedef enum e_state
 {
 	DEFAULT,
 	IN_SINGLE_QUOTE,
 	IN_DOUBLE_QUOTE
-} t_state;
+}		t_state;
 
 /*			utils.c			*/
 int	ft_strncmp(const char *s1, const char *s2, size_t n);

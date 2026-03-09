@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   testctrlc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:02 by afournie          #+#    #+#             */
-/*   Updated: 2026/02/12 14:39:35 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/09 11:13:50 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <signal.h>
+#include "includes/header.h"
 
 void	ctrlc_handler(int sig, siginfo_t *info, void *context)
 {
+	(void) info;
+	(void) context;
 	if (sig == SIGINT)
 	{
 		rl_replace_line("EXIT\n", 0);

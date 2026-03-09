@@ -6,12 +6,12 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:43:16 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 14:52:10 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/09 15:07:16 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
+#include "includes/header.h"
+
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

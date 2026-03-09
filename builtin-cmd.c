@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin-cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 13:25:55 by afournie          #+#    #+#             */
-/*   Updated: 2026/03/06 13:15:02 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/09 12:23:10 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
-#include <stdbool.h>
-#include <unistd.h>
-#include <stdio.h>
+#include "includes/minishell.h"
 
 void	echo_cmd(char *s)
 {
@@ -22,25 +19,83 @@ void	echo_cmd(char *s)
 
 bool	is_absolute_path(char *s)
 {
-	if (s[0] == '/')
+	int	i;
+
+	i = 0;
+	while (s[i] == ' ')
+		i++;
+	if (s[i] == '/')
 		return (true);
 	return (false);
 }
 
-void	cd_cmd(char *s)
+char	*pwd_cmd(void)
 {
-	if (is_absolute_path(s))
-		if (chdir(s) == -1)
-			perror("Error :");
+	char	tmp[PATH_MAX];
+	char	*path;
+
+	if (getcwd(tmp, PATH_MAX) != NULL)
+	{
+		path = ft_strdup(tmp);
+		if (!path)
+			return (NULL);
+		printf("%s\n", path);
+		return (path);
+	}
+	else
+	{
+		perror("minishell: pwd");
+		return (NULL);
+	}
 }
 
-// void	pwd_cmd(void)
-// {
-// 	getcwd();
-// }
+void	cd_cmd(char *s, char **envcpy)
+{
+	int		oldpwd_id;
+	int		pwd_id;
+	char	*test;
+	char	*current_dir;
 
-//int	main(int ac, char **av)
-//{
-//	echo_cmd(av[1]);
-//	return (0);
-//}
+	(void)envcpy;
+	test = get_env("OLDPWD", envcpy);
+	oldpwd_id = get_env_i("OLDPWD", envcpy);
+	pwd_id = get_env_i("PWD", envcpy);
+	current_dir = pwd_cmd();
+	if (chdir(s) == -1)
+		perror("Error :");
+	else
+	{
+		envcpy[oldpwd_id] = current_dir;
+		envcpy[pwd_id] = pwd_cmd();
+	}
+}
+
+char	*get_env(char *s, char **envcpy)
+{
+	int	i;
+
+	i = -1;
+	while (envcpy[++i])
+		if (ft_strncmp(envcpy[i], s, ft_strlen(s)) == 0)
+			return (&envcpy[i][ft_strlen(s)]);
+	return (NULL);
+}
+
+int	get_env_i(char *s, char **envcpy)
+{
+	int	i;
+
+	i = -1;
+	while (envcpy[++i])
+		if (ft_strncmp(envcpy[i], s, ft_strlen(s)) == 0)
+			return (i);
+	return (-1);
+}
+
+int	suitebordel(int ac, char **av, char **envcpy)
+{
+	(void)envcpy;
+	(void)ac;
+	(void)av;
+	return (0);
+}
