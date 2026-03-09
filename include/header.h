@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:42:48 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 11:04:04 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/09 14:52:26 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef enum	e_state
 } t_state;
 
 /*			utils.c			*/
-char	*get_path(char **envp);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strdup(const char *src);
 
