@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 14:51:05 by afournie          #+#    #+#             */
-/*   Updated: 2026/03/06 17:20:40 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/09 12:22:52 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,15 @@ void	exec_cmd(char *rl);
 void	exec_cmd(char *rl);
 
 char	*pwd_cmd(void);
-void	cd_cmd(char *s);
+void	cd_cmd(char *s, char **envcpy);
 void	echo_cmd(char *s);
 void	free_env(char **env);
 char	**env_cpy(char **envp);
 bool	is_absolute_path(char *s);
 int		count_env_vars(char **envp);
 char	*get_env(char *s, char **envp);
+
+int		suitebordel(int ac, char **av, char **envcpy);
+int		get_env_i(char *s, char **envcpy);
 
 #endif

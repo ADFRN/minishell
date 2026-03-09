@@ -6,7 +6,7 @@
 #    By: afournie <afournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/05 13:53:45 by afournie          #+#    #+#              #
-#    Updated: 2026/03/06 15:35:49 by afournie         ###   ########.fr        #
+#    Updated: 2026/03/09 11:17:06 by afournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,12 +40,22 @@ export MINISHELL_ART
 NAME        = minishell
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror
+LDFLAGS     = -lreadline
 
 LIBFT_DIR   = libft
 LIBFT       = $(LIBFT_DIR)/libft.a
 INC         = -I includes -I $(LIBFT_DIR)
 
-SRCS        = main.c \
+SRCS        =	builtin-cmd.c  \
+				envcpy.c \
+				lexer.c   \
+				main.c   \
+				utils.c \
+				cmd_executer.c \
+				expand.c\
+				lexer_utils.c \
+				testctrlc.c
+
 
 OBJS        = $(SRCS:.c=.o)
 TOTAL_FILES := $(words $(SRCS))
@@ -57,7 +67,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	@echo "\n$(YELLOW)Linking $(NAME)...$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
 	@echo "$$MINISHELL_ART"
 	@echo "$(GREEN)Minishell est prêt à l'emploi !$(RESET)"
 

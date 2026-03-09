@@ -6,11 +6,11 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 14:02:17 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/06 17:23:05 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:14:12 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "includes/minishell.h"
 
 void	exec_cmd(char *rl)
 {

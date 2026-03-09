@@ -6,11 +6,11 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:28:54 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/06 17:38:53 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:14:00 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "includes/header.h"
 
 
 static void	go_to_end_of_word(char *str, int *i, t_state *state)

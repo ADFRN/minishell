@@ -6,11 +6,11 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:43:16 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/06 17:41:07 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:13:56 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "includes/header.h"
 
 
 int	ft_strcmp(const char *s1, const char *s2)
