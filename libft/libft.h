@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 10:25:43 by afournie          #+#    #+#             */
-/*   Updated: 2026/03/06 13:41:31 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:30:36 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,14 @@ int					ft_putnbr_udesc(unsigned int n);
 int					ft_print_ptr(void *adress);
 int					ft_putstr(char *s);
 int					ft_putnbr(int n);
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                 OTHERS                                     */
+/*                                                                            */
+/* ************************************************************************** */
+
+char	*ft_strcpy(char *dest, const char *src);
+char	*ft_strcat(char *dest, const char *src);
 
 #endif

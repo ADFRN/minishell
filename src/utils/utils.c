@@ -6,55 +6,64 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:43:16 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 15:07:16 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/09 15:44:07 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/header.h"
+#include "minishell.h"
 
-
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_pathlen(char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while ((s1[i] || s2[i]) && i < n)
-	{
-		if ((unsigned char)s1[i] != (unsigned char)s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	while (str[i] && str[i] != ' ' && str[i] != '"' && str[i] != '\'')
 		i++;
-	}
-	return (0);
+	return (i);
 }
 
-int	ft_strcmp(const char *s1, const char *s2)
+void	free_split(char **splitted_words)
 {
-	size_t	i;
+	int	i;
 
 	i = -1;
-	while (s1[++i] && s2[i])
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	while (splitted_words[++i])
+		free(splitted_words[i]);
+	free(splitted_words);
 }
 
-char	*ft_strdup(const char *src)
+static char	*add_equal(char *to_find)
 {
-	size_t	i;
-	size_t	len;
-	char	*dup_str;
+	char *str;
 
-	len = 0;
-	while (src[len])
-		len++;
-	dup_str = malloc(len + 1);
-	if (!dup_str)
+	str = ft_strjoin(to_find, "=");
+	if (!str)
 		return (NULL);
-	dup_str[len] = '\0';
-	i = -1;
-	while (src[++i])
-		dup_str[i] = src[i];
-	return (dup_str);
+	return (str);
 }
 
+char	*get_envp(char **envp, char *to_find)
+{
+	int		i;
+	int		len_str;
+	char	*str;
 
+	i = -1;
+	str = add_equal(to_find);
+	len_str = ft_pathlen(str);
+	while (envp[++i])
+		if (ft_strncmp(envp[i], str, len_str) == 0)
+			return (&envp[i][len_str]);
+	return (NULL);
+}
+
+int	get_env_i(char **envcpy, char *s)
+{
+	int	i;
+
+	i = -1;
+	while (envcpy[++i])
+		if (ft_strncmp(envcpy[i], s, ft_strlen(s)) == 0)
+			return (i);
+	return (-1);
+}

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: afournie <afournie@student.42.fr>          +#+  +:+       +#+         #
+#    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/03/05 13:53:45 by afournie          #+#    #+#              #
-#    Updated: 2026/03/09 11:17:06 by afournie         ###   ########.fr        #
+#    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
+#    Updated: 2026/03/09 15:43:51 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,6 @@ define MINISHELL_ART
 $(CYAN)      _________________$(RESET)
 $(CYAN)     |  $(WHITE)Minishell 1.0$(CYAN)  |$(RESET)
 $(CYAN)     |  $(GREEN)>_ ready      $(CYAN) |$(RESET)
-$(CYAN)     |_________________|$(RESET)
-$(CYAN)     |        _        |$(RESET)
 $(CYAN)     |_______(_)_______|$(RESET)
 $(CYAN)   _______________________$(RESET)
 $(CYAN)  /                       \\$(RESET)
@@ -42,53 +40,52 @@ CC          = cc
 CFLAGS      = -Wall -Wextra -Werror
 LDFLAGS     = -lreadline
 
+SRC_DIR     = src
+OBJ_DIR     = obj
 LIBFT_DIR   = libft
+INC_DIR     = includes
+
+# --- SOURCES (Liste explicite pour la norme) ---
+SRCS        =	$(SRC_DIR)/builtins/builtins.c		\
+				$(SRC_DIR)/env/env_utils.c			\
+				$(SRC_DIR)/exec/cmd_executer.c		\
+				$(SRC_DIR)/expander/expand.c		\
+            	$(SRC_DIR)/lexer/lexer_utils.c		\
+				$(SRC_DIR)/lexer/lexer.c			\
+				$(SRC_DIR)/main/main.c				\
+				$(SRC_DIR)/signals/signals.c		\
+				$(SRC_DIR)/utils/utils.c			\
+
+OBJS        = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 LIBFT       = $(LIBFT_DIR)/libft.a
-INC         = -I includes -I $(LIBFT_DIR)
-
-SRCS        =	builtin-cmd.c  \
-				envcpy.c \
-				lexer.c   \
-				main.c   \
-				utils.c \
-				cmd_executer.c \
-				expand.c\
-				lexer_utils.c \
-				testctrlc.c
-
-
-OBJS        = $(SRCS:.c=.o)
-TOTAL_FILES := $(words $(SRCS))
-CURRENT_FILE = 0
 
 # --- RULES ---
-
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	@echo "\n$(YELLOW)Linking $(NAME)...$(RESET)"
+	@echo "$(YELLOW)Linking $(NAME)...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
 	@echo "$$MINISHELL_ART"
 	@echo "$(GREEN)Minishell est prêt à l'emploi !$(RESET)"
 
 $(LIBFT):
 	@echo "$(MAGENTA)Construction de la Libft...$(RESET)"
-	@make -s -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
 
-%.o: %.c
-	@$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE) + 1))))
-	@printf "$(BLUE)Compiling [%d/%d]$(RESET) %-20s\r" $(CURRENT_FILE) $(TOTAL_FILES) $<
-	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFT_DIR) -c $< -o $@
+	@echo "$(BLUE)Compiling:$(RESET) $(notdir $<)"
 
 clean:
-	@make clean -s -C $(LIBFT_DIR)
-	@rm -f $(OBJS)
-	@echo "$(RED)Objets de Minishell nettoyés.$(RESET)"
+	@echo "$(RED)Nettoyage des objets...$(RESET)"
+	@make clean -C $(LIBFT_DIR)
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@make fclean -s -C $(LIBFT_DIR)
+	@echo "$(RED)Suppression de l'exécutable...$(RESET)"
+	@make fclean -C $(LIBFT_DIR)
 	@rm -f $(NAME)
-	@echo "$(RED)Exécutable $(NAME) supprimé.$(RESET)"
 
 re: fclean all
 

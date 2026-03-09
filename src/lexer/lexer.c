@@ -6,12 +6,11 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:28:54 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 15:06:13 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/09 15:26:15 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/header.h"
-
+#include "minishell.h"
 
 static void	go_to_end_of_word(char *str, int *i, t_state *state)
 {

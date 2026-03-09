@@ -6,11 +6,11 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:02:53 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 15:06:05 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/09 15:37:46 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/header.h"
+#include "minishell.h"
 
 bool	have_valid_quotes(char *str)
 {
@@ -34,16 +34,6 @@ bool	have_valid_quotes(char *str)
 			state = DEFAULT;
 	}
 	return (state == DEFAULT);
-}
-
-void	free_split(char **splitted_words)
-{
-	int	i;
-
-	i = -1;
-	while (splitted_words[++i])
-		free(splitted_words[i]);
-	free(splitted_words);
 }
 
 void	print_split(char **splitted_words)

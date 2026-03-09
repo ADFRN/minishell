@@ -3,56 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/06 14:51:05 by afournie          #+#    #+#             */
-/*   Updated: 2026/03/09 12:22:52 by afournie         ###   ########.fr       */
+/*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
+/*   Updated: 2026/03/09 15:44:59 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/libft.h"
-# include <errno.h>
-# include <linux/limits.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <signal.h>
-# include <stdbool.h>
+/* --- LIBRARIES --- */
+# include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
 # include <unistd.h>
+# include <stdbool.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include <errno.h>
+# include <linux/limits.h>
 
-// void	ctrlc_handler(int sig, siginfo_t *info, void *context);
-// void	init_signal(void);
+/* --- ENUMS & STRUCTS --- */
+typedef enum e_state
+{
+	DEFAULT,
+	IN_SINGLE_QUOTE,
+	IN_DOUBLE_QUOTE
+}	t_state;
 
-/*			utils.c			*/
-char	*ft_strdup(const char *src);
-int		ft_strcmp(const char *s1, const char *s2);
+/* --- PROTOTYPES --- */
 
-/*			parser.c		*/
-int		count_words(char *str);
-char	**split_words(char *rl);
-void	print_each_words(char *rl);
+// Lexer
+char	**lexer(char *rl, int i);
+bool	have_valid_quotes(char *str);
+void	set_state(char c, t_state *state);
 
-/*			testctrlc.c		*/
-void	exec_cmd(char *rl);
+// Expander
+void	expand(char **tokens, char **envp);
+char	*get_envp(char **envp, char *to_find);
 
-/*			cmd_executer.c	*/
-void	exec_cmd(char *rl);
-
-char	*pwd_cmd(void);
-void	cd_cmd(char *s, char **envcpy);
-void	echo_cmd(char *s);
-void	free_env(char **env);
+// Env
 char	**env_cpy(char **envp);
-bool	is_absolute_path(char *s);
-int		count_env_vars(char **envp);
-char	*get_env(char *s, char **envp);
+void	free_env(char **env);
 
+// Exec & Builtins
+void	exec_cmd(char *rl);
+void	echo_cmd(char *s);
+char	*pwd_cmd(void);
 int		suitebordel(int ac, char **av, char **envcpy);
-int		get_env_i(char *s, char **envcpy);
+
+// Signals
+void	init_signal(void);
+
+// Utils
+int		ft_pathlen(char *str);
+void	free_split(char **splitted_words);
+char	*get_envp(char **envp, char *to_find);
+int		get_env_i(char **envcpy, char *s);
+void	print_split(char **splitted_words);
 
 #endif

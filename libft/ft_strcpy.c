@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_executer.c                                     :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/12 14:02:17 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 11:14:12 by afournie         ###   ########.fr       */
+/*   Created: 2026/03/09 15:29:04 by ttiprez           #+#    #+#             */
+/*   Updated: 2026/03/09 15:29:42 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
-
-void	exec_cmd(char *rl)
+char	*ft_strcpy(char *dest, const char *src)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
-	while (rl[i])
+	while (src[i])
 	{
-		if (i == 0 && rl[i] == 'p')
-			j++;
-		if (i == 1 && rl[i] == 'w')
-			j++;
-		if (i == 2 && rl[i] == 'd')
-			j++;
+		dest[i] = src[i];
 		i++;
 	}
-	if (j == 3)
-		printf("pwd:%s\n", getcwd(NULL, 0));
+	dest[i] = '\0';
+	return (dest);
 }

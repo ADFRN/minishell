@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin-cmd.c                                      :+:      :+:    :+:   */
+/*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 13:25:55 by afournie          #+#    #+#             */
-/*   Updated: 2026/03/09 12:23:10 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/09 15:41:12 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "minishell.h"
 
 void	echo_cmd(char *s)
 {
@@ -57,9 +57,9 @@ void	cd_cmd(char *s, char **envcpy)
 	char	*current_dir;
 
 	(void)envcpy;
-	test = get_env("OLDPWD", envcpy);
-	oldpwd_id = get_env_i("OLDPWD", envcpy);
-	pwd_id = get_env_i("PWD", envcpy);
+	test = get_envp(envcpy, "OLDPWD");
+	oldpwd_id = get_env_i(envcpy, "OLDPWD");
+	pwd_id = get_env_i(envcpy, "PWD");
 	current_dir = pwd_cmd();
 	if (chdir(s) == -1)
 		perror("Error :");
@@ -68,28 +68,6 @@ void	cd_cmd(char *s, char **envcpy)
 		envcpy[oldpwd_id] = current_dir;
 		envcpy[pwd_id] = pwd_cmd();
 	}
-}
-
-char	*get_env(char *s, char **envcpy)
-{
-	int	i;
-
-	i = -1;
-	while (envcpy[++i])
-		if (ft_strncmp(envcpy[i], s, ft_strlen(s)) == 0)
-			return (&envcpy[i][ft_strlen(s)]);
-	return (NULL);
-}
-
-int	get_env_i(char *s, char **envcpy)
-{
-	int	i;
-
-	i = -1;
-	while (envcpy[++i])
-		if (ft_strncmp(envcpy[i], s, ft_strlen(s)) == 0)
-			return (i);
-	return (-1);
 }
 
 int	suitebordel(int ac, char **av, char **envcpy)
