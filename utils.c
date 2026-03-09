@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:43:16 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/06 14:06:35 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/09 12:21:27 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,3 +42,5 @@ char	*ft_strdup(const char *src)
 		dup_str[i] = src[i];
 	return (dup_str);
 }
+
+

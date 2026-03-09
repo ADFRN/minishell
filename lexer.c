@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:28:54 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/06 15:13:27 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/09 10:48:33 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,7 @@ static void	go_to_end_of_word(char *str, int *i, t_state *state)
 {
 	while (str[*i] && (*state != DEFAULT || str[*i] != ' '))
 	{
-		if (*state == DEFAULT)
-		{
-			if (str[*i] == '\'')
-				*state = IN_SINGLE_QUOTE;
-			else if (str[*i] == '\"')
-				*state = IN_DOUBLE_QUOTE;
-		}
-		else if ((*state == IN_SINGLE_QUOTE && str[*i] == '\'')
-			|| (*state == IN_DOUBLE_QUOTE && str[*i] == '\"'))
-			*state = DEFAULT;
+		set_state(str[*i], state);
 		(*i)++;
 	}
 }
