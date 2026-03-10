@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 15:45:29 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/10 15:40:29 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,14 @@ static void	shell_prompt(int ac, char **av, char **envcpy)
 			exit(0);
 		add_history(rl);
 		printf("%s\n", rl);
-		suitebordel(ac, av, envcpy);
-	 	tokens = lexer(rl, 0);
-	 	if (!tokens)
-	 		exit(EXIT_FAILURE);
-	 	expand(tokens, envcpy);
-	 	if (!have_valid_quotes(rl))
-	 		printf("error: unclosed quote\n");
-	 	print_split(tokens);
-	 	free_split(tokens);
+		tokens = lexer(rl, 0);
+		if (!tokens)
+			exit(EXIT_FAILURE);
+		expand(tokens, envcpy);
+		if (!have_valid_quotes(rl))
+			printf("error: unclosed quote\n");
+		print_split(tokens);
+		free_split(tokens);
 	}
 }
 

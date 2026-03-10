@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
+#    By: afournie <afournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/03/09 15:43:51 by ttiprez          ###   ########.fr        #
+#    Updated: 2026/03/10 13:19:40 by afournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ export MINISHELL_ART
 # --- CONFIG ---
 NAME        = minishell
 CC          = cc
-CFLAGS      = -Wall -Wextra -Werror
+CFLAGS      = 
 LDFLAGS     = -lreadline
 
 SRC_DIR     = src

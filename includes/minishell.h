@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 15:44:59 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/10 12:58:56 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 /* --- LIBRARIES --- */
 # include "libft.h"
+# include <errno.h>
+# include <linux/limits.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdbool.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <signal.h>
-# include <errno.h>
-# include <linux/limits.h>
 
 /* --- ENUMS & STRUCTS --- */
 typedef enum e_state
@@ -31,7 +31,7 @@ typedef enum e_state
 	DEFAULT,
 	IN_SINGLE_QUOTE,
 	IN_DOUBLE_QUOTE
-}	t_state;
+}		t_state;
 
 /* --- PROTOTYPES --- */
 
@@ -45,8 +45,9 @@ void	expand(char **tokens, char **envp);
 char	*get_envp(char **envp, char *to_find);
 
 // Env
-char	**env_cpy(char **envp);
 void	free_env(char **env);
+char	**env_cpy(char **envp);
+int		count_env_vars(char **envp);
 
 // Exec & Builtins
 void	exec_cmd(char *rl);
@@ -59,6 +60,7 @@ void	init_signal(void);
 
 // Utils
 int		ft_pathlen(char *str);
+char	*add_equal(char *to_find);
 void	free_split(char **splitted_words);
 char	*get_envp(char **envp, char *to_find);
 int		get_env_i(char **envcpy, char *s);
