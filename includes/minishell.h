@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 15:44:59 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/10 15:00:02 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool	have_valid_quotes(char *str);
 void	set_state(char c, t_state *state);
 
 // Expander
-void	expand(char **tokens, char **envp);
+void	expand(char **token, char **envp);
 char	*get_envp(char **envp, char *to_find);
 
 // Env

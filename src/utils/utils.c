@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:43:16 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 15:44:07 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/10 15:37:09 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_split(char **splitted_words)
 
 static char	*add_equal(char *to_find)
 {
-	char *str;
+	char	*str;
 
 	str = ft_strjoin(to_find, "=");
 	if (!str)
@@ -54,7 +54,7 @@ char	*get_envp(char **envp, char *to_find)
 	while (envp[++i])
 		if (ft_strncmp(envp[i], str, len_str) == 0)
 			return (&envp[i][len_str]);
-	return (NULL);
+	return ("");
 }
 
 int	get_env_i(char **envcpy, char *s)

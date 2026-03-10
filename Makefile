@@ -6,7 +6,7 @@
 #    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/03/09 15:43:51 by ttiprez          ###   ########.fr        #
+#    Updated: 2026/03/10 14:34:00 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ export MINISHELL_ART
 # --- CONFIG ---
 NAME        = minishell
 CC          = cc
-CFLAGS      = -Wall -Wextra -Werror
+CFLAGS      = -Wall -Wextra 
 LDFLAGS     = -lreadline
 
 SRC_DIR     = src

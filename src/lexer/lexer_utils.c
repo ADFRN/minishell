@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:02:53 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 15:37:46 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/10 15:35:46 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	set_state(char c, t_state *state)
 		*state = IN_SINGLE_QUOTE;
 	else if (c == '"' && *state == DEFAULT)
 		*state = IN_DOUBLE_QUOTE;
-	else if ((c == '\'' && *state == IN_SINGLE_QUOTE) ||
-		(c == '"' && *state == IN_DOUBLE_QUOTE))
+	else if ((c == '\'' && *state == IN_SINGLE_QUOTE)
+		|| (c == '"' && *state == IN_DOUBLE_QUOTE))
 		*state = DEFAULT;
 }
