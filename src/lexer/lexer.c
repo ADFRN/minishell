@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:28:54 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 15:26:15 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/23 11:10:40 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,24 @@
 
 static void	go_to_end_of_word(char *str, int *i, t_state *state)
 {
-	while (str[*i] && (*state != DEFAULT || str[*i] != ' '))
+	while (str[*i])
 	{
 		set_state(str[*i], state);
+		if (*state == DEFAULT && (str[*i] == ' ' || is_metachar(str[*i])))
+			break;
 		(*i)++;
 	}
+}
+
+static char	*copy_operator(char *str, int *i)
+{
+    char	*op;
+    int		len;
+
+    len = get_operator_len(&str[*i]);
+    op = ft_substr(str, *i, len);
+    *i += len;
+    return (op);
 }
 
 static char	*copy_word(char *str, int *i, t_state *state)
@@ -52,7 +65,12 @@ static int	count_words(char *str)
 	{
 		while (str[i] && str[i] == ' ')
 			i++;
-		if (str[i])
+		if (is_metachar(str[i]))
+		{
+			nb_words++;
+			i += get_operator_len(&str[i]);
+		}
+		else
 		{
 			nb_words++;
 			go_to_end_of_word(str, &i, &state);
@@ -81,7 +99,10 @@ char	**lexer(char *str, int i)
 		if (str[i])
 		{
 			state = DEFAULT;
-			splitted_words[current_word++] = copy_word(str, &i, &state);
+			if (is_metachar(str[i]))
+				splitted_words[current_word++] = copy_operator(str, &i);
+			else
+				splitted_words[current_word++] = copy_word(str, &i, &state);
 			if (!splitted_words[current_word - 1])
 				return (free_split(splitted_words), NULL);
 		}

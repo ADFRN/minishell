@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:02:53 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/10 15:35:46 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/23 11:11:25 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,20 @@ bool	have_valid_quotes(char *str)
 			state = DEFAULT;
 	}
 	return (state == DEFAULT);
+}
+
+bool	is_metachar(char c)
+{
+	return (c == '|' || c == '<' || c == '>');
+}
+
+int	get_operator_len(char *str)
+{
+	if ((str[0] == '<' && str[1] == '<') || (str[0] == '>' && str[1] == '>'))
+		return (2);
+	if (str[0] == '<' || str[0] == '|' || str[0] == '>')
+		return (1);
+	return (0);
 }
 
 void	print_split(char **splitted_words)
