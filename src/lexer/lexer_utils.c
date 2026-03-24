@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:02:53 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/23 11:11:25 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/24 12:49:31 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,20 @@ int	get_operator_len(char *str)
 	return (0);
 }
 
-void	print_split(char **splitted_words)
+int	get_word_len(char *str)
 {
-	int	i;
+	int		i;
+	t_state	state;
 
-	i = -1;
-	while (splitted_words[++i])
-		printf("mot %d : %s\n", i, splitted_words[i]);
+	i = -1;	
+	state = DEFAULT;
+	while (str[++i])
+	{
+		set_state(str[i], &state);
+		if (state == DEFAULT && (str[i] == ' ' || is_metachar(str[i])))
+			break;		
+	}
+	return (i);
 }
 
 void	set_state(char c, t_state *state)

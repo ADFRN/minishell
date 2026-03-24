@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/23 11:42:44 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/24 12:51:24 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,34 +54,42 @@ typedef struct s_token
 /* --- PROTOTYPES --- */
 
 // Lexer
-char	**lexer(char *rl, int i);
-bool	have_valid_quotes(char *str);
-void	set_state(char c, t_state *state);
+char			**lexer(char *rl, int i);
+//	lexer_utils.c
+bool			have_valid_quotes(char *str);
+bool			is_metachar(char c);
+int				get_operator_len(char *str);
+int				get_word_len(char *str);
+void			set_state(char c, t_state *state);
+//	tokenizer.c
+t_token			*tokenizer(char *line);
+//	token_utils.c
+t_token			*ft_token_new(char *content, t_token_type type);
+void			ft_token_add_back(t_token **lst, t_token *new);
+void			ft_token_clear(t_token **lst);
+t_token_type	get_operator_type(char *str);
+void			print_tokens(t_token **lst);
 
 // Expander
-void	expand(char **token, char **envp);
-char	*get_envp(char **envp, char *to_find);
+void			expand(char **token, char **envp);
+char			*get_envp(char **envp, char *to_find);
 
 // Env
-char	**env_cpy(char **envp);
-void	free_env(char **env);
+char			**env_cpy(char **envp);
+void			free_env(char **env);
 
 // Exec & Builtins
-void	exec_cmd(char *rl);
-void	echo_cmd(char *s);
-char	*pwd_cmd(void);
-int		suitebordel(int ac, char **av, char **envcpy);
+void			exec_cmd(char *rl);
+void			echo_cmd(char *s);
+char			*pwd_cmd(void);
+int				suitebordel(int ac, char **av, char **envcpy);
 
 // Signals
-void	init_signal(void);
+void			init_signal(void);
 
 // Utils
-int		ft_pathlen(char *str);
-void	free_split(char **splitted_words);
-char	*get_envp(char **envp, char *to_find);
-int		get_env_i(char **envcpy, char *s);
-void	print_split(char **splitted_words);
-bool	is_metachar(char c);
-int		get_operator_len(char *str);
+int				ft_pathlen(char *str);
+char			*get_envp(char **envp, char *to_find);
+int				get_env_i(char **envcpy, char *s);
 
 #endif

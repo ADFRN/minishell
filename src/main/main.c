@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/10 15:36:59 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/24 12:51:44 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 static void	shell_prompt(int ac, char **av, char **envcpy)
 {
 	char	*rl;
-	char	**tokens;
+	t_token	*lst_token;
 
+	lst_token = NULL;
 	while (1)
 	{
 		rl = readline("[username]@[hostname]:[current_directory]$ ");
@@ -25,14 +26,16 @@ static void	shell_prompt(int ac, char **av, char **envcpy)
 		add_history(rl);
 		printf("%s\n", rl);
 		suitebordel(ac, av, envcpy);
-		tokens = lexer(rl, 0);
-		if (!tokens)
-			exit(EXIT_FAILURE);
-		expand(tokens, envcpy);
+		//expand(lst_token, envcpy);
 		if (!have_valid_quotes(rl))
-			printf("error: unclosed quote\n");
-		print_split(tokens);
-		free_split(tokens);
+		{
+			printf("error: unclosed quote\n");	
+			return ;
+		}
+		lst_token = tokenizer(rl);
+		if (!lst_token)
+			exit(EXIT_FAILURE);
+		print_tokens(&lst_token);
 	}
 }
 

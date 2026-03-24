@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:43:16 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/23 10:54:40 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/24 12:39:44 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@ int	ft_pathlen(char *str)
 	while (str[i] && str[i] != ' ' && str[i] != '"' && str[i] != '\'')
 		i++;
 	return (i);
-}
-
-void	free_split(char **splitted_words)
-{
-	int	i;
-
-	i = -1;
-	while (splitted_words[++i])
-		free(splitted_words[i]);
-	free(splitted_words);
 }
 
 static char	*add_equal(char *to_find)
