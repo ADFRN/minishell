@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 11:29:34 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/24 12:53:23 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/24 14:33:15 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ void	ft_token_add_back(t_token **lst, t_token *new)
 
 void	ft_token_clear(t_token	**lst)
 {
-	t_token	*current;
 	t_token	*next;
 
-	current = *lst;
-	next = current->next;
-	while (current)
+	if (!lst || !*lst)
+		return ;
+	while (*lst)
 	{
-		free(current->content);
-		free(current);
-		current = next;
-		next = current->next;
+		next = (*lst)->next;
+		free((*lst)->content);
+		free(*lst);
+
+		*lst = next;
 	}
 }
 
@@ -75,20 +75,17 @@ t_token_type	get_operator_type(char *str)
 
 char	*type_to_str(t_token_type type)
 {
-	char	type_str[8] = {0};
 	if (type == PIPE)
-		ft_strcpy(type_str, "PIPE");
+		return ("PIPE");
 	else if (type == HEREDOC)
-		ft_strcpy(type_str, "HEREDOC");
+		return ("HEREDOC");
 	else if (type == APPEND)
-		ft_strcpy(type_str, "APPEND");
+		return ("APPEND");
 	else if (type == OUTPUT)
-		ft_strcpy(type_str, "OUTPUT");
+		return ("OUTPUT");
 	else if (type == INPUT)
-		ft_strcpy(type_str, "INPUT");
-	else if (type == WORD)
-		ft_strcpy(type_str, "WORD");
-	return (ft_strdup(type_str));			
+		return ("INPUT");
+	return ("WORD");		
 }
 
 void	print_tokens(t_token **lst)
@@ -99,7 +96,7 @@ void	print_tokens(t_token **lst)
 	printf("WORD | TYPE\n");
 	while (current)
 	{
-		printf("%-20s | %s\n", current->content, type_to_str(current->type));
+		printf("%-60s | %s\n", current->content, type_to_str(current->type));
 		current = current->next;
 	}
 }

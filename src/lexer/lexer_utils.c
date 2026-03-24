@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:02:53 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/24 12:49:31 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/24 14:04:02 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,14 @@ int	get_word_len(char *str)
 	int		i;
 	t_state	state;
 
-	i = -1;	
+	i = 0;	
 	state = DEFAULT;
-	while (str[++i])
+	while (str[i])
 	{
 		set_state(str[i], &state);
 		if (state == DEFAULT && (str[i] == ' ' || is_metachar(str[i])))
-			break;		
+			break;
+		i++;		
 	}
 	return (i);
 }

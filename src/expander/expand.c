@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 15:26:37 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/10 15:31:45 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/24 14:45:04 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,50 +39,47 @@ static int	add_var(char **new_str, char *var_name, char *var_val)
 	return (len);
 }
 
-static void	just_for_norm(char **token, char *new)
-{
-	free(*token);
-	*token = new;
-}
-
-static void	expand_token(char **token, char **envp, t_state *state)
+static void	expand_token(t_token *token, char **envp, t_state *state)
 {
 	char	*new;
-	char	*name;
 	char	*tmp;
 	int		i;
 
-	new = ft_calloc(1, 1);
-	i = -1;
-	while ((*token)[++i])
+	new = ft_strdup("");
+	i = 0;
+	while (token->content[i])
 	{
-		set_state((*token)[i], state);
-		if ((*token)[i] == '$' && (*state != IN_SINGLE_QUOTE))
+		set_state(token->content[i], state);
+		if (token->content[i] == '$' && (*state != IN_SINGLE_QUOTE))
 		{
-			name = extract_var_name(&(*token)[i + 1]);
-			if (name && name[0] != '\0')
-			{
-				i += add_var(&new, name, get_envp(envp, name));
-				continue ;
-			}
-			free(name);
+			i++;
+			tmp = extract_var_name(&token->content[i]);
+			i += add_var(&new, tmp, get_envp(envp, tmp));
 		}
-		tmp = ft_strnjoin(new, &(*token)[i], 1);
-		free(new);
-		new = tmp;
+		else
+		{
+			tmp = ft_strnjoin(new, &token->content[i], 1);
+			free(new);
+			new = tmp;
+			i++;
+		}
 	}
-	just_for_norm(token, new);
+	free(token->content);
+	token->content = new;
 }
 
-void	expand(char **tokens, char **envp)
+void	expand(t_token **lst_tokens, char **envp)
 {
 	int		i;
 	t_state	state;
+	t_token	*current;
 
 	i = -1;
-	while (tokens[++i])
+	current = *lst_tokens;
+	while (current)
 	{
 		state = DEFAULT;
-		expand_token(&tokens[i], envp, &state);
+		expand_token(current, envp, &state);
+		current = current->next;
 	}
 }

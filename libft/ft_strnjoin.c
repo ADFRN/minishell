@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:47:23 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/10 15:35:22 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/24 14:40:45 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,29 @@
 
 char	*ft_strnjoin(const char *s1, const char *s2, int n)
 {
-	int		len;
 	char	*new;
 	int		i;
 	int		j;
+	int		len_s1;
 
 	if (!s1 || !s2)
 		return (NULL);
-	i = -1;
-	j = 0;
-	len = (ft_strlen(s1) + n);
-	new = malloc(sizeof(char) * (len + 1));
+	len_s1 = ft_strlen(s1);
+	new = malloc((len_s1 + n + 1));
 	if (!new)
 		return (NULL);
-	while (s1[++i])
+	i = 0;
+	while (s1[i])
+	{
 		new[i] = s1[i];
+		i++;
+	}
+	j = 0;
 	while (s2[j] && j < n)
 	{
-		new[i] = s2[j];
-		i++;
+		new[i + j] = s2[j];
 		j++;
 	}
-	new[i] = '\0';
+	new[i + j] = '\0';
 	return (new);
 }

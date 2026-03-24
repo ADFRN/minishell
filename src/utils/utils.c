@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:43:16 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/24 12:39:44 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/24 14:32:52 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ char	*get_envp(char **envp, char *to_find)
 
 	i = -1;
 	str = add_equal(to_find);
+	if (!str)
+		return (NULL);
 	len_str = ft_pathlen(str);
 	while (envp[++i])
 		if (ft_strncmp(envp[i], str, len_str) == 0)
-			return (&envp[i][len_str]);
-	return ("");
+			return (free(str), &envp[i][len_str]);
+	return (free(str), "");
 }
 
 int	get_env_i(char **envcpy, char *s)
