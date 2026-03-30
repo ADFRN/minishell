@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/24 14:25:31 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/30 11:16:46 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	shell_prompt(int ac, char **av, char **envcpy)
 {
 	char	*rl;
 	t_token	*lst_token;
+	t_cmd	*lst_cmd;
 
 	lst_token = NULL;
 	// MINISHELL
@@ -26,7 +27,7 @@ static void	shell_prompt(int ac, char **av, char **envcpy)
 		if (!rl)
 			exit(EXIT_FAILURE);
 		add_history(rl);
-		
+
 		suitebordel(ac, av, envcpy);
 
 		// VERIFICATION READLINE
@@ -36,25 +37,24 @@ static void	shell_prompt(int ac, char **av, char **envcpy)
 			free(rl);
 			continue ;
 		}
-		
+
 		// LEXER
 		lst_token = tokenizer(rl);
 		if (!lst_token)
-		exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		
 		// AFFICHAGE
-		printf("%s\n", rl);
-		print_tokens(&lst_token);
-		printf("Expansion...\n");
+		printf("\nINPUT : %s\n\n", rl);
 		expand(&lst_token, envcpy);
-		printf("Expanded !\n");
-		print_tokens(&lst_token);
+
+		lst_cmd = parser(&lst_token);
+		ft_token_clear(&lst_token);
+		//ft_print_lst_cmd(&lst_cmd);
 
 		// FREE
-		ft_token_clear(&lst_token);
 		free(rl);
 	}
-	// FREE
+	// LAST FREE
 	free(rl);
 	ft_token_clear(&lst_token);
 }

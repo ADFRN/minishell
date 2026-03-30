@@ -10,7 +10,6 @@ minishell
 *.swo
 .vscode/
 .vscode/*
-.idea/
 *.DS_Store
 
 # --- Debug et Logs ---
