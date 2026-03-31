@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/31 12:12:34 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/31 13:52:39 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_cmd_clear(t_cmd **lst)
 	}
 }
 
-static char    *remove_quotes(char *str)
+static char	*remove_quotes(char *str)
 {
 	char	*result;
 	int		i;
@@ -109,7 +109,7 @@ char	**ft_token_to_args(t_token **start)
 	{
 		args[++i] = ft_strdup(curr->content);
 		args[i] = remove_quotes(curr->content);
-		curr = curr->next;	
+		curr = curr->next;
 	}
 	args[i + 1] = NULL;
 	*start = curr;
@@ -129,9 +129,11 @@ static void	print_split(char **str)
 
 void	ft_print_lst_cmd(t_cmd **lst_cmd)
 {
-	t_cmd	*current = *lst_cmd;
-	int		i = 0;
+	t_cmd	*current;
+	int		i;
 
+	current = *lst_cmd;
+	i = 0;
 	while (current)
 	{
 		printf("\n\t\tMaillon n%d :\n", i++);

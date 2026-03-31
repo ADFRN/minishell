@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 13:25:55 by afournie          #+#    #+#             */
-/*   Updated: 2026/03/10 15:39:12 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/31 13:54:06 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,7 @@ char	*pwd_cmd(void)
 			return (NULL);
 		return (path);
 	}
-	else
-	{
-		perror("minishell: pwd");
-		return (NULL);
-	}
+	return (perror("minishell: pwd"), NULL);
 }
 
 void	cd_cmd(char *s, char **envcpy)

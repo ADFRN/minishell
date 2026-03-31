@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 11:29:34 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/27 10:27:56 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/31 13:52:45 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_token_add_back(t_token **lst, t_token *new)
 	new->prev = last;
 }
 
-void	ft_token_clear(t_token	**lst)
+void	ft_token_clear(t_token **lst)
 {
 	t_token	*next;
 
@@ -53,7 +53,6 @@ void	ft_token_clear(t_token	**lst)
 		next = (*lst)->next;
 		free((*lst)->content);
 		free(*lst);
-
 		*lst = next;
 	}
 }
@@ -85,7 +84,7 @@ char	*type_to_str(t_token_type type)
 		return ("OUTPUT");
 	else if (type == INPUT)
 		return ("INPUT");
-	return ("WORD");		
+	return ("WORD");
 }
 
 void	print_tokens(t_token **lst)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:25 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/30 11:16:20 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/31 13:52:33 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,25 @@
 
 #include "minishell.h"
 
-static bool report_syntax_error(char *token_content)
+static bool	report_syntax_error(char *token_content)
 {
 	if (token_content)
-		printf("minishell: syntax error near unexpected token `%s'\n", token_content);
+		printf("minishell: syntax error near unexpected token `%s'\n",
+			token_content);
 	else
 		printf("minishell: syntax error near unexpected token `newline'\n");
 	return (false);
 }
 
-static bool is_redir(int type)
+static bool	is_redir(int type)
 {
-	return (type == INPUT || type == OUTPUT 
-			|| type == HEREDOC || type == APPEND);
+	return (type == INPUT || type == OUTPUT || type == HEREDOC
+		|| type == APPEND);
 }
 
 static bool	check_syntax(t_token *token_lst)
 {
-	t_token *current;
+	t_token	*current;
 
 	current = token_lst;
 	while (current)
@@ -48,14 +49,14 @@ static bool	check_syntax(t_token *token_lst)
 		if (current->type == PIPE)
 		{
 			if (!current->prev || !current->next || current->next->type == PIPE)
-			return (report_syntax_error("|"));
+				return (report_syntax_error("|"));
 		}
 		else if (is_redir(current->type))
 		{
 			if (!current->next)
-			return (report_syntax_error(NULL));
+				return (report_syntax_error(NULL));
 			if (current->next->type != WORD)
-			return (report_syntax_error(current->next->content));
+				return (report_syntax_error(current->next->content));
 		}
 		current = current->next;
 	}

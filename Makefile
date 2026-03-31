@@ -6,7 +6,7 @@
 #    By: afournie <afournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/03/31 13:51:32 by afournie         ###   ########.fr        #
+#    Updated: 2026/03/31 13:53:43 by afournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,6 @@ SRCS        =	$(SRC_DIR)/builtins/builtins.c		\
 				$(SRC_DIR)/main/main.c				\
 				$(SRC_DIR)/signals/signals.c		\
 				$(SRC_DIR)/utils/utils.c			\
-				$(SRC_DIR)/utils/utils_prompt.c		\
 
 OBJS        = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 LIBFT       = $(LIBFT_DIR)/libft.a

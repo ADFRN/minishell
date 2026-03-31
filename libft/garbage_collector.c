@@ -1,0 +1,74 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   garbage_collector.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/31 14:35:53 by afournie          #+#    #+#             */
+/*   Updated: 2026/03/31 14:59:52 by afournie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+typedef struct s_garbage
+{
+	void		*ptr;
+	t_garbage	*next;
+}				t_garbage;
+
+static void	*new_gnode(t_garbage **head, int size)
+{
+	t_garbage	*new;
+	t_garbage	*tmp;
+	void		*ptr;
+
+	new = malloc(sizeof(t_garbage));
+	if (!new)
+		return (NULL);
+	new->ptr = malloc(size);
+	if (!new->ptr)
+		return (free(new), NULL);
+	if (*head == NULL)
+		head = new;
+	else
+	{
+		tmp = *head;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next;
+	}
+	return (ptr);
+}
+
+void	*ft_malloc(int size)
+{
+	static t_garbage	*head = NULL;
+	void				*ptr;
+
+	if (size == -1)
+		return (&head);
+	ptr = new_gnode(&head, size);
+	if (!ptr)
+		return (ft_putstr_fd("malloc error\n", 2), NULL);
+	return (ptr);
+}
+
+void	ft_free(void)
+{
+	t_garbage	**lst_head;
+	t_garbage	*head;
+	t_garbage	*tmp;
+
+	lst_head = ft_malloc(-1);
+	head = *lst_head;
+	while (head != NULL)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp->ptr);
+		free(tmp);
+	}
+	*lst_head = NULL;
+}

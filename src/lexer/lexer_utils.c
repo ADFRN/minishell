@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:02:53 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/24 14:04:02 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/31 13:52:52 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ int	get_word_len(char *str)
 	int		i;
 	t_state	state;
 
-	i = 0;	
+	i = 0;
 	state = DEFAULT;
 	while (str[i])
 	{
 		set_state(str[i], &state);
 		if (state == DEFAULT && (str[i] == ' ' || is_metachar(str[i])))
-			break;
-		i++;		
+			break ;
+		i++;
 	}
 	return (i);
 }
@@ -73,7 +73,7 @@ void	set_state(char c, t_state *state)
 		*state = IN_SINGLE_QUOTE;
 	else if (c == '"' && *state == DEFAULT)
 		*state = IN_DOUBLE_QUOTE;
-	else if ((c == '\'' && *state == IN_SINGLE_QUOTE)
-		|| (c == '"' && *state == IN_DOUBLE_QUOTE))
+	else if ((c == '\'' && *state == IN_SINGLE_QUOTE) || (c == '"'
+			&& *state == IN_DOUBLE_QUOTE))
 		*state = DEFAULT;
 }

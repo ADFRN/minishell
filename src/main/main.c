@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/31 13:50:23 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/31 14:09:55 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,10 @@ static void	shell_prompt(char **envcpy)
 	while (1)
 	{
 		// READLINE
-		rl = readline("[username]@[hostname]:[current_directory]$ ");
-
+		rl = readline("Minishell-1.0$ ");
 		if (!rl)
 			exit(EXIT_FAILURE);
 		add_history(rl);
-
 		// VERIFICATION READLINE
 		if (!have_valid_quotes(rl))
 		{
@@ -36,20 +34,16 @@ static void	shell_prompt(char **envcpy)
 			free(rl);
 			continue ;
 		}
-
 		// LEXER
 		lst_token = tokenizer(rl);
 		if (!lst_token)
 			exit(EXIT_FAILURE);
-
 		// AFFICHAGE
 		printf("\nINPUT : %s\n\n", rl);
 		expand(&lst_token, envcpy);
-
 		lst_cmd = parser(&lst_token);
 		ft_token_clear(&lst_token);
 		ft_print_lst_cmd(&lst_cmd);
-
 		// FREE
 		free(rl);
 	}
@@ -57,7 +51,6 @@ static void	shell_prompt(char **envcpy)
 	free(rl);
 	ft_token_clear(&lst_token);
 }
-
 
 int	main(int ac, char **av, char **envp)
 {

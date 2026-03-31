@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:28:54 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/24 14:32:20 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/31 13:52:48 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_token	*tokenizer(char *line)
 		while (line[i] == ' ')
 			i++;
 		if (!line[i])
-			break;
+			break ;
 		if (is_metachar(line[i]))
 			res = handle_operator(line, &i, &token_lst);
 		else
