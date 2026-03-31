@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/30 11:16:35 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/31 12:12:34 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,32 +116,32 @@ char	**ft_token_to_args(t_token **start)
 	return (args);
 }
 
-//static void	print_split(char **str)
-//{
-//	printf("[");
-//	for (int i = 0; str[i]; i++)
-//	{
-//		printf("\"%s\", ", str[i]);
-//	}
-//	printf("NULL");
-//	printf("]\n");
-//}
+static void	print_split(char **str)
+{
+	printf("[");
+	for (int i = 0; str[i]; i++)
+	{
+		printf("\"%s\", ", str[i]);
+	}
+	printf("NULL");
+	printf("]\n");
+}
 
-//void	ft_print_lst_cmd(t_cmd **lst_cmd)
-//{
-//	t_cmd	*current = *lst_cmd;
-//	int		i = 0;
+void	ft_print_lst_cmd(t_cmd **lst_cmd)
+{
+	t_cmd	*current = *lst_cmd;
+	int		i = 0;
 
-//	while (current)
-//	{
-//		printf("\n\t\tMaillon n%d :\n", i++);
-//		printf("args		= ");
-//		print_split(current->args);
-//		printf("redir_int	= %s\n", current->redir_in);
-//		printf("redir_out	= %s\n", current->redir_out);
-//		printf("heredoc		= %s\n", current->heredoc ? "true" : "false");
-//		printf("append		= %s\n", current->append ? "true" : "false");
-//		printf("next		= %s\n", current->next ? "yes" : "no");
-//		current = current->next;
-//	}
-//}
+	while (current)
+	{
+		printf("\n\t\tMaillon n%d :\n", i++);
+		printf("args		= ");
+		print_split(current->args);
+		printf("redir_int	= %s\n", current->redir_in);
+		printf("redir_out	= %s\n", current->redir_out);
+		printf("heredoc		= %s\n", current->heredoc ? "true" : "false");
+		printf("append		= %s\n", current->append ? "true" : "false");
+		printf("next		= %s\n", current->next ? "yes" : "no");
+		current = current->next;
+	}
+}

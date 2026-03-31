@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/30 11:16:46 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/31 12:13:02 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	shell_prompt(int ac, char **av, char **envcpy)
 
 		lst_cmd = parser(&lst_token);
 		ft_token_clear(&lst_token);
-		//ft_print_lst_cmd(&lst_cmd);
+		ft_print_lst_cmd(&lst_cmd);
 
 		// FREE
 		free(rl);
