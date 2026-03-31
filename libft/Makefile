@@ -6,7 +6,7 @@
 #    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/05 15:56:04 by afournie          #+#    #+#              #
-#    Updated: 2026/03/09 15:31:03 by ttiprez          ###   ########.fr        #
+#    Updated: 2026/03/10 14:49:48 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SRCS    = ft_atoi.c ft_itoa.c ft_bzero.c ft_split.c ft_lstnew.c ft_memcmp.c \
           ft_toupper.c ft_lstclear.c ft_striteri.c ft_putnbr_fd.c \
           ft_lstdelone.c ft_putstr_fd.c ft_putchar_fd.c ft_putendl_fd.c \
           ft_putnbr_hexa.c ft_lstadd_back.c ft_lstadd_front.c 	\
-		  ft_get_next_line.c ft_strcpy.c ft_strcat.c
+		  ft_get_next_line.c ft_strcpy.c ft_strcat.c ft_strnjoin.c ft_strndup.c
 
 OBJS    = $(SRCS:.c=.o)
 TOTAL_FILES := $(words $(SRCS))

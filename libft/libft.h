@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 10:25:43 by afournie          #+#    #+#             */
-/*   Updated: 2026/03/09 15:30:36 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/10 15:35:15 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,9 @@ int					ft_putnbr(int n);
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strcpy(char *dest, const char *src);
-char	*ft_strcat(char *dest, const char *src);
+char				*ft_strcpy(char *dest, const char *src);
+char				*ft_strcat(char *dest, const char *src);
+char				*ft_strndup(const char *s, int n);
+char				*ft_strnjoin(const char *s1, const char *s2, int n);
 
 #endif

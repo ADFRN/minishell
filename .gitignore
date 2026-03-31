@@ -1,0 +1,25 @@
+# --- Binaires et Librairies ---
+*.a
+*.o
+*.so
+minishell
+
+# --- Fichiers temporaires d'éditeurs ---
+*~
+*.swp
+*.swo
+.vscode/
+.vscode/*
+.idea/
+*.DS_Store
+
+# --- Debug et Logs ---
+*.txt
+*.log
+valgrind_logs.txt
+vgcore.*
+.gdb_history
+
+# --- Dossiers d'objets (si tu en utilises un plus tard) ---
+obj/
+objs/

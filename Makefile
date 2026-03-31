@@ -6,7 +6,7 @@
 #    By: afournie <afournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/03/27 15:10:18 by afournie         ###   ########.fr        #
+#    Updated: 2026/03/31 13:35:45 by afournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ export MINISHELL_ART
 # --- CONFIG ---
 NAME        = minishell
 CC          = cc
-CFLAGS      =
+CFLAGS      = -Wall -Wextra -Werror
 LDFLAGS     = -lreadline
 
 SRC_DIR     = src
@@ -50,6 +50,7 @@ SRCS        =	$(SRC_DIR)/builtins/builtins.c		\
 				$(SRC_DIR)/env/env_utils.c			\
 				$(SRC_DIR)/exec/cmd_executer.c		\
 				$(SRC_DIR)/expander/expand.c		\
+				$(SRC_DIR)/lexer/token_utils.c		\
             	$(SRC_DIR)/lexer/lexer_utils.c		\
 				$(SRC_DIR)/lexer/lexer.c			\
 				$(SRC_DIR)/main/main.c				\

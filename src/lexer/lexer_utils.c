@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:02:53 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 15:37:46 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/24 14:04:02 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,35 @@ bool	have_valid_quotes(char *str)
 	return (state == DEFAULT);
 }
 
-void	print_split(char **splitted_words)
+bool	is_metachar(char c)
 {
-	int	i;
+	return (c == '|' || c == '<' || c == '>');
+}
 
-	i = -1;
-	while (splitted_words[++i])
-		printf("mot %d : %s\n", i, splitted_words[i]);
+int	get_operator_len(char *str)
+{
+	if ((str[0] == '<' && str[1] == '<') || (str[0] == '>' && str[1] == '>'))
+		return (2);
+	if (str[0] == '<' || str[0] == '|' || str[0] == '>')
+		return (1);
+	return (0);
+}
+
+int	get_word_len(char *str)
+{
+	int		i;
+	t_state	state;
+
+	i = 0;	
+	state = DEFAULT;
+	while (str[i])
+	{
+		set_state(str[i], &state);
+		if (state == DEFAULT && (str[i] == ' ' || is_metachar(str[i])))
+			break;
+		i++;		
+	}
+	return (i);
 }
 
 void	set_state(char c, t_state *state)
@@ -51,7 +73,7 @@ void	set_state(char c, t_state *state)
 		*state = IN_SINGLE_QUOTE;
 	else if (c == '"' && *state == DEFAULT)
 		*state = IN_DOUBLE_QUOTE;
-	else if ((c == '\'' && *state == IN_SINGLE_QUOTE) ||
-		(c == '"' && *state == IN_DOUBLE_QUOTE))
+	else if ((c == '\'' && *state == IN_SINGLE_QUOTE)
+		|| (c == '"' && *state == IN_DOUBLE_QUOTE))
 		*state = DEFAULT;
 }

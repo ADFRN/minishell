@@ -6,86 +6,70 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:28:54 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/09 15:26:15 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/03/24 14:32:20 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	go_to_end_of_word(char *str, int *i, t_state *state)
+static bool	handle_operator(char *line, int *i, t_token **token_lst)
 {
-	while (str[*i] && (*state != DEFAULT || str[*i] != ' '))
-	{
-		set_state(str[*i], state);
-		(*i)++;
-	}
+	int				content_len;
+	char			*content;
+	t_token_type	content_type;
+	t_token			*new;
+
+	content_len = get_operator_len(&line[*i]);
+	content_type = get_operator_type(&line[*i]);
+	content = ft_substr(line, *i, content_len);
+	if (!content)
+		return (false);
+	new = ft_token_new(content, content_type);
+	if (!new)
+		return (free(content), false);
+	ft_token_add_back(token_lst, new);
+	*i += content_len;
+	return (true);
 }
 
-static char	*copy_word(char *str, int *i, t_state *state)
+static bool	handle_word(char *line, int *i, t_token **token_lst)
 {
-	int		str_start;
-	int		word_i;
-	char	*word;
+	int		content_len;
+	char	*content;
+	t_token	*new;
 
-	str_start = *i;
-	go_to_end_of_word(str, i, state);
-	word = malloc(*i - str_start + 1);
-	if (!word)
-		return (NULL);
-	word_i = 0;
-	while (str_start < *i)
-		word[word_i++] = str[str_start++];
-	word[word_i] = 0;
-	return (word);
+	content_len = get_word_len(&line[*i]);
+	content = ft_substr(line, *i, content_len);
+	if (!content)
+		return (false);
+	new = ft_token_new(content, WORD);
+	if (!new)
+		return (free(content), false);
+	ft_token_add_back(token_lst, new);
+	*i += content_len;
+	return (true);
 }
 
-static int	count_words(char *str)
+t_token	*tokenizer(char *line)
 {
+	t_token	*token_lst;
 	int		i;
-	int		nb_words;
-	t_state	state;
+	bool	res;
 
 	i = 0;
-	nb_words = 0;
-	state = DEFAULT;
-	while (str[i])
+	token_lst = NULL;
+	while (line[i])
 	{
-		while (str[i] && str[i] == ' ')
+		while (line[i] == ' ')
 			i++;
-		if (str[i])
-		{
-			nb_words++;
-			go_to_end_of_word(str, &i, &state);
-		}
+		if (!line[i])
+			break;
+		if (is_metachar(line[i]))
+			res = handle_operator(line, &i, &token_lst);
+		else
+			res = handle_word(line, &i, &token_lst);
+		if (!res)
+			return (ft_token_clear(&token_lst), NULL);
 	}
-	return (nb_words);
-}
-
-char	**lexer(char *str, int i)
-{
-	int		current_word;
-	char	**splitted_words;
-	t_state	state;
-
-	if (!str)
-		return (NULL);
-	splitted_words = malloc(sizeof(char *) * (count_words(str) + 1));
-	if (!splitted_words)
-		return (NULL);
-	current_word = 0;
-	state = DEFAULT;
-	while (str[i])
-	{
-		while (str[i] && str[i] == ' ')
-			i++;
-		if (str[i])
-		{
-			state = DEFAULT;
-			splitted_words[current_word++] = copy_word(str, &i, &state);
-			if (!splitted_words[current_word - 1])
-				return (free_split(splitted_words), NULL);
-		}
-	}
-	splitted_words[current_word] = NULL;
-	return (splitted_words);
+	return (token_lst);
 }

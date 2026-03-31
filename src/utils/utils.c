@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:43:16 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/27 14:58:31 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/31 13:35:28 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	free_split(char **splitted_words)
 	free(splitted_words);
 }
 
-char	*add_equal(char *to_find)
+static char	*add_equal(char *to_find)
 {
-	char *str;
+	char	*str;
 
 	str = ft_strjoin(to_find, "=");
 	if (!str)
@@ -50,11 +50,13 @@ char	*get_envp(char **envp, char *to_find)
 
 	i = -1;
 	str = add_equal(to_find);
+	if (!str)
+		return (NULL);
 	len_str = ft_pathlen(str);
 	while (envp[++i])
 		if (ft_strncmp(envp[i], str, len_str) == 0)
-			return (&envp[i][len_str]);
-	return (NULL);
+			return (free(str), &envp[i][len_str]);
+	return (free(str), "");
 }
 
 int	get_env_i(char **envcpy, char *s)
