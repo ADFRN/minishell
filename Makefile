@@ -6,7 +6,7 @@
 #    By: afournie <afournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/03/10 13:19:40 by afournie         ###   ########.fr        #
+#    Updated: 2026/03/27 15:10:18 by afournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ export MINISHELL_ART
 # --- CONFIG ---
 NAME        = minishell
 CC          = cc
-CFLAGS      = 
+CFLAGS      =
 LDFLAGS     = -lreadline
 
 SRC_DIR     = src
@@ -55,6 +55,7 @@ SRCS        =	$(SRC_DIR)/builtins/builtins.c		\
 				$(SRC_DIR)/main/main.c				\
 				$(SRC_DIR)/signals/signals.c		\
 				$(SRC_DIR)/utils/utils.c			\
+				$(SRC_DIR)/utils/utils_prompt.c		\
 
 OBJS        = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 LIBFT       = $(LIBFT_DIR)/libft.a

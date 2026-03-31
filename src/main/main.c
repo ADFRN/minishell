@@ -6,11 +6,12 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/10 15:40:29 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/27 15:09:02 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 static void	shell_prompt(int ac, char **av, char **envcpy)
 {
@@ -19,7 +20,7 @@ static void	shell_prompt(int ac, char **av, char **envcpy)
 
 	while (1)
 	{
-		rl = readline("[username]@[hostname]:[current_directory]$ ");
+		rl = readline(create_prompt_line());
 		if (!rl)
 			exit(0);
 		add_history(rl);
@@ -35,12 +36,14 @@ static void	shell_prompt(int ac, char **av, char **envcpy)
 	}
 }
 
+
 int	main(int ac, char **av, char **envp)
 {
 	char	**envcpy;
 
 	init_signal();
 	envcpy = env_cpy(envp);
+	create_prompt_line();
 	shell_prompt(ac, av, envcpy);
 	return (EXIT_SUCCESS);
 }

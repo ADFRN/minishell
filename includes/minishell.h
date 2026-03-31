@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/10 12:58:56 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/27 15:09:29 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 /* --- LIBRARIES --- */
 # include "libft.h"
 # include <errno.h>
+# include <fcntl.h>
 # include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -65,5 +66,6 @@ void	free_split(char **splitted_words);
 char	*get_envp(char **envp, char *to_find);
 int		get_env_i(char **envcpy, char *s);
 void	print_split(char **splitted_words);
+char	*create_prompt_line(void);
 
 #endif
