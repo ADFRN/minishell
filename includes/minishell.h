@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/31 13:33:34 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/31 13:51:40 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,16 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
+typedef struct s_cmd
+{
+	char **args;        // Le tableau pour execve (ex: ["ls", "-l", NULL])
+	char *redir_in;     // Nom du fichier d'entrée ou delimiteur (si < ou <<)
+	char *redir_out;    // Nom du fichier de sortie (si > ou >>)
+	bool heredoc;       // Heredoc (1 si <<, 0 si <)
+	bool append;        // Booléen (1 si >>, 0 si >)
+	struct s_cmd *next; // Commande suivante (après un pipe)
+}					t_cmd;
+
 /* --- PROTOTYPES --- */
 
 // Lexer
@@ -69,6 +79,16 @@ void				ft_token_clear(t_token **lst);
 t_token_type		get_operator_type(char *str);
 void				print_tokens(t_token **lst);
 
+// Parser
+//	parser.c
+t_cmd				*parser(t_token **token_lst);
+//	cmd_utils.c
+t_cmd				*ft_cmd_new(void);
+void				ft_cmd_add_back(t_cmd **lst, t_cmd *new);
+void				ft_cmd_clear(t_cmd **lst);
+void				ft_print_lst_cmd(t_cmd **lst_cmd);
+char				**ft_token_to_args(t_token **start);
+
 // Expander
 void				expand(t_token **lst_tokens, char **envp);
 char				*get_envp(char **envp, char *to_find);
@@ -82,7 +102,6 @@ int					count_env_vars(char **envp);
 void				exec_cmd(char *rl);
 void				echo_cmd(char *s);
 char				*pwd_cmd(void);
-int					suitebordel(int ac, char **av, char **envcpy);
 
 // Signals
 void				init_signal(void);
@@ -90,5 +109,6 @@ void				init_signal(void);
 // Utils
 char				*get_envp(char **envp, char *to_find);
 int					get_env_i(char **envcpy, char *s);
+char				*add_equal(char *to_find);
 
 #endif

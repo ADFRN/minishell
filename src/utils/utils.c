@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:43:16 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/31 13:35:28 by afournie         ###   ########.fr       */
+/*   Updated: 2026/03/31 13:45:46 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_split(char **splitted_words)
 	free(splitted_words);
 }
 
-static char	*add_equal(char *to_find)
+char	*add_equal(char *to_find)
 {
 	char	*str;
 

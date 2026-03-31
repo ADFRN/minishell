@@ -6,7 +6,7 @@
 #    By: afournie <afournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/03/31 13:35:45 by afournie         ###   ########.fr        #
+#    Updated: 2026/03/31 13:51:32 by afournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,8 @@ SRCS        =	$(SRC_DIR)/builtins/builtins.c		\
 				$(SRC_DIR)/lexer/token_utils.c		\
             	$(SRC_DIR)/lexer/lexer_utils.c		\
 				$(SRC_DIR)/lexer/lexer.c			\
+				$(SRC_DIR)/parser/parser.c			\
+				$(SRC_DIR)/parser/cmd_utils.c		\
 				$(SRC_DIR)/main/main.c				\
 				$(SRC_DIR)/signals/signals.c		\
 				$(SRC_DIR)/utils/utils.c			\
