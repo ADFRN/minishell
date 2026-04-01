@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 11:29:34 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/31 13:52:45 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/01 12:00:41 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ t_token	*ft_token_new(char *content, t_token_type type)
 {
 	t_token	*token;
 
-	token = malloc(sizeof(t_token));
+	token = ft_malloc(sizeof(t_token));
 	if (!token)
-		return (NULL);
+		exit((ft_free(), EXIT_FAILURE));
 	token->content = content;
 	token->type = type;
 	token->next = NULL;
@@ -42,20 +42,20 @@ void	ft_token_add_back(t_token **lst, t_token *new)
 	new->prev = last;
 }
 
-void	ft_token_clear(t_token **lst)
-{
-	t_token	*next;
+// void	ft_token_clear(t_token **lst)
+// {
+// 	t_token	*next;
 
-	if (!lst || !*lst)
-		return ;
-	while (*lst)
-	{
-		next = (*lst)->next;
-		free((*lst)->content);
-		free(*lst);
-		*lst = next;
-	}
-}
+// 	if (!lst || !*lst)
+// 		return ;
+// 	while (*lst)
+// 	{
+// 		next = (*lst)->next;
+// 		free((*lst)->content);
+// 		free(*lst);
+// 		*lst = next;
+// 	}
+// }
 
 t_token_type	get_operator_type(char *str)
 {

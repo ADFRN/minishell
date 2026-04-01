@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:28:54 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/31 13:52:48 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/01 12:04:37 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ t_token	*tokenizer(char *line)
 		else
 			res = handle_word(line, &i, &token_lst);
 		if (!res)
-			return (ft_token_clear(&token_lst), NULL);
+			// return (ft_token_clear(&token_lst), NULL);
+			return (ft_free(), NULL);
 	}
 	return (token_lst);
 }

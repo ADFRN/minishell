@@ -6,32 +6,34 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 14:35:53 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/01 11:48:23 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/01 12:07:16 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	*new_gnode(t_garbage **head, int size)
+void	*new_gnode(t_garbage **list_head, int size)
 {
 	t_garbage	*new;
-	t_garbage	*tmp;
+	t_garbage	*temp;
 	void		*ptr;
 
-	ptr = NULL;
 	new = malloc(sizeof(t_garbage));
 	if (!new)
 		return (NULL);
 	new->ptr = malloc(size);
 	if (!new->ptr)
 		return (free(new), NULL);
-	if (*head == NULL)
-		head = &new;
+	ptr = new->ptr;
+	new->next = NULL;
+	if (*list_head == NULL)
+		*list_head = new;
 	else
 	{
-		tmp = *head;
-		while (tmp->next)
-			tmp = tmp->next;
+		temp = *list_head;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new;
 	}
 	return (ptr);
 }

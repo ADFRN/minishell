@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/31 13:52:39 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/01 12:01:41 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@ t_cmd	*ft_cmd_new(void)
 {
 	t_cmd	*cmd;
 
-	cmd = malloc(sizeof(t_cmd));
+	cmd = ft_malloc(sizeof(t_cmd));
 	if (!cmd)
-		return (NULL);
+	{
+		ft_free();
+		exit(EXIT_FAILURE);
+	}
 	cmd->args = NULL;
 	cmd->redir_in = NULL;
 	cmd->redir_out = NULL;
@@ -43,22 +46,22 @@ void	ft_cmd_add_back(t_cmd **lst, t_cmd *new)
 	last->next = new;
 }
 
-void	ft_cmd_clear(t_cmd **lst)
-{
-	t_cmd	*next;
+// void	ft_cmd_clear(t_cmd **lst)
+// {
+// 	t_cmd	*next;
 
-	if (!lst || !*lst)
-		return ;
-	while (*lst)
-	{
-		next = (*lst)->next;
-		free((*lst)->args);
-		free((*lst)->redir_in);
-		free((*lst)->redir_out);
-		free(*lst);
-		*lst = next;
-	}
-}
+// 	if (!lst || !*lst)
+// 		return ;
+// 	while (*lst)
+// 	{
+// 		next = (*lst)->next;
+// 		free((*lst)->args);
+// 		free((*lst)->redir_in);
+// 		free((*lst)->redir_out);
+// 		free(*lst);
+// 		*lst = next;
+// 	}
+// }
 
 static char	*remove_quotes(char *str)
 {
@@ -67,7 +70,9 @@ static char	*remove_quotes(char *str)
 	int		j;
 	char	quote;
 
-	result = malloc(strlen(str) + 1);
+	result = ft_malloc(strlen(str) + 1);
+	if (!result)
+		exit((ft_free(), EXIT_FAILURE));
 	i = 0;
 	j = 0;
 	while (str[i])
@@ -100,9 +105,9 @@ char	**ft_token_to_args(t_token **start)
 		curr = curr->next;
 		i++;
 	}
-	args = malloc(sizeof(char *) * (i + 1));
+	args = ft_malloc(sizeof(char *) * (i + 1));
 	if (!args)
-		return (NULL);
+		exit((ft_free(), EXIT_FAILURE));
 	curr = *start;
 	i = -1;
 	while (curr && curr->type == WORD)
