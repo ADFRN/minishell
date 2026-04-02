@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 15:26:37 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/24 14:45:04 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/02 11:15:17 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ static void	expand_token(t_token *token, char **envp, t_state *state)
 		set_state(token->content[i], state);
 		if (token->content[i] == '$' && (*state != IN_SINGLE_QUOTE))
 		{
-			i++;
-			tmp = extract_var_name(&token->content[i]);
+			tmp = extract_var_name(&token->content[++i]);
 			i += add_var(&new, tmp, get_envp(envp, tmp));
+			free(tmp);
 		}
 		else
 		{
 			tmp = ft_strnjoin(new, &token->content[i], 1);
-			free(new);
+			//free(new);
 			new = tmp;
 			i++;
 		}

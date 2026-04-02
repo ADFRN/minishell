@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/01 12:05:06 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/02 11:59:09 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@ static void	shell_prompt(char **envcpy)
 		// READLINE
 		rl = readline("Minishell-1.0$ ");
 		if (!rl)
-			exit(EXIT_FAILURE);
+			exit((free(envcpy), ft_free(), EXIT_SUCCESS));
+		if (rl[0] == '\0')
+		{
+			free(rl);
+			continue;
+		}
 		add_history(rl);
 		// VERIFICATION READLINE
 		if (!have_valid_quotes(rl))
@@ -46,6 +51,7 @@ static void	shell_prompt(char **envcpy)
 		ft_print_lst_cmd(&lst_cmd);
 		// FREE
 		free(rl);
+		ft_free();
 	}
 	// LAST FREE
 	free(rl);
@@ -62,5 +68,6 @@ int	main(int ac, char **av, char **envp)
 	init_signal();
 	envcpy = env_cpy(envp);
 	shell_prompt(envcpy);
+	free(env_cpy);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 14:47:23 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/24 14:40:45 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/02 11:15:49 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strnjoin(const char *s1, const char *s2, int n)
 	if (!s1 || !s2)
 		return (NULL);
 	len_s1 = ft_strlen(s1);
-	new = malloc((len_s1 + n + 1));
+	new = ft_malloc((len_s1 + n + 1));
 	if (!new)
 		return (NULL);
 	i = 0;
