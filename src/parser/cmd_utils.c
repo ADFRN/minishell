@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/03 18:58:55 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/03 19:18:23 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	ft_print_lst_cmd(t_cmd **lst_cmd)
 			print_split(current->args);
 		else
 			printf("NULL\n");
-		printf("redir_int	= %s\n", current->redir_in);
+		printf("redir_in	= %s\n", current->redir_in);
 		printf("redir_out	= %s\n", current->redir_out);
 		printf("heredoc		= %s\n", current->heredoc ? "true" : "false");
 		printf("append		= %s\n", current->append ? "true" : "false");
