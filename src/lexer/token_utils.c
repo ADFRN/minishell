@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 11:29:34 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/01 12:00:41 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/03 18:23:22 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ void	ft_token_add_back(t_token **lst, t_token *new)
 	new->prev = last;
 }
 
-// void	ft_token_clear(t_token **lst)
-// {
-// 	t_token	*next;
+void	ft_token_clear(t_token **lst)
+{
+	t_token	*next;
 
-// 	if (!lst || !*lst)
-// 		return ;
-// 	while (*lst)
-// 	{
-// 		next = (*lst)->next;
-// 		free((*lst)->content);
-// 		free(*lst);
-// 		*lst = next;
-// 	}
-// }
+	if (!lst || !*lst)
+		return ;
+	while (*lst)
+	{
+		next = (*lst)->next;
+		free((*lst)->content);
+		// free(*lst);
+		*lst = next;
+	}
+}
 
 t_token_type	get_operator_type(char *str)
 {

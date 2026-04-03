@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 15:26:37 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/02 11:15:17 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/03 18:43:03 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ static int	add_var(char **new_str, char *var_name, char *var_val)
 	if (!var_val)
 		var_val = "";
 	tmp = ft_strjoin(*new_str, var_val);
-	free(*new_str);
+	// free(*new_str);
 	*new_str = tmp;
 	len = ft_strlen(var_name);
 	free(var_name);
 	return (len);
 }
 
-static void	expand_token(t_token *token, char **envp, t_state *state)
+static void	expand_str(char **str, char **envp, t_state *state)
 {
 	char	*new;
 	char	*tmp;
@@ -47,39 +47,29 @@ static void	expand_token(t_token *token, char **envp, t_state *state)
 
 	new = ft_strdup("");
 	i = 0;
-	while (token->content[i])
+	while ((*str)[i])
 	{
-		set_state(token->content[i], state);
-		if (token->content[i] == '$' && (*state != IN_SINGLE_QUOTE))
+		set_state((*str)[i], state);
+		if ((*str)[i] == '$' && (*state != IN_SINGLE_QUOTE))
 		{
-			tmp = extract_var_name(&token->content[++i]);
+			i++;
+			tmp = extract_var_name(&(*str)[i]);
 			i += add_var(&new, tmp, get_envp(envp, tmp));
-			free(tmp);
 		}
 		else
 		{
-			tmp = ft_strnjoin(new, &token->content[i], 1);
-			//free(new);
+			tmp = ft_strnjoin(new, &(*str)[i], 1);
 			new = tmp;
 			i++;
 		}
 	}
-	free(token->content);
-	token->content = new;
+	*str = new;
 }
 
-void	expand(t_token **lst_tokens, char **envp)
+void	expand(char **str, char **envp)
 {
-	int		i;
 	t_state	state;
-	t_token	*current;
 
-	i = -1;
-	current = *lst_tokens;
-	while (current)
-	{
-		state = DEFAULT;
-		expand_token(current, envp, &state);
-		current = current->next;
-	}
+	state = DEFAULT;
+	expand_str(str, envp, &state);
 }

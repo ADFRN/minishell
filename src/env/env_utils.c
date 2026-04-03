@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 14:49:15 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/01 11:54:11 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/03 18:14:45 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*ft_strdup_classic(const char *s)
+{
+	int		i;
+	int		size;
+	char	*new;
+
+	i = 0;
+	size = ft_strlen(s);
+	new = malloc(sizeof(char) * (size + 1));
+	if (!new)
+		return (NULL);
+	while (s[i])
+	{
+		new[i] = s[i];
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
+}
 
 int	count_env_vars(char **envp)
 {
@@ -50,7 +70,7 @@ char	**env_cpy(char **envp)
 	i = 0;
 	while (i < size)
 	{
-		cpy[i] = ft_strdup(envp[i]);
+		cpy[i] = ft_strdup_classic(envp[i]);
 		if (!cpy[i])
 		{
 			free_env(cpy);

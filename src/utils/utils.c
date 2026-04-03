@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:43:16 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/03/31 13:45:46 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/03 18:43:58 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ char	*get_envp(char **envp, char *to_find)
 	len_str = ft_pathlen(str);
 	while (envp[++i])
 		if (ft_strncmp(envp[i], str, len_str) == 0)
-			return (free(str), &envp[i][len_str]);
-	return (free(str), "");
+			return (&envp[i][len_str]);
+	return ("");
 }
 
 int	get_env_i(char **envcpy, char *s)

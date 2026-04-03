@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/02 11:13:04 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/03 18:16:35 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,6 @@ void	ft_cmd_add_back(t_cmd **lst, t_cmd *new)
 	last->next = new;
 }
 
-// void	ft_cmd_clear(t_cmd **lst)
-// {
-// 	t_cmd	*next;
-
-// 	if (!lst || !*lst)
-// 		return ;
-// 	while (*lst)
-// 	{
-// 		next = (*lst)->next;
-// 		free((*lst)->args);
-// 		free((*lst)->redir_in);
-// 		free((*lst)->redir_out);
-// 		free(*lst);
-// 		*lst = next;
-// 	}
-// }
-
 static char	*remove_quotes(char *str)
 {
 	char	*result;
@@ -88,7 +71,7 @@ static char	*remove_quotes(char *str)
 		else
 			result[j++] = str[i++];
 	}
-	result[i] = '\0';
+	result[j] = '\0';
 	return (result);
 }
 

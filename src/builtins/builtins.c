@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 13:25:55 by afournie          #+#    #+#             */
-/*   Updated: 2026/03/31 13:54:06 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/03 18:01:13 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,9 @@ void	export_cmd(char *var_name, char *var_value, char **envcpy)
 void	unset_cmd(char *var_name, char **envcpy)
 {
 	int		i;
-	int		found;
 	size_t	len;
 
 	i = 0;
-	found = 0;
 	len = ft_strlen(var_name);
 	while (envcpy[i])
 	{
