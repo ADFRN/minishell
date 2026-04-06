@@ -25,7 +25,10 @@ static void	shell_prompt(char **envcpy)
 		// READLINE
 		rl = readline("Minishell-1.0$ ");
 		if (!rl)
+		{
+			printf("exit\n");
 			break;
+		}
 		if (rl[0] == '\0')
 		{
 			free(rl);
