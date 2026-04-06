@@ -1,0 +1,25 @@
+- Boucler pour chaque token
+
+(gerer here_doc et append y'a des fonctions pour ca dans pipex a modifier un peu)
+
+Si fd_in :
+	dup2(fd_in, STDIN_FILENO)
+sinon :
+	par defaut
+
+si fd_out :
+	dup2(fd_in, STDOUT_FILENO)
+sinon :
+	par defaut
+
+si args : (exemple avec "echo -n 'bonjour a tous'")
+	execve("/usr/bin/echo", ["/usr/bin/echo", "-m", "bonjour a tous", NULL], envcpy)
+sinon :
+	rien (i guess)
+
+si next :
+	dup2(STDOUT_FILENO, STDIN_FILENO)
+	+
+	cmd = cmd->next
+sinon :
+	fini (i guess)

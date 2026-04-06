@@ -13,7 +13,6 @@ minishell
 *.DS_Store
 
 # --- Debug et Logs ---
-*.txt
 *.log
 valgrind_logs.txt
 vgcore.*
