@@ -22,16 +22,6 @@ int	ft_pathlen(char *str)
 	return (i);
 }
 
-void	free_split(char **splitted_words)
-{
-	int	i;
-
-	i = -1;
-	while (splitted_words[++i])
-		free(splitted_words[i]);
-	free(splitted_words);
-}
-
 char	*add_equal(char *to_find)
 {
 	char	*str;

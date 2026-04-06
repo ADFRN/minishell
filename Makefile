@@ -57,6 +57,16 @@ SRCS        =	$(SRC_DIR)/builtins/builtins.c		\
 				$(SRC_DIR)/main/main.c				\
 				$(SRC_DIR)/signals/signals.c		\
 				$(SRC_DIR)/utils/utils.c			\
+				$(SRC_DIR)/exec/parsing/split_quotes.c \
+			  	$(SRC_DIR)/exec/parsing/split_utils.c \
+			  	$(SRC_DIR)/exec/parsing/args_check.c \
+			  	$(SRC_DIR)/exec/parsing/path_parsing.c \
+				$(SRC_DIR)/exec/utils/cmd_list.c \
+			  	$(SRC_DIR)/exec/utils/cleanup.c \
+			  	$(SRC_DIR)/exec/execution/child_exec.c \
+			  	$(SRC_DIR)/exec/execution/pipe_exec.c \
+			  	$(SRC_DIR)/exec/files/file_manager.c
+
 
 OBJS        = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 LIBFT       = $(LIBFT_DIR)/libft.a

@@ -138,6 +138,7 @@ int						ft_putnbr(int n);
 /*                                                                            */
 /* ************************************************************************** */
 
+int						ft_strcmp(const char *s1, const char *s2);
 char					*ft_strcpy(char *dest, const char *src);
 char					*ft_strcat(char *dest, const char *src);
 char					*ft_strndup(const char *s, int n);

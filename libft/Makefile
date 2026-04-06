@@ -40,7 +40,7 @@ SRCS    = ft_atoi.c ft_itoa.c ft_bzero.c ft_split.c ft_lstnew.c ft_memcmp.c \
           ft_lstdelone.c ft_putstr_fd.c ft_putchar_fd.c ft_putendl_fd.c \
           ft_putnbr_hexa.c ft_lstadd_back.c ft_lstadd_front.c 	\
 		  ft_get_next_line.c ft_strcpy.c ft_strcat.c ft_strnjoin.c ft_strndup.c\
-		  garbage_collector.c
+		  garbage_collector.c ft_strcmp.c
 
 OBJS    = $(SRCS:.c=.o)
 TOTAL_FILES := $(words $(SRCS))

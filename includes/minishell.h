@@ -15,6 +15,9 @@
 
 # define _POSIX_C_SOURCE 200809L
 
+/* --- PIPEX --- */
+# include "pipex.h"
+
 /* --- LIBRARIES --- */
 # include "libft.h"
 # include <errno.h>
@@ -27,6 +30,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/types.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 /* --- ENUMS & STRUCTS --- */
 typedef enum e_state
