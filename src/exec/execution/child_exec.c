@@ -31,7 +31,7 @@ static void	exec_command(t_lstcmd *lst, t_lstcmd *cmd)
 {
 	if (!cmd->cmd_with_path)
 	{
-		cmd_not_found("");
+		cmd_not_found(cmd->cmd_split[0]);
 		free_lstcmd(lst);
 		exit(CMD_NOT_FOUND);
 	}
@@ -57,7 +57,6 @@ int	child_action(t_lstcmd *lst, t_lstcmd *cmd, int from, int to)
 			close(to);
 		return (0);
 	}
-		return (close(from), close(to), 0);
 	child = fork();
 	if (child == -1)
 		return (close(from), close(to), perror("fork()"), false);
