@@ -1,0 +1,4 @@
+- Garbage collector
+- Expand rl et pas lst_tokens
+- Faire la version bash de POSIX et pas celui par defaut (bash --posix)
+- Ajouter valgrind.sup (supprime les leaks de readlines)

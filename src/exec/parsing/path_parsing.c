@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:36:03 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/03 17:44:24 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/07 12:35:43 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*get_cmd_with_path(char *cmd, char *path)
 		full_cmd = cat_path_cmd(splitted_path[i], cmd);
 		if (!full_cmd)
 			return (free_split(splitted_path), NULL);
-		if (access(full_cmd, X_OK) == 0)
+		if (access(full_cmd, F_OK) == 0)
 			return (free_split(splitted_path), full_cmd);
 		free(full_cmd);
 	}

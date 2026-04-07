@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:50:19 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/03 17:42:25 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/07 12:35:33 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,6 @@ static void	exec_command(t_lstcmd *lst, t_lstcmd *cmd)
 		exit(CMD_NOT_FOUND);
 	}
 	execve(cmd->cmd_with_path, cmd->cmd_split, cmd->envp);
-	if (ft_strchr(cmd->cmd_with_path, '/') == NULL)
-	{
-		cmd_not_found(cmd->cmd_split[0]);
-		free_lstcmd(lst);
-		exit(CMD_NOT_FOUND);
-	}
 	perror(cmd->cmd_split[0]);
 	free_lstcmd(lst);
 	return (exit(CMD_EXEC_ERROR));
