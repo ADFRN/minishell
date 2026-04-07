@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 10:04:10 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/03 18:00:48 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/07 14:49:19 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,3 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	}
 	return ((void *)0);
 }
-

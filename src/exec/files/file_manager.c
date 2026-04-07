@@ -6,13 +6,13 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:51:44 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/10 20:10:57 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/07 14:52:05 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	read_stdin(int fd, char *eof)
+static void	read_stdin(int fd, char *eof)
 {
 	char	buf[100000];
 	int		nb_read;
@@ -20,10 +20,7 @@ static bool	read_stdin(int fd, char *eof)
 
 	other_eof = ft_strjoin(eof, "\n");
 	if (!other_eof)
-	{
-		close(fd);
-		return (false);
-	}
+		exit((close(fd), ft_free(), EXIT_FAILURE));
 	while (1)
 	{
 		ft_putstr_fd("> ", STDIN_FILENO);
@@ -35,24 +32,21 @@ static bool	read_stdin(int fd, char *eof)
 			break ;
 		write(fd, buf, nb_read);
 	}
-	free(other_eof);
-	return (true);
 }
 
-int	open_input_file(char *filename, char **av)
+int	open_input_file(t_cmd *cmd)
 {
 	int	input_fd;
 
-	if (!is_heredoc(av))
-		input_fd = open(filename, O_RDONLY);
+	if (cmd->heredoc)
+		input_fd = open(cmd->redir_in, O_RDONLY);
 	else
 	{
 		input_fd = open("/tmp/.pipex_heredoc", O_WRONLY | O_CREAT | O_TRUNC, \
 			0644);
 		if (input_fd < 0)
 			return (perror("/tmp/.pipex_heredoc"), -1);
-		if (!read_stdin(input_fd, av[2]))
-			return (-2);
+		read_stdin(input_fd, cmd->redir_in);
 		close(input_fd);
 		input_fd = open("/tmp/.pipex_heredoc", O_RDONLY);
 		if (input_fd < 0)
@@ -61,13 +55,15 @@ int	open_input_file(char *filename, char **av)
 	return (input_fd);
 }
 
-int	open_output_file(char *filename, bool is_hd)
+int	open_output_file(t_cmd *cmd)
 {
 	int	output_fd;
 
-	if (is_hd)
-		output_fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (cmd->append)
+		output_fd = open(cmd->redir_out, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
-		output_fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		output_fd = open(cmd->redir_out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (!output_fd)
+		exit((ft_free(), EXIT_FAILURE));
 	return (output_fd);
 }

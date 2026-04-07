@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/03 18:22:32 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/07 15:46:50 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 # define MINISHELL_H
 
 # define _POSIX_C_SOURCE 200809L
-
-/* --- PIPEX --- */
-# include "pipex.h"
 
 /* --- LIBRARIES --- */
 # include "libft.h"
@@ -62,12 +59,12 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
-	char **args;        // Le tableau pour execve (ex: ["ls", "-l", NULL])
-	char *redir_in;     // Nom du fichier d'entrée ou delimiteur (si < ou <<)
-	char *redir_out;    // Nom du fichier de sortie (si > ou >>)
-	bool heredoc;       // Heredoc (1 si <<, 0 si <)
-	bool append;        // Booléen (1 si >>, 0 si >)
-	struct s_cmd *next; // Commande suivante (après un pipe)
+	char			**args;        // Le tableau pour execve (ex: ["ls", "-l", NULL])
+	char			*redir_in;     // Nom du fichier d'entrée ou delimiteur (si < ou <<)
+	char			*redir_out;    // Nom du fichier de sortie (si > ou >>)
+	bool			heredoc;       // Heredoc (1 si <<, 0 si <)
+	bool			append;        // Booléen (1 si >>, 0 si >)
+	struct s_cmd	*next; // Commande suivante (après un pipe)
 }					t_cmd;
 
 /* --- PROTOTYPES --- */
@@ -117,5 +114,82 @@ void				init_signal(void);
 char				*get_envp(char **envp, char *to_find);
 int					get_env_i(char **envcpy, char *s);
 char				*add_equal(char *to_find);
+
+/* --- PIPEX --- */
+/************************************************************/
+/* Definition des constantes et codes de retour          */
+/************************************************************/
+# define CMD_NOT_FOUND 127
+# define CMD_EXEC_ERROR 126
+
+/************************************************************/
+/* Definition de la structure des commandes               */
+/************************************************************/
+typedef struct s_lstcmd
+{
+	char				**cmd_split;
+	char				*cmd_with_path;
+	char				**envp;
+	struct s_lstcmd		*next;
+}	t_lstcmd;
+
+/*****************************/
+/*		 args_check.c		 */
+/*****************************/
+bool		is_heredoc(char **av);
+void		argv_checker(int ac, char **av);
+
+/*****************************/
+/*		 path_parsing.c		 */
+/*****************************/
+char		*get_path(char **envp);
+char		*get_cmd_with_path(char *cmd, char *path);
+
+/*****************************/
+/*		 split_quotes.c		 */
+/*****************************/
+char		**ft_split_quotes(char *s);
+
+/*****************************/
+/*		 split_utils.c		 */
+/*****************************/
+int			is_quote(char c);
+char		*skip_spaces(char *s);
+char		*skip_quote(char *s, char quote);
+int			count_words(char *s);
+int			word_len(char *s);
+
+/*****************************/
+/*		 pipe_exec.c		 */
+/*****************************/
+int			wait_for_children(pid_t last_pid);
+//int			execute_pipeline(t_lstcmd *lst, int fd_in, int fd_out);
+
+/*****************************/
+/*		 child_exec.c		 */
+/*****************************/
+void	cmd_not_found(char *cmd);
+void	close_all_fd(void);
+//int			child_action(t_lstcmd *lst, t_lstcmd *cmd, int from, int to);
+
+/*****************************/
+/*		 file_manager.c		 */
+/*****************************/
+int			open_input_file(t_cmd *cmd);
+int			open_output_file(t_cmd *cmd);
+
+/*****************************/
+/*		  cmd_list.c		 */
+/*****************************/
+t_lstcmd	*new_lstcmd(char **envp);
+t_lstcmd	*add_lstcmd(t_lstcmd **start, t_lstcmd *to_add);
+void		free_lstcmd(t_lstcmd *lst);
+t_lstcmd	*init_lstcmd(bool is_hd, int ac, char **av, char **envp);
+
+/*****************************/
+/*		   cleanup.c		 */
+/*****************************/
+void		free_split(char **splitted_words);
+void		cleanup(t_lstcmd *lst, int fd_in, int fd_out);
 
 #endif
