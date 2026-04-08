@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_manager.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:51:44 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/07 14:52:05 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/08 11:22:41 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	open_input_file(t_cmd *cmd)
 
 	if (cmd->heredoc)
 		input_fd = open(cmd->redir_in, O_RDONLY);
-	else
+	else if (cmd->redir_in)
 	{
 		input_fd = open("/tmp/.pipex_heredoc", O_WRONLY | O_CREAT | O_TRUNC, \
 			0644);
@@ -52,6 +52,9 @@ int	open_input_file(t_cmd *cmd)
 		if (input_fd < 0)
 			return (perror("/tmp/.pipex_heredoc"), -1);
 	}
+	else
+		input_fd = STDIN_FILENO;
+	dup2(input_fd, STDIN_FILENO);
 	return (input_fd);
 }
 
@@ -61,9 +64,12 @@ int	open_output_file(t_cmd *cmd)
 
 	if (cmd->append)
 		output_fd = open(cmd->redir_out, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else
+	else if (cmd->redir_out)
 		output_fd = open(cmd->redir_out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+		output_fd = STDOUT_FILENO;
 	if (!output_fd)
 		exit((ft_free(), EXIT_FAILURE));
+	dup2(output_fd, STDOUT_FILENO);
 	return (output_fd);
 }
