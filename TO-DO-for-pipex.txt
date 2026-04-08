@@ -10,7 +10,7 @@ sinon :
 si fd_out :
 	dup2(fd_in, STDOUT_FILENO)
 sinon :
-	par defaut
+	par defaut																												
 
 si args : (exemple avec "echo -n 'bonjour a tous'")
 	execve("/usr/bin/echo", ["/usr/bin/echo", "-m", "bonjour a tous", NULL], envcpy)
