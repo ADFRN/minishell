@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:25 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/03 18:57:58 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/09 15:27:18 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,44 +23,12 @@
 
 #include "minishell.h"
 
-static bool	report_syntax_error(char *token_content)
+static void	fill_redir_in(t_token **lst_token, t_cmd **cmd)
 {
-	if (token_content)
-		printf("minishell: syntax error near unexpected token `%s'\n",
-			token_content);
-	else
-		printf("minishell: syntax error near unexpected token `newline'\n");
-	return (false);
-}
-
-static bool	is_redir(int type)
-{
-	return (type == INPUT || type == OUTPUT || type == HEREDOC
-		|| type == APPEND);
-}
-
-static bool	check_syntax(t_token *token_lst)
-{
-	t_token	*current;
-
-	current = token_lst;
-	while (current)
+	if (!(*cmd)->redir_in)
 	{
-		if (current->type == PIPE)
-		{
-			if (!current->prev || !current->next || current->next->type == PIPE)
-				return (report_syntax_error("|"));
-		}
-		else if (is_redir(current->type))
-		{
-			if (!current->next)
-				return (report_syntax_error(NULL));
-			if (current->next->type != WORD)
-				return (report_syntax_error(current->next->content));
-		}
-		current = current->next;
+		
 	}
-	return (true);
 }
 
 static void	fill_cmd(t_token **lst_token, t_cmd **cmd)
@@ -70,19 +38,16 @@ static void	fill_cmd(t_token **lst_token, t_cmd **cmd)
 		(*cmd)->args = ft_token_to_args(lst_token);
 		return ;
 	}
-	if ((*lst_token)->type == INPUT)
+	if ((*lst_token)->type == INPUT || (*lst_token)->type == HEREDOC)
+	{
+		fill_redir_in(lst_token, cmd);
 		(*cmd)->redir_in = ft_strdup((*lst_token)->next->content);
+	}
 	else if ((*lst_token)->type == OUTPUT)
 		(*cmd)->redir_out = ft_strdup((*lst_token)->next->content);
-	else if ((*lst_token)->type == HEREDOC)
-	{
-		(*cmd)->redir_in = ft_strdup((*lst_token)->next->content);
-		(*cmd)->heredoc = true;
-	}
 	else if ((*lst_token)->type == APPEND)
 	{
 		(*cmd)->redir_out = ft_strdup((*lst_token)->next->content);
-		(*cmd)->append = true;
 	}
 	(*lst_token) = (*lst_token)->next->next;
 }

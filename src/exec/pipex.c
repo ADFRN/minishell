@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/09 11:58:27 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/09 12:23:15 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ static void exec_cmd(t_cmd *cmd, char **envp)
 	if (!get_cmd_with_path(cmd->args[0], get_path(envp)))
 	{
 		cmd_not_found(cmd->args[0]);
-		exit((ft_free(), close_all_fd(), EXIT_FAILURE));
+		exit((ft_free(), free_env(envp), EXIT_FAILURE));
 	}
 	execve(get_cmd_with_path(cmd->args[0], get_path(envp)), cmd->args, envp);
 	perror(cmd->args[0]);
+	exit((ft_free(), free_env(envp), EXIT_FAILURE));
 }
 
 static int child_action(t_cmd *cmd, int from, int to, char **envp)
@@ -48,7 +49,7 @@ static int child_action(t_cmd *cmd, int from, int to, char **envp)
 	return (0); // TODO: sortir proprement
 }
 
-static int pipex(t_cmd **lst_cmd, char **envp)
+int pipex(t_cmd **lst_cmd, char **envp)
 {
 	t_cmd *current;
 	int pipe_fd[2];

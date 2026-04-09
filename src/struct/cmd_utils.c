@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/03 19:18:23 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/09 15:20:20 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ t_cmd	*ft_cmd_new(void)
 	cmd->args = NULL;
 	cmd->redir_in = NULL;
 	cmd->redir_out = NULL;
-	cmd->append = false;
-	cmd->heredoc = false;
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -130,10 +128,16 @@ void	ft_print_lst_cmd(t_cmd **lst_cmd)
 			print_split(current->args);
 		else
 			printf("NULL\n");
-		printf("redir_in	= %s\n", current->redir_in);
-		printf("redir_out	= %s\n", current->redir_out);
-		printf("heredoc		= %s\n", current->heredoc ? "true" : "false");
-		printf("append		= %s\n", current->append ? "true" : "false");
+		printf("redir_in	= ");
+		if (current->redir_in)
+			print_split(current->redir_in);
+		else
+			printf("NULL\n");
+		printf("redir_out	= ");
+		if (current->redir_out)
+			print_split(current->redir_out);
+		else
+			printf("NULL\n");
 		printf("next		= %s\n", current->next ? "yes" : "no");
 		current = current->next;
 	}

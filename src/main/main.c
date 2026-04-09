@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/09 11:58:13 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/09 14:21:30 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,10 @@ static void shell_prompt(char **envcpy)
 			continue;
 		// AFFICHAGE
 		lst_cmd = parser(&lst_token);
-		ft_print_lst_cmd(&lst_cmd);
-		pipex(&lst_cmd, envcpy);
 		ft_token_clear(&lst_token);
+		ft_print_lst_cmd(&lst_cmd);
+		printf("\n");
+		pipex(&lst_cmd, envcpy);
 		// FREE
 		ft_free();
 	}
