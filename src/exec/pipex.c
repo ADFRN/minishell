@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/09 11:58:27 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/09 12:27:00 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int child_action(t_cmd *cmd, int from, int to, char **envp)
 	return (0); // TODO: sortir proprement
 }
 
-static int pipex(t_cmd **lst_cmd, char **envp)
+int pipex(t_cmd **lst_cmd, char **envp)
 {
 	t_cmd *current;
 	int pipe_fd[2];

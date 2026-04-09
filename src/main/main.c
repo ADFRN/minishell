@@ -3,65 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/09 11:58:13 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/09 14:10:52 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void shell_prompt(char **envcpy)
+int	main(int ac, char **av, char **envp)
 {
-	char *rl;
-	t_token *lst_token;
-	t_cmd *lst_cmd;
-
-	lst_token = NULL;
-	// MINISHELL
-	while (1)
-	{
-		// READLINE
-		rl = readline("Minishell-1.0$ ");
-		if (!rl)
-		{
-			printf("exit\n");
-			break;
-		}
-		if (rl[0] == '\0')
-		{
-			free(rl);
-			continue;
-		}
-		add_history(rl);
-		// VERIFICATION READLINE
-		if (!have_valid_quotes(rl))
-		{
-			printf("error: unclosed quote\n");
-			free(rl);
-			continue;
-		}
-		// LEXER
-		expand(&rl, envcpy);
-		lst_token = tokenizer(rl);
-		if (!lst_token)
-			continue;
-		// AFFICHAGE
-		lst_cmd = parser(&lst_token);
-		ft_print_lst_cmd(&lst_cmd);
-		pipex(&lst_cmd, envcpy);
-		ft_token_clear(&lst_token);
-		// FREE
-		ft_free();
-	}
-	// LAST FREE
-	ft_free();
-}
-
-int main(int ac, char **av, char **envp)
-{
-	char **envcpy;
+	char	**envcpy;
 
 	(void)ac;
 	(void)av;

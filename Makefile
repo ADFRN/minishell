@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
+#    By: afournie <afournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/04/07 15:49:28 by ttiprez          ###   ########.fr        #
+#    Updated: 2026/04/09 14:14:46 by afournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,10 @@ SRCS        =	$(SRC_DIR)/builtins/builtins.c		\
 			  	$(SRC_DIR)/exec/utils/cleanup.c \
 			  	$(SRC_DIR)/exec/execution/child_exec.c \
 			  	$(SRC_DIR)/exec/execution/pipe_exec.c \
-			  	$(SRC_DIR)/exec/files/file_manager.c
+			  	$(SRC_DIR)/exec/files/file_manager.c \
+			  	$(SRC_DIR)/exec/pipex.c \
+			  	$(SRC_DIR)/routine/routnie.c \
+
 
 
 OBJS        = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
