@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/09 15:22:19 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/10 12:43:31 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define MINISHELL_H
 
 # define _POSIX_C_SOURCE 200809L
+# define HEREDOC_LIMITS 16
+
+/* --- RETURN_CODE --- */
+# define HERE_DOC_EXCEED 2
 
 /* --- LIBRARIES --- */
 # include "libft.h"
@@ -51,9 +55,9 @@ typedef enum e_token_type
 
 typedef struct s_redirection
 {
-	char			*filename;			// Nom du fichier ou du EOF
-	bool			heredoc_or_append;	// 1 si << ou >>
-	t_redirection	*next;
+	char					*filename;			// Nom du fichier ou du EOF
+	bool					heredoc_or_append;	// 1 si << ou >>
+	struct s_redirection	*next;
 }	t_redirection;
 
 typedef struct s_token
@@ -91,9 +95,9 @@ void				print_tokens(t_token **lst);
 
 // Parser
 //	parser.c
-t_cmd				*parser(t_token **token_lst);
+t_cmd				*parser(t_token **token_lst, char **env);
 //	syntax_error.c
-bool				check_syntax(t_token *token_lst);
+bool				check_syntax(t_token *token_lst, char **env);
 
 // Expander
 void				expand(char **str, char **envp);
@@ -119,6 +123,9 @@ void				ft_cmd_add_back(t_cmd **lst, t_cmd *new);
 void				ft_print_lst_cmd(t_cmd **lst_cmd);
 char				**ft_token_to_args(t_token **start);
 // redirection_utils.c
+t_redirection		*ft_redir_new(char *filename, bool heredoc_or_append);
+void				ft_redir_add_back(t_redirection **lst, t_redirection *new);
+t_redirection		*ft_redir_get_last(t_redirection **lst);
 
 // Utils
 char				*get_envp(char **envp, char *to_find);

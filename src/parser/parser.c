@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:25 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/09 15:27:18 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/10 12:43:58 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,20 @@
 
 static void	fill_redir_in(t_token **lst_token, t_cmd **cmd)
 {
-	if (!(*cmd)->redir_in)
-	{
-		
-	}
+	t_redirection	*new;
+	
+	new = ft_redir_new(ft_strdup((*lst_token)->next->content), \
+		(*lst_token)->type == HEREDOC);
+	ft_redir_add_back(&(*cmd)->redir_in, new);
+}
+
+static void	fill_redir_out(t_token **lst_token, t_cmd **cmd)
+{
+	t_redirection	*new;
+	
+	new = ft_redir_new(ft_strdup((*lst_token)->next->content), \
+		(*lst_token)->type == APPEND);
+	ft_redir_add_back(&(*cmd)->redir_out, new);
 }
 
 static void	fill_cmd(t_token **lst_token, t_cmd **cmd)
@@ -39,26 +49,19 @@ static void	fill_cmd(t_token **lst_token, t_cmd **cmd)
 		return ;
 	}
 	if ((*lst_token)->type == INPUT || (*lst_token)->type == HEREDOC)
-	{
 		fill_redir_in(lst_token, cmd);
-		(*cmd)->redir_in = ft_strdup((*lst_token)->next->content);
-	}
-	else if ((*lst_token)->type == OUTPUT)
-		(*cmd)->redir_out = ft_strdup((*lst_token)->next->content);
-	else if ((*lst_token)->type == APPEND)
-	{
-		(*cmd)->redir_out = ft_strdup((*lst_token)->next->content);
-	}
+	else if ((*lst_token)->type == OUTPUT || (*lst_token)->type == APPEND)
+		fill_redir_out(lst_token, cmd);
 	(*lst_token) = (*lst_token)->next->next;
 }
 
-t_cmd	*parser(t_token **token_lst)
+t_cmd	*parser(t_token **token_lst, char **env)
 {
 	t_token	*current_token;
 	t_cmd	*current_cmd;
 	t_cmd	*lst_cmd;
 
-	if (!check_syntax(*token_lst))
+	if (!check_syntax(*token_lst, env))
 		return (NULL);
 	lst_cmd = ft_cmd_new();
 	current_cmd = lst_cmd;

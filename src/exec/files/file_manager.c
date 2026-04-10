@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_manager.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:51:44 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/08 11:22:41 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/10 12:43:48 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,40 +36,53 @@ static void	read_stdin(int fd, char *eof)
 
 int	open_input_file(t_cmd *cmd)
 {
-	int	input_fd;
+	t_redirection	*c;
+	int				input_fd;
 
-	if (cmd->heredoc)
-		input_fd = open(cmd->redir_in, O_RDONLY);
-	else if (cmd->redir_in)
-	{
-		input_fd = open("/tmp/.pipex_heredoc", O_WRONLY | O_CREAT | O_TRUNC, \
-			0644);
-		if (input_fd < 0)
-			return (perror("/tmp/.pipex_heredoc"), -1);
-		read_stdin(input_fd, cmd->redir_in);
-		close(input_fd);
-		input_fd = open("/tmp/.pipex_heredoc", O_RDONLY);
-		if (input_fd < 0)
-			return (perror("/tmp/.pipex_heredoc"), -1);
-	}
-	else
+	c = cmd->redir_in;
+	if (!c)
 		input_fd = STDIN_FILENO;
-	dup2(input_fd, STDIN_FILENO);
-	return (input_fd);
+	while (c)
+	{
+		if (!cmd->redir_in->heredoc_or_append && !c->next)
+			input_fd = open(c->filename, O_RDONLY);
+		else if (cmd->redir_in->heredoc_or_append)
+		{
+			input_fd = open("/tmp/.pipex_heredoc", O_WRONLY | O_CREAT | O_TRUNC, \
+				0644);
+			if (input_fd < 0)
+				return (perror("/tmp/.pipex_heredoc"), -1);
+			read_stdin(input_fd, c->filename);
+			close(input_fd);
+			input_fd = open("/tmp/.pipex_heredoc", O_RDONLY);
+			if (input_fd < 0)
+				return (perror("/tmp/.pipex_heredoc"), -1);	
+		}
+		c = c->next;
+	}
+	return (dup2(input_fd, STDIN_FILENO), input_fd);
 }
 
 int	open_output_file(t_cmd *cmd)
 {
-	int	output_fd;
+	int				output_fd;
+	t_redirection	*c;
 
-	if (cmd->append)
-		output_fd = open(cmd->redir_out, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (cmd->redir_out)
-		output_fd = open(cmd->redir_out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else
+	c = cmd->redir_out;
+	if (!c)
 		output_fd = STDOUT_FILENO;
-	if (!output_fd)
-		exit((ft_free(), EXIT_FAILURE));
+	while (c)
+	{
+		if (c->heredoc_or_append)
+			output_fd = open(c->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		else if (c->filename)
+			output_fd = open(c->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else
+			output_fd = STDOUT_FILENO;
+		if (output_fd < 0)
+			return (perror("output_fd"), -1);
+		c = c->next;
+	}
 	dup2(output_fd, STDOUT_FILENO);
 	return (output_fd);
 }

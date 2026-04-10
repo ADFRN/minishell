@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/09 15:20:20 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/10 12:44:21 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ static char	*remove_quotes(char *str)
 	return (result);
 }
 
+// TODO : AJOUTER les word et pas ecraser ceux deja ecrit 
+//		  (exemple echo < in cat < in ---> doit ajouter cat sans ecraser echo)
 char	**ft_token_to_args(t_token **start)
 {
 	t_token	*curr;
@@ -102,18 +104,38 @@ char	**ft_token_to_args(t_token **start)
 	return (args);
 }
 
-static void	print_split(char **str)
+static void	print_split(char **str)				// DEBUG
 {
 	printf("[");
 	for (int i = 0; str[i]; i++)
 	{
 		printf("\"%s\", ", str[i]);
 	}
-	printf("NULL");
-	printf("]\n");
+	printf("NULL]\n");
 }
 
-void	ft_print_lst_cmd(t_cmd **lst_cmd)
+static void	print_redir(t_redirection **lst)	// DEBUG
+{
+	t_redirection	*current = *lst;
+
+	printf("%-15s [", "FILENAME :");
+	while (current)
+	{
+		printf("\"%s\", ", current->filename);
+		current = current->next;
+	}
+	printf("NULL]\n");
+	current = *lst;
+	printf("%-15s [", "HERE/APP :");
+	while (current)
+	{
+		printf("\"%s\", ", current->heredoc_or_append ? "yes" : "no");
+		current = current->next;
+	}
+	printf("NULL]\n");
+}
+
+void	ft_print_lst_cmd(t_cmd **lst_cmd)		// DEBUG
 {
 	t_cmd	*current;
 	int		i;
@@ -128,14 +150,14 @@ void	ft_print_lst_cmd(t_cmd **lst_cmd)
 			print_split(current->args);
 		else
 			printf("NULL\n");
-		printf("redir_in	= ");
+		printf("redir_in	= \n");
 		if (current->redir_in)
-			print_split(current->redir_in);
+			print_redir(&current->redir_in);
 		else
 			printf("NULL\n");
-		printf("redir_out	= ");
+		printf("redir_out	= \n");
 		if (current->redir_out)
-			print_split(current->redir_out);
+			print_redir(&current->redir_out);
 		else
 			printf("NULL\n");
 		printf("next		= %s\n", current->next ? "yes" : "no");

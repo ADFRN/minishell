@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/09 12:23:15 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/10 12:37:21 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,8 @@ int pipex(t_cmd **lst_cmd, char **envp)
 				return (perror("pipe"), -1); // TODO : Gerer ereur
 			output_fd = pipe_fd[1];
 		}
-		if (current->redir_out)
-		{
-			if (output_fd != STDOUT_FILENO)
-				close(output_fd);
-			if (current->append)
-				output_fd = open(current->redir_out,
-								 O_WRONLY | O_CREAT | O_APPEND, 0644);
-			else
-				output_fd = open(current->redir_out,
-								 O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		}
-		if (current->redir_in) // TODO : Gerer heredoc
-			input_fd = open(current->redir_in, O_RDONLY);
+		open_input_file(current);
+		open_output_file(current);
 		if (current->args)
 			last_pid = child_action(current, input_fd, output_fd, envp);
 		if (input_fd != STDIN_FILENO)
