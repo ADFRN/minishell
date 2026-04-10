@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 12:43:31 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/10 15:22:21 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
+	char			**envp;
+	char			*cmd_with_path;
 	char			**args;        // Le tableau pour execve (ex: ["ls", "-l", NULL])
 	t_redirection	*redir_in;     // Nom du fichier d'entrée ou delimiteur (si < ou <<)
 	t_redirection	*redir_out;    // Nom du fichier de sortie (si > ou >>)
@@ -79,7 +81,7 @@ typedef struct s_cmd
 /* --- PROTOTYPES --- */
 
 // Lexer
-t_token				*tokenizer(char *line);
+t_token				*lexer(char *line);
 //	lexer_utils.c
 bool				have_valid_quotes(char *str);
 bool				is_metachar(char c);
@@ -133,7 +135,7 @@ int					get_env_i(char **envcpy, char *s);
 char				*add_equal(char *to_find);
 
 /* --- PIPEX --- */
-int 				pipex(t_cmd **lst_cmd, char **envp);
+int 				pipex(t_cmd **lst_cmd);
 
 /************************************************************/
 /* Definition des constantes et codes de retour          */

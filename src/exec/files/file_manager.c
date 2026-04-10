@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:51:44 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 12:43:48 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/10 15:33:31 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	open_input_file(t_cmd *cmd)
 			input_fd = open(c->filename, O_RDONLY);
 		else if (cmd->redir_in->heredoc_or_append)
 		{
-			input_fd = open("/tmp/.pipex_heredoc", O_WRONLY | O_CREAT | O_TRUNC, \
-				0644);
+			input_fd = open("/tmp/.pipex_heredoc", \
+				O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (input_fd < 0)
 				return (perror("/tmp/.pipex_heredoc"), -1);
 			read_stdin(input_fd, c->filename);
@@ -60,7 +60,7 @@ int	open_input_file(t_cmd *cmd)
 		}
 		c = c->next;
 	}
-	return (dup2(input_fd, STDIN_FILENO), input_fd);
+	return (input_fd);
 }
 
 int	open_output_file(t_cmd *cmd)
@@ -83,6 +83,5 @@ int	open_output_file(t_cmd *cmd)
 			return (perror("output_fd"), -1);
 		c = c->next;
 	}
-	dup2(output_fd, STDOUT_FILENO);
 	return (output_fd);
 }

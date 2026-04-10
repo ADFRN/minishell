@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 12:44:21 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/10 15:06:51 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ static void	print_redir(t_redirection **lst)	// DEBUG
 {
 	t_redirection	*current = *lst;
 
-	printf("%-15s [", "FILENAME :");
+	printf("\t%-15s [", "FILENAME :");
 	while (current)
 	{
 		printf("\"%s\", ", current->filename);
@@ -126,7 +126,7 @@ static void	print_redir(t_redirection **lst)	// DEBUG
 	}
 	printf("NULL]\n");
 	current = *lst;
-	printf("%-15s [", "HERE/APP :");
+	printf("\t%-15s [", "HERE/APP :");
 	while (current)
 	{
 		printf("\"%s\", ", current->heredoc_or_append ? "yes" : "no");
@@ -145,21 +145,17 @@ void	ft_print_lst_cmd(t_cmd **lst_cmd)		// DEBUG
 	while (current)
 	{
 		printf("\n\t\tMaillon n%d :\n", i++);
+		printf("envp		= ");
+		if (current->args) print_split(current->args);
+		else printf("NULL\n");
+		printf("cmd_path	= %s\n", current->cmd_with_path);
 		printf("args		= ");
-		if (current->args)
-			print_split(current->args);
-		else
-			printf("NULL\n");
+		if (current->args) print_split(current->args);
+		else printf("NULL\n");
 		printf("redir_in	= \n");
-		if (current->redir_in)
-			print_redir(&current->redir_in);
-		else
-			printf("NULL\n");
+		print_redir(&current->redir_in);
 		printf("redir_out	= \n");
-		if (current->redir_out)
-			print_redir(&current->redir_out);
-		else
-			printf("NULL\n");
+		print_redir(&current->redir_out);
 		printf("next		= %s\n", current->next ? "yes" : "no");
 		current = current->next;
 	}

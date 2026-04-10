@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 12:55:42 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/10 15:07:52 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void shell_prompt(char **envcpy)
 {
-	char *rl;
-	t_token *lst_token;
-	t_cmd *lst_cmd;
+	char	*rl;
+	t_token	*lst_token;
+	t_cmd	*lst_cmd;
 
 	lst_token = NULL;
 	// MINISHELL
@@ -44,16 +44,15 @@ static void shell_prompt(char **envcpy)
 		}
 		// LEXER
 		expand(&rl, envcpy);
-		lst_token = tokenizer(rl);
+		lst_token = lexer(rl);
 		if (!lst_token)
 			continue;
 		// AFFICHAGE
 		lst_cmd = parser(&lst_token, envcpy);
-		ft_token_clear(&lst_token);
 		ft_print_lst_cmd(&lst_cmd);
-		printf("\n");
-		pipex(&lst_cmd, envcpy);
-		printf("\n");
+		printf("\n----------\n");
+		pipex(&lst_cmd);
+		printf("----------\n");
 		// FREE
 		ft_free();
 		close_all_fd();

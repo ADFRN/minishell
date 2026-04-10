@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:25 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 12:43:58 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/10 15:09:06 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static void	fill_cmd(t_token **lst_token, t_cmd **cmd)
 	if ((*lst_token)->type == WORD)
 	{
 		(*cmd)->args = ft_token_to_args(lst_token);
+		(*cmd)->cmd_with_path = get_cmd_with_path((*cmd)->args[0], \
+			get_path((*cmd)->envp));
 		return ;
 	}
 	if ((*lst_token)->type == INPUT || (*lst_token)->type == HEREDOC)
@@ -62,12 +64,13 @@ t_cmd	*parser(t_token **token_lst, char **env)
 	t_cmd	*lst_cmd;
 
 	if (!check_syntax(*token_lst, env))
-		return (NULL);
+		return (ft_token_clear(token_lst), NULL);
 	lst_cmd = ft_cmd_new();
 	current_cmd = lst_cmd;
 	current_token = *token_lst;
 	while (current_token)
 	{
+		current_cmd->envp = env;
 		if (current_token->type == PIPE)
 		{
 			current_cmd->next = ft_cmd_new();
@@ -77,5 +80,5 @@ t_cmd	*parser(t_token **token_lst, char **env)
 		else
 			fill_cmd(&current_token, &current_cmd);
 	}
-	return (lst_cmd);
+	return (ft_token_clear(token_lst), lst_cmd);
 }
