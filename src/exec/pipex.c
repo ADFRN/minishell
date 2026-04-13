@@ -6,26 +6,40 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/09 11:58:27 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/13 12:57:18 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void exec_cmd(t_cmd *cmd, char **envp)
+static void	exec_cmd(t_cmd *cmd)
 {
-	if (!get_cmd_with_path(cmd->args[0], get_path(envp)))
+	if (!cmd->cmd_with_path)
 	{
 		cmd_not_found(cmd->args[0]);
-		exit((ft_free(), close_all_fd(), EXIT_FAILURE));
+		exit((free_env(cmd->envp), ft_free(), EXIT_FAILURE));
 	}
-	execve(get_cmd_with_path(cmd->args[0], get_path(envp)), cmd->args, envp);
+	execve(cmd->cmd_with_path, cmd->args, cmd->envp);
 	perror(cmd->args[0]);
+	exit((free_env(cmd->envp), ft_free(), EXIT_FAILURE));
 }
 
-static int child_action(t_cmd *cmd, int from, int to, char **envp)
+static void	child_process(t_cmd *cmd, int from, int to)
 {
-	pid_t child;
+	if (dup2(from, STDIN_FILENO) == -1 || dup2(to, STDOUT_FILENO) == -1)
+		exit(EXIT_FAILURE);
+	if (open_input_file(cmd->redir_in) == -1)
+		exit(EXIT_FAILURE);
+	if (open_output_file(cmd->redir_out) == -1)
+		exit(EXIT_FAILURE);
+	close_all_fd();
+	exec_cmd(cmd);
+	exit(EXIT_FAILURE);
+}
+
+static int	child_action(t_cmd *cmd, int from, int to)
+{
+	pid_t	pid;
 
 	if (from < 0)
 	{
@@ -33,64 +47,48 @@ static int child_action(t_cmd *cmd, int from, int to, char **envp)
 			close(to);
 		return (0);
 	}
-	child = fork();
-	if (child == -1)
-		exit((printf("fail\n"), EXIT_FAILURE)); // TODO:sortir proprement
-	if (child == 0)
-	{
-		if (dup2(from, STDIN_FILENO) == -1)
-			return (1); // TODO : sortir proprement
-		if (dup2(to, STDOUT_FILENO) == -1)
-			return (1); // TODO : sortir proprement
-		close_all_fd();
-		exec_cmd(cmd, envp);
-	}
-	return (0); // TODO: sortir proprement
+	pid = fork();
+	if (pid == -1)
+		return (perror("fork"), -1);
+	if (pid == 0)
+		child_process(cmd, from, to);
+	return (pid);
 }
 
-static int pipex(t_cmd **lst_cmd, char **envp)
+static void	prepare_fds(t_cmd *current, int *output_fd, int pipe_fd[2])
 {
-	t_cmd *current;
-	int pipe_fd[2];
-	int input_fd;
-	int output_fd;
-	int last_pid;
+	if (current->next)
+	{
+		if (pipe(pipe_fd) == -1)
+			exit(EXIT_FAILURE);
+		*output_fd = pipe_fd[1];
+	}
+	else
+		*output_fd = STDOUT_FILENO;
+}
+
+int	pipex(t_cmd **lst_cmd)
+{
+	t_cmd	*current;
+	int		pipe_fd[2];
+	int		input_fd;
+	int		output_fd;
+	int		last_pid;
 
 	current = *lst_cmd;
 	input_fd = STDIN_FILENO;
-	last_pid = 0;
 	while (current)
 	{
-		output_fd = STDOUT_FILENO;
-		if (current->next)
-		{
-			if (pipe(pipe_fd) == -1)
-				return (perror("pipe"), -1); // TODO : Gerer ereur
-			output_fd = pipe_fd[1];
-		}
-		if (current->redir_out)
-		{
-			if (output_fd != STDOUT_FILENO)
-				close(output_fd);
-			if (current->append)
-				output_fd = open(current->redir_out,
-								 O_WRONLY | O_CREAT | O_APPEND, 0644);
-			else
-				output_fd = open(current->redir_out,
-								 O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		}
-		if (current->redir_in) // TODO : Gerer heredoc
-			input_fd = open(current->redir_in, O_RDONLY);
+		prepare_fds(current, &output_fd, pipe_fd);
 		if (current->args)
-			last_pid = child_action(current, input_fd, output_fd, envp);
+			last_pid = child_action(current, input_fd, output_fd);
 		if (input_fd != STDIN_FILENO)
 			close(input_fd);
 		if (output_fd != STDOUT_FILENO)
 			close(output_fd);
+		input_fd = STDIN_FILENO;
 		if (current->next)
 			input_fd = pipe_fd[0];
-		else
-			input_fd = STDIN_FILENO;
 		current = current->next;
 	}
 	return (wait_for_children(last_pid));

@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/09 11:58:13 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/13 15:05:28 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void shell_prompt(char **envcpy)
 {
-	char *rl;
-	t_token *lst_token;
-	t_cmd *lst_cmd;
+	char	*rl;
+	t_token	*lst_token;
+	t_cmd	*lst_cmd;
 
 	lst_token = NULL;
 	// MINISHELL
@@ -38,24 +38,23 @@ static void shell_prompt(char **envcpy)
 		// VERIFICATION READLINE
 		if (!have_valid_quotes(rl))
 		{
-			printf("error: unclosed quote\n");
-			free(rl);
+			free((free(rl), printf("error: unclosed quote\n"), NULL));
 			continue;
 		}
 		// LEXER
 		expand(&rl, envcpy);
-		lst_token = tokenizer(rl);
+		lst_token = lexer(rl);
 		if (!lst_token)
 			continue;
 		// AFFICHAGE
-		lst_cmd = parser(&lst_token);
-		ft_print_lst_cmd(&lst_cmd);
-		pipex(&lst_cmd, envcpy);
-		ft_token_clear(&lst_token);
+		lst_cmd = parser(&lst_token, envcpy);
+		pipex(&lst_cmd);
 		// FREE
 		ft_free();
+		close_all_fd();
 	}
 	// LAST FREE
+	close_all_fd();
 	ft_free();
 }
 

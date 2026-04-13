@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:36:03 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/07 12:35:43 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/09 12:16:33 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,9 @@ static char	*cat_path_cmd(char *path, char*cmd)
 	if (!full_cmd)
 		return (NULL);
 	tmp = ft_strjoin(full_cmd, "/");
-	free(full_cmd);
 	if (!tmp)
 		return (NULL);
 	full_cmd = ft_strjoin(tmp, cmd);
-	free(tmp);
 	if (!full_cmd)
 		return (NULL);
 	return (full_cmd);
@@ -54,7 +52,6 @@ char	*get_cmd_with_path(char *cmd, char *path)
 			return (free_split(splitted_path), NULL);
 		if (access(full_cmd, F_OK) == 0)
 			return (free_split(splitted_path), full_cmd);
-		free(full_cmd);
 	}
 	return (free_split(splitted_path), NULL);
 }

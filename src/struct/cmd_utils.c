@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/03 19:18:23 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/13 14:25:21 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ t_cmd	*ft_cmd_new(void)
 	cmd->args = NULL;
 	cmd->redir_in = NULL;
 	cmd->redir_out = NULL;
-	cmd->append = false;
-	cmd->heredoc = false;
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -75,6 +73,8 @@ static char	*remove_quotes(char *str)
 	return (result);
 }
 
+// TODO : AJOUTER les word et pas ecraser ceux deja ecrit 
+//		  (exemple echo < in cat < in ---> doit ajouter cat sans ecraser echo)
 char	**ft_token_to_args(t_token **start)
 {
 	t_token	*curr;
@@ -104,18 +104,38 @@ char	**ft_token_to_args(t_token **start)
 	return (args);
 }
 
-static void	print_split(char **str)
+static void	print_split(char **str)				// DEBUG
 {
 	printf("[");
 	for (int i = 0; str[i]; i++)
 	{
 		printf("\"%s\", ", str[i]);
 	}
-	printf("NULL");
-	printf("]\n");
+	printf("NULL]\n");
 }
 
-void	ft_print_lst_cmd(t_cmd **lst_cmd)
+static void	print_redir(t_redirection **lst)	// DEBUG
+{
+	t_redirection	*current = *lst;
+
+	printf("\t%-15s [", "FILENAME :");
+	while (current)
+	{
+		printf("\"%s\", ", current->filename);
+		current = current->next;
+	}
+	printf("NULL]\n");
+	current = *lst;
+	printf("\t%-15s [", "HERE/APP :");
+	while (current)
+	{
+		printf("\"%s\", ", current->heredoc_or_append ? "yes" : "no");
+		current = current->next;
+	}
+	printf("NULL]\n");
+}
+
+void	ft_print_lst_cmd(t_cmd **lst_cmd)		// DEBUG
 {
 	t_cmd	*current;
 	int		i;
@@ -125,15 +145,15 @@ void	ft_print_lst_cmd(t_cmd **lst_cmd)
 	while (current)
 	{
 		printf("\n\t\tMaillon n%d :\n", i++);
+		printf("envp		= %s\n", current->envp ? "yes" : "no");
+		printf("cmd_path	= %s\n", current->cmd_with_path);
 		printf("args		= ");
-		if (current->args)
-			print_split(current->args);
-		else
-			printf("NULL\n");
-		printf("redir_in	= %s\n", current->redir_in);
-		printf("redir_out	= %s\n", current->redir_out);
-		printf("heredoc		= %s\n", current->heredoc ? "true" : "false");
-		printf("append		= %s\n", current->append ? "true" : "false");
+		if (current->args) print_split(current->args);
+		else printf("NULL\n");
+		printf("redir_in	= \n");
+		print_redir(&current->redir_in);
+		printf("redir_out	= \n");
+		print_redir(&current->redir_out);
 		printf("next		= %s\n", current->next ? "yes" : "no");
 		current = current->next;
 	}
