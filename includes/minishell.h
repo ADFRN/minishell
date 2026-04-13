@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 15:22:21 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/13 12:56:46 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,8 +196,8 @@ void	close_all_fd(void);
 /*****************************/
 /*		 file_manager.c		 */
 /*****************************/
-int			open_input_file(t_cmd *cmd);
-int			open_output_file(t_cmd *cmd);
+int	open_input_file(t_redirection *redir);
+int	open_output_file(t_redirection *redir);
 
 /*****************************/
 /*		  cmd_list.c		 */

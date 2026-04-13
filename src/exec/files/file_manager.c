@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:51:44 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 15:33:31 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/13 12:58:57 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,54 +34,57 @@ static void	read_stdin(int fd, char *eof)
 	}
 }
 
-int	open_input_file(t_cmd *cmd)
+static int	handle_heredoc(t_redirection *redir)
 {
-	t_redirection	*c;
-	int				input_fd;
+	int	fd;
 
-	c = cmd->redir_in;
-	if (!c)
-		input_fd = STDIN_FILENO;
-	while (c)
-	{
-		if (!cmd->redir_in->heredoc_or_append && !c->next)
-			input_fd = open(c->filename, O_RDONLY);
-		else if (cmd->redir_in->heredoc_or_append)
-		{
-			input_fd = open("/tmp/.pipex_heredoc", \
-				O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (input_fd < 0)
-				return (perror("/tmp/.pipex_heredoc"), -1);
-			read_stdin(input_fd, c->filename);
-			close(input_fd);
-			input_fd = open("/tmp/.pipex_heredoc", O_RDONLY);
-			if (input_fd < 0)
-				return (perror("/tmp/.pipex_heredoc"), -1);	
-		}
-		c = c->next;
-	}
-	return (input_fd);
+	fd = open("/tmp/.pipex_heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0)
+		return (perror("/tmp/.pipex_heredoc"), -1);
+	read_stdin(fd, redir->filename);
+	close(fd);
+	fd = open("/tmp/.pipex_heredoc", O_RDONLY);
+	if (fd < 0)
+		return (perror("/tmp/.pipex_heredoc"), -1);
+	return (fd);
 }
 
-int	open_output_file(t_cmd *cmd)
+int	open_input_file(t_redirection *redir) // RENVOIE PAS LE CONTENU
 {
-	int				output_fd;
-	t_redirection	*c;
+	int	fd;
 
-	c = cmd->redir_out;
-	if (!c)
-		output_fd = STDOUT_FILENO;
-	while (c)
+	while (redir)
 	{
-		if (c->heredoc_or_append)
-			output_fd = open(c->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		else if (c->filename)
-			output_fd = open(c->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (redir->heredoc_or_append)
+			fd = handle_heredoc(redir);
 		else
-			output_fd = STDOUT_FILENO;
-		if (output_fd < 0)
-			return (perror("output_fd"), -1);
-		c = c->next;
+			fd = open(redir->filename, O_RDONLY);
+		if (fd < 0 && !redir->heredoc_or_append)
+			return (perror(redir->filename), -1);
+		close(fd);
+		redir = redir->next;
 	}
-	return (output_fd);
+	if (dup2(fd, STDIN_FILENO) == -1)
+			return (close(fd), -1);
+	return (0);
+}
+
+int	open_output_file(t_redirection *redir)
+{
+	int	fd;
+
+	while (redir)
+	{
+		if (redir->heredoc_or_append)
+			fd = open(redir->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		else
+			fd = open(redir->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd < 0)
+			return (perror(redir->filename), -1);
+		if (dup2(fd, STDOUT_FILENO) == -1)
+			return (close(fd), -1);
+		close(fd);
+		redir = redir->next;
+	}
+	return (0);
 }
