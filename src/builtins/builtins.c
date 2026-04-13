@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 13:25:55 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/08 14:32:42 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/10 15:25:38 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	echo_cmd(char *s)
-{
-	printf("%s", s);
-}
 
 void	env_cmd(char **envcpy)
 {
@@ -44,24 +39,6 @@ char	*pwd_cmd(void)
 		return (path);
 	}
 	return (perror("minishell: pwd"), NULL);
-}
-
-void	cd_cmd(char *s, char **envcpy)
-{
-	int		oldpwd_id;
-	int		pwd_id;
-	char	*current_dir;
-
-	oldpwd_id = get_env_i(envcpy, "OLDPWD");
-	pwd_id = get_env_i(envcpy, "PWD");
-	current_dir = pwd_cmd();
-	if (chdir(s) == -1)
-		perror("Error :");
-	else
-	{
-		envcpy[oldpwd_id] = ft_strjoin("OLDPWD=", current_dir);
-		envcpy[pwd_id] = ft_strjoin("PWD=", pwd_cmd());
-	}
 }
 
 void	export_cmd(char *var_name, char *var_value, char **envcpy)

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
 /*   Updated: 2026/04/13 15:05:28 by ttiprez          ###   ########.fr       */
@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void shell_prompt(char **envcpy)
+int	main(int ac, char **av, char **envp)
 {
 	char	*rl;
 	t_token	*lst_token;
@@ -65,9 +65,9 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	init_signal();
-	envcpy = env_cpy(envp);
-	shell_prompt(envcpy);
-	free_env(envcpy);
+	lst_cmd->envp = env_cpy(envp);
+	shell_prompt(lst_cmd);
+	free_env(lst_cmd->envp);
 	return (EXIT_SUCCESS);
 }
 
