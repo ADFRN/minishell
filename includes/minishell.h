@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 15:45:25 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/13 16:00:27 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,23 +146,6 @@ char				*add_equal(char *to_find);
 /* --- PIPEX --- */
 int 				pipex(t_cmd **lst_cmd);
 
-/************************************************************/
-/* Definition des constantes et codes de retour          */
-/************************************************************/
-# define CMD_NOT_FOUND 127
-# define CMD_EXEC_ERROR 126
-
-/************************************************************/
-/* Definition de la structure des commandes               */
-/************************************************************/
-typedef struct s_lstcmd
-{
-	char				**cmd_split;
-	char				*cmd_with_path;
-	char				**envp;
-	struct s_lstcmd		*next;
-}	t_lstcmd;
-
 /*****************************/
 /*        args_check.c       */
 /*****************************/
@@ -221,8 +204,8 @@ t_lstcmd			*init_lstcmd(bool is_hd, int ac, char **av, char **envp);
 /*****************************/
 void				free_split(char **splitted_words);
 void				cleanup(t_lstcmd *lst, int fd_in, int fd_out);
-int					pipex(t_cmd **lst_cmd, char **envp);
-void				shell_prompt(t_cmd *lst_cmd);
+int					pipex(t_cmd **lst_cmd);
+void				shell_prompt(char **envcpy);
 void				exec_echo(t_cmd *cmd);
 
 #endif
