@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:25 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 15:09:06 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/13 15:03:53 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_cmd	*parser(t_token **token_lst, char **env)
 	t_cmd	*lst_cmd;
 
 	if (!check_syntax(*token_lst, env))
-		return (ft_token_clear(token_lst), NULL);
+		return (ft_token_clear(token_lst), NULL);	//TODO: Fake le here_doc
 	lst_cmd = ft_cmd_new();
 	current_cmd = lst_cmd;
 	current_token = *token_lst;

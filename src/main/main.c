@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 15:07:52 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/13 15:05:28 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ static void shell_prompt(char **envcpy)
 		// VERIFICATION READLINE
 		if (!have_valid_quotes(rl))
 		{
-			printf("error: unclosed quote\n");
-			free(rl);
+			free((free(rl), printf("error: unclosed quote\n"), NULL));
 			continue;
 		}
 		// LEXER
@@ -49,10 +48,7 @@ static void shell_prompt(char **envcpy)
 			continue;
 		// AFFICHAGE
 		lst_cmd = parser(&lst_token, envcpy);
-		ft_print_lst_cmd(&lst_cmd);
-		printf("\n----------\n");
 		pipex(&lst_cmd);
-		printf("----------\n");
 		// FREE
 		ft_free();
 		close_all_fd();

@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 15:06:51 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/13 14:25:21 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,7 @@ void	ft_print_lst_cmd(t_cmd **lst_cmd)		// DEBUG
 	while (current)
 	{
 		printf("\n\t\tMaillon n%d :\n", i++);
-		printf("envp		= ");
-		if (current->args) print_split(current->args);
-		else printf("NULL\n");
+		printf("envp		= %s\n", current->envp ? "yes" : "no");
 		printf("cmd_path	= %s\n", current->cmd_with_path);
 		printf("args		= ");
 		if (current->args) print_split(current->args);

@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:51:44 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/13 12:58:57 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/13 14:05:03 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,22 @@ static int	handle_heredoc(t_redirection *redir)
 	return (fd);
 }
 
-int	open_input_file(t_redirection *redir) // RENVOIE PAS LE CONTENU
+int	open_input_file(t_redirection *redir)
 {
-	int	fd;
+	int	input_fd;
 
+	if (!redir)
+		input_fd = STDIN_FILENO;
 	while (redir)
 	{
-		if (redir->heredoc_or_append)
-			fd = handle_heredoc(redir);
-		else
-			fd = open(redir->filename, O_RDONLY);
-		if (fd < 0 && !redir->heredoc_or_append)
-			return (perror(redir->filename), -1);
-		close(fd);
+		if (!redir->heredoc_or_append && !redir->next)
+			input_fd = open(redir->filename, O_RDONLY);
+		else if (redir->heredoc_or_append)
+			input_fd = handle_heredoc(redir);
 		redir = redir->next;
 	}
-	if (dup2(fd, STDIN_FILENO) == -1)
-			return (close(fd), -1);
-	return (0);
+	dup2(input_fd, STDIN_FILENO);
+	return (input_fd);
 }
 
 int	open_output_file(t_redirection *redir)
