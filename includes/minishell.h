@@ -16,6 +16,10 @@
 # define _POSIX_C_SOURCE 200809L
 # define CMD_NOT_FOUND 127
 # define CMD_EXEC_ERROR 126
+# define HEREDOC_LIMITS 16
+
+/* --- RETURN_CODE --- */
+# define HERE_DOC_EXCEED 2
 
 /* --- LIBRARIES --- */
 # include "libft.h"
@@ -50,6 +54,13 @@ typedef enum e_token_type
 	APPEND
 }					t_token_type;
 
+typedef struct s_redirection
+{
+	char					*filename;			// Nom du fichier ou du EOF
+	bool					heredoc_or_append;	// 1 si << ou >>
+	struct s_redirection	*next;
+}	t_redirection;
+
 typedef struct s_token
 {
 	char			*content;
@@ -60,13 +71,12 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
-	char **args;        // Le tableau pour execve (ex: ["ls", "-l", NULL])
-	char *redir_in;     // Nom du fichier d'entrée ou delimiteur (si < ou <<)
-	char *redir_out;    // Nom du fichier de sortie (si > ou >>)
-	bool heredoc;       // Heredoc (1 si <<, 0 si <)
-	bool append;        // Booléen (1 si >>, 0 si >)
-	char **envp;        // Copie de l'environnement
-	struct s_cmd *next; // Commande suivante (après un pipe)
+	char			**envp;
+	char			*cmd_with_path;
+	char			**args;        // Le tableau pour execve (ex: ["ls", "-l", NULL])
+	t_redirection	*redir_in;     // Nom du fichier d'entrée ou delimiteur (si < ou <<)
+	t_redirection	*redir_out;    // Nom du fichier de sortie (si > ou >>)
+	struct s_cmd	*next; // Commande suivante (après un pipe)
 }					t_cmd;
 
 typedef struct s_lstcmd
@@ -80,8 +90,7 @@ typedef struct s_lstcmd
 /* --- PROTOTYPES --- */
 
 // Lexer
-t_token				*tokenizer(char *line);
-
+t_token				*lexer(char *line);
 //	lexer_utils.c
 bool				have_valid_quotes(char *str);
 bool				is_metachar(char c);
@@ -97,12 +106,9 @@ t_token_type		get_operator_type(char *str);
 void				print_tokens(t_token **lst);
 
 //	parser.c
-t_cmd				*parser(t_token **token_lst);
-//	cmd_utils.c
-t_cmd				*ft_cmd_new(void);
-void				ft_cmd_add_back(t_cmd **lst, t_cmd *new);
-void				ft_print_lst_cmd(t_cmd **lst_cmd);
-char				**ft_token_to_args(t_token **start);
+t_cmd				*parser(t_token **token_lst, char **env);
+//	syntax_error.c
+bool				check_syntax(t_token *token_lst, char **env);
 
 // Expander
 void				expand(char **str, char **envp);
@@ -121,10 +127,41 @@ char				*pwd_cmd(void);
 // Signals
 void				init_signal(void);
 
+// Struct
+//	cmd_utils.c
+t_cmd				*ft_cmd_new(void);
+void				ft_cmd_add_back(t_cmd **lst, t_cmd *new);
+void				ft_print_lst_cmd(t_cmd **lst_cmd);
+char				**ft_token_to_args(t_token **start);
+// redirection_utils.c
+t_redirection		*ft_redir_new(char *filename, bool heredoc_or_append);
+void				ft_redir_add_back(t_redirection **lst, t_redirection *new);
+t_redirection		*ft_redir_get_last(t_redirection **lst);
+
 // Utils
 char				*get_envp(char **envp, char *to_find);
 int					get_env_i(char **envcpy, char *s);
 char				*add_equal(char *to_find);
+
+/* --- PIPEX --- */
+int 				pipex(t_cmd **lst_cmd);
+
+/************************************************************/
+/* Definition des constantes et codes de retour          */
+/************************************************************/
+# define CMD_NOT_FOUND 127
+# define CMD_EXEC_ERROR 126
+
+/************************************************************/
+/* Definition de la structure des commandes               */
+/************************************************************/
+typedef struct s_lstcmd
+{
+	char				**cmd_split;
+	char				*cmd_with_path;
+	char				**envp;
+	struct s_lstcmd		*next;
+}	t_lstcmd;
 
 /*****************************/
 /*        args_check.c       */
@@ -168,8 +205,8 @@ void				close_all_fd(void);
 /*****************************/
 /*       file_manager.c      */
 /*****************************/
-int					open_input_file(t_cmd *cmd);
-int					open_output_file(t_cmd *cmd);
+int	open_input_file(t_redirection *redir);
+int	open_output_file(t_redirection *redir);
 
 /*****************************/
 /*         cmd_list.c        */

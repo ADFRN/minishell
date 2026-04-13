@@ -37,7 +37,7 @@ export MINISHELL_ART
 # --- CONFIG ---
 NAME        = minishell
 CC          = cc
-#CFLAGS      = -Wall -Wextra -Werror -g
+CFLAGS      = -Wall -Wextra -Werror -g
 LDFLAGS     = -lreadline
 
 SRC_DIR     = src

@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 14:49:57 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/13 15:05:28 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,53 @@
 
 int	main(int ac, char **av, char **envp)
 {
+	char	*rl;
+	t_token	*lst_token;
 	t_cmd	*lst_cmd;
+
+	lst_token = NULL;
+	// MINISHELL
+	while (1)
+	{
+		// READLINE
+		rl = readline("Minishell-1.0$ ");
+		if (!rl)
+		{
+			printf("exit\n");
+			break;
+		}
+		if (rl[0] == '\0')
+		{
+			free(rl);
+			continue;
+		}
+		add_history(rl);
+		// VERIFICATION READLINE
+		if (!have_valid_quotes(rl))
+		{
+			free((free(rl), printf("error: unclosed quote\n"), NULL));
+			continue;
+		}
+		// LEXER
+		expand(&rl, envcpy);
+		lst_token = lexer(rl);
+		if (!lst_token)
+			continue;
+		// AFFICHAGE
+		lst_cmd = parser(&lst_token, envcpy);
+		pipex(&lst_cmd);
+		// FREE
+		ft_free();
+		close_all_fd();
+	}
+	// LAST FREE
+	close_all_fd();
+	ft_free();
+}
+
+int main(int ac, char **av, char **envp)
+{
+	char **envcpy;
 
 	(void)ac;
 	(void)av;

@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 15:26:37 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/09 12:06:55 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/10 14:55:34 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static int	add_var(char **new_str, char *var_name, char *var_val)
 	tmp = ft_strjoin(*new_str, var_val);
 	*new_str = tmp;
 	len = ft_strlen(var_name);
-	free(var_name);
 	return (len);
 }
 

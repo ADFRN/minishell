@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:28:54 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/03 18:54:32 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/10 15:07:41 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static bool	handle_word(char *line, int *i, t_token **token_lst)
 	return (true);
 }
 
-t_token	*tokenizer(char *line)
+t_token	*lexer(char *line)
 {
 	t_token	*token_lst;
 	int		i;

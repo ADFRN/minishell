@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 11:29:34 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/09 12:05:37 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/10 12:51:56 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	ft_token_clear(t_token **lst)
 	while (*lst)
 	{
 		next = (*lst)->next;
-		free((*lst)->content);
 		*lst = next;
 	}
 }
