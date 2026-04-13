@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:14:20 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 12:44:08 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/13 16:10:13 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ bool	check_syntax(t_token *token_lst, char **env)
 	current = token_lst;
 	while (current)
 	{
-		if (current->type == PIPE)
-		{
-			if (!current->prev || !current->next || current->next->type == PIPE)
-				return (report_syntax_error("|"));
-		}
+		if (current->type == PIPE && \
+			(!current->prev || !current->next || current->next->type == PIPE))
+			return (report_syntax_error("|"));
 		else if (is_redir(current->type))
 		{
 			if (current->type == HEREDOC)

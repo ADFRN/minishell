@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 11:29:34 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 12:51:56 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/13 16:08:34 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*type_to_str(t_token_type type)
 	return ("WORD");
 }
 
-void	print_tokens(t_token **lst)
+void	print_tokens(t_token **lst) // DEBUG
 {
 	t_token	*current;
 

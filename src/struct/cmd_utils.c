@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/13 14:25:21 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/13 16:10:30 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ static char	*remove_quotes(char *str)
 	return (result);
 }
 
-// TODO : AJOUTER les word et pas ecraser ceux deja ecrit 
-//		  (exemple echo < in cat < in ---> doit ajouter cat sans ecraser echo)
+// TODO : AJOUTER les word et pas ecraser ceux deja ecrit
+//			(exemple echo < in cat < in ---> doit ajouter cat sans ecraser echo)
 char	**ft_token_to_args(t_token **start)
 {
 	t_token	*curr;
@@ -104,7 +104,7 @@ char	**ft_token_to_args(t_token **start)
 	return (args);
 }
 
-static void	print_split(char **str)				// DEBUG
+static void	print_split(char **str) // DEBUG
 {
 	printf("[");
 	for (int i = 0; str[i]; i++)
@@ -114,9 +114,9 @@ static void	print_split(char **str)				// DEBUG
 	printf("NULL]\n");
 }
 
-static void	print_redir(t_redirection **lst)	// DEBUG
+static void	print_redir(t_redirection **lst) // DEBUG
 {
-	t_redirection	*current = *lst;
+	t_redirection *current = *lst;
 
 	printf("\t%-15s [", "FILENAME :");
 	while (current)
@@ -135,10 +135,10 @@ static void	print_redir(t_redirection **lst)	// DEBUG
 	printf("NULL]\n");
 }
 
-void	ft_print_lst_cmd(t_cmd **lst_cmd)		// DEBUG
+void	ft_print_lst_cmd(t_cmd **lst_cmd) // DEBUG
 {
-	t_cmd	*current;
-	int		i;
+	t_cmd *current;
+	int i;
 
 	current = *lst_cmd;
 	i = 0;
@@ -148,8 +148,10 @@ void	ft_print_lst_cmd(t_cmd **lst_cmd)		// DEBUG
 		printf("envp		= %s\n", current->envp ? "yes" : "no");
 		printf("cmd_path	= %s\n", current->cmd_with_path);
 		printf("args		= ");
-		if (current->args) print_split(current->args);
-		else printf("NULL\n");
+		if (current->args)
+			print_split(current->args);
+		else
+			printf("NULL\n");
 		printf("redir_in	= \n");
 		print_redir(&current->redir_in);
 		printf("redir_out	= \n");
