@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/09 14:18:12 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/10 15:45:25 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,13 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
-	char			**args;		// Le tableau pour execve (ex: ["ls", "-l", NULL])
-	char			*redir_in;	// Nom du fichier d'entrée ou delimiteur (si < ou <<)
-	char			*redir_out;	// Nom du fichier de sortie (si > ou >>)
-	bool			heredoc;	// Heredoc (1 si <<, 0 si <)
-	bool			append;		// Booléen (1 si >>, 0 si >)
-	struct s_cmd 	*next;		// Commande suivante (après un pipe)
+	char **args;        // Le tableau pour execve (ex: ["ls", "-l", NULL])
+	char *redir_in;     // Nom du fichier d'entrée ou delimiteur (si < ou <<)
+	char *redir_out;    // Nom du fichier de sortie (si > ou >>)
+	bool heredoc;       // Heredoc (1 si <<, 0 si <)
+	bool append;        // Booléen (1 si >>, 0 si >)
+	char **envp;        // Copie de l'environnement
+	struct s_cmd *next; // Commande suivante (après un pipe)
 }					t_cmd;
 
 typedef struct s_lstcmd
@@ -184,6 +185,7 @@ t_lstcmd			*init_lstcmd(bool is_hd, int ac, char **av, char **envp);
 void				free_split(char **splitted_words);
 void				cleanup(t_lstcmd *lst, int fd_in, int fd_out);
 int					pipex(t_cmd **lst_cmd, char **envp);
-void				shell_prompt(char **envcpy);
+void				shell_prompt(t_cmd *lst_cmd);
+void				exec_echo(t_cmd *cmd);
 
 #endif
