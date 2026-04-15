@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/15 12:53:46 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/15 15:30:24 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	exec_cmd(t_cmd *cmd)
 
 static void	child_process(t_cmd *cmd, int from, int to)
 {
+	reset_signals_child();
 	if (dup2(from, STDIN_FILENO) == -1 || dup2(to, STDOUT_FILENO) == -1)
 		exit(EXIT_FAILURE);
 	if (open_input_file(cmd->redir_in) == -1)
@@ -42,26 +43,22 @@ static int	child_action(t_cmd *cmd, int from, int to)
 {
 	pid_t	pid;
 
-	if (from < 0)
-	{
-		if (to >= 0)
-			close(to);
-		return (0);
-	}
 	pid = fork();
 	if (pid == -1)
-		return (perror("fork"), -1);
+		exit((perror("fork"), \
+			close_all_fd(), free_env(cmd->envp), ft_free(), EXIT_FAILURE));
 	if (pid == 0)
 		child_process(cmd, from, to);
 	return (pid);
 }
 
-static void	prepare_fds(t_cmd *current, int *output_fd, int pipe_fd[2])
+static void	prepare_fds(t_cmd *cmd, int *output_fd, int pipe_fd[2])
 {
-	if (current->next)
+	if (cmd->next)
 	{
 		if (pipe(pipe_fd) == -1)
-			exit(EXIT_FAILURE);
+			exit((perror("pipe"), \
+				close_all_fd(), free_env(cmd->envp), ft_free(), EXIT_FAILURE));
 		*output_fd = pipe_fd[1];
 	}
 	else

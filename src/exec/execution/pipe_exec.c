@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:49:01 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/07 15:41:49 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/15 14:50:24 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,46 +19,23 @@ int	wait_for_children(pid_t last_pid)
 	pid_t	pid;
 
 	exit_code = 0;
-	while (1)
+	pid = wait(&status);
+	while (pid > 0)
 	{
-		pid = waitpid(-1, &status, 0);
-		if (pid == -1)
-			break ;
 		if (pid == last_pid)
 		{
-			if (WIFEXITED(status))
-				exit_code = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
+			if (WIFSIGNALED(status))
+			{
 				exit_code = 128 + WTERMSIG(status);
+				if (WTERMSIG(status) == SIGINT)
+					write(1, "\n", 1);
+				else if (WTERMSIG(status) == SIGQUIT)
+					write(1, "Quit (core dumped)\n", 19);
+			}
+			else
+				exit_code = WEXITSTATUS(status);
 		}
+		pid = wait(&status);
 	}
 	return (exit_code);
 }
-
-//int	execute_pipeline(t_lstcmd *lst, int fd_in, int fd_out)
-//{
-//	t_lstcmd	*current;
-//	int			pipe_fd[2];
-//	int			input_fd;
-//	int			output_fd;
-//	int			last_pid;
-
-//	current = lst;
-//	input_fd = fd_in;
-//	last_pid = 0;
-//	while (current)
-//	{
-//		output_fd = fd_out;
-//		if (current->next)
-//		{
-//			if (pipe(pipe_fd) == -1)
-//				return (perror("pipe"), -1);
-//			output_fd = pipe_fd[1];
-//		}
-//		last_pid = child_action(lst, current, input_fd, output_fd);
-//		if (current->next)
-//			input_fd = pipe_fd[0];
-//		current = current->next;
-//	}
-//	return (wait_for_children(last_pid));
-//}

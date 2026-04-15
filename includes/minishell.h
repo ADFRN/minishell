@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/13 16:06:54 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/15 15:31:06 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,15 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+extern volatile sig_atomic_t g_sig;
+
 /* --- ENUMS & STRUCTS --- */
 typedef enum e_state
 {
 	DEFAULT,
 	IN_SINGLE_QUOTE,
 	IN_DOUBLE_QUOTE
-}							t_state;
+}	t_state;
 
 typedef enum e_token_type
 {
@@ -52,14 +54,23 @@ typedef enum e_token_type
 	OUTPUT,
 	HEREDOC,
 	APPEND
-}							t_token_type;
+}	t_token_type;
+
+typedef enum e_redir_type
+{
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	REDIR_HEREDOC
+}	t_redir_type;
 
 typedef struct s_redirection
 {
+	//t_redir_type			redir_type;
 	char					*filename;
 	bool					heredoc_or_append;
 	struct s_redirection	*next;
-}							t_redirection;
+}	t_redirection;
 
 typedef struct s_token
 {
@@ -67,7 +78,7 @@ typedef struct s_token
 	t_token_type			type;
 	struct s_token			*next;
 	struct s_token			*prev;
-}							t_token;
+}	t_token;
 
 typedef struct s_cmd
 {
@@ -77,7 +88,7 @@ typedef struct s_cmd
 	t_redirection			*redir_in;
 	t_redirection			*redir_out;
 	struct s_cmd			*next;
-}							t_cmd;
+}	t_cmd;
 
 typedef struct s_lstcmd
 {
@@ -126,6 +137,8 @@ char						*pwd_cmd(void);
 
 // Signals
 void						init_signal(void);
+void						reset_signals_child(void);
+void						ignore_signals_parent(void);
 
 // Struct
 //	cmd_utils.c
@@ -145,14 +158,13 @@ char						*get_envp(char **envp, char *to_find);
 int							get_env_i(char **envcpy, char *s);
 char						*add_equal(char *to_find);
 
+
+int							pipex(t_cmd **lst_cmd);
+void						shell_prompt(char **envcpy);
+void						exec_echo(t_cmd *cmd);
+
 /* --- PIPEX --- */
 int							pipex(t_cmd **lst_cmd);
-
-/*****************************/
-/*        args_check.c       */
-/*****************************/
-bool						is_heredoc(char **av);
-void						argv_checker(int ac, char **av);
 
 /*****************************/
 /*       path_parsing.c      */
@@ -161,24 +173,9 @@ char						*get_path(char **envp);
 char						*get_cmd_with_path(char *cmd, char *path);
 
 /*****************************/
-/*        split_quotes.c     */
-/*****************************/
-char						**ft_split_quotes(char *s);
-
-/*****************************/
-/*       split_utils.c       */
-/*****************************/
-int							is_quote(char c);
-char						*skip_spaces(char *s);
-char						*skip_quote(char *s, char quote);
-int							count_words(char *s);
-int							word_len(char *s);
-
-/*****************************/
 /*        pipe_exec.c        */
 /*****************************/
 int							wait_for_children(pid_t last_pid);
-// int			execute_pipeline(t_lstcmd *lst, int fd_in, int fd_out);
 
 /*****************************/
 /*          child_exec.c     */
@@ -194,21 +191,8 @@ int							open_input_file(t_redirection *redir);
 int							open_output_file(t_redirection *redir);
 
 /*****************************/
-/*         cmd_list.c        */
-/*****************************/
-t_lstcmd					*new_lstcmd(char **envp);
-t_lstcmd					*add_lstcmd(t_lstcmd **start, t_lstcmd *to_add);
-void						free_lstcmd(t_lstcmd *lst);
-t_lstcmd					*init_lstcmd(bool is_hd, int ac, char **av,
-								char **envp);
-
-/*****************************/
 /*        cleanup.c          */
 /*****************************/
 void						free_split(char **splitted_words);
-void						cleanup(t_lstcmd *lst, int fd_in, int fd_out);
-int							pipex(t_cmd **lst_cmd);
-void						shell_prompt(char **envcpy);
-void						exec_echo(t_cmd *cmd);
 
 #endif
