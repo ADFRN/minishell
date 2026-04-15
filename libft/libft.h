@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 10:25:43 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/09 14:28:38 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/15 12:02:48 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,8 @@ int						ft_putnbr(int n);
 /*                                                                            */
 /* ************************************************************************** */
 
+char					*ft_strjoin_classic(const char *s1, const char *s2);
+char					*ft_strdup_classic(const char *s);
 int						ft_strcmp(const char *s1, const char *s2);
 char					*ft_strcpy(char *dest, const char *src);
 char					*ft_strcat(char *dest, const char *src);
