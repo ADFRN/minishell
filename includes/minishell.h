@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/13 16:06:54 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:05:01 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,17 @@ char						*get_envp(char **envp, char *to_find);
 // Env
 void						free_env(char **env);
 char						**env_cpy(char **envp);
+void						realloc_env(char ***old_env, char *new_var);
 int							count_env_vars(char **envp);
 
 // Exec & Builtins
 // void				exec_cmd(char *rl);
-void						echo_cmd(char *s);
-char						*pwd_cmd(void);
+char						*exec_pwd(void);
+void						exec_cd(t_cmd *cmd);
+void						exec_env(t_cmd *cmd);
+void						exec_echo(t_cmd *cmd);
+void						exec_export(t_cmd *cmd, char ***envcpy);
+void						exec_unset(t_cmd *cmd, char ***env_ptr);
 
 // Signals
 void						init_signal(void);

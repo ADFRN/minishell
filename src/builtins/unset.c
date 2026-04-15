@@ -1,41 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/05 13:25:55 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/15 16:05:10 by afournie         ###   ########.fr       */
+/*   Created: 2026/04/15 15:59:55 by afournie          #+#    #+#             */
+/*   Updated: 2026/04/15 16:06:17 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_env(t_cmd *cmd)
+void	exec_unset(t_cmd *cmd, char ***env_ptr)
 {
-	int	i;
+	int		arg_idx;
+	int		env_idx;
+	char	**env;
 
-	i = 0;
-	while (cmd->envp[i])
+	if (!cmd->args[1] || !env_ptr || !*env_ptr)
+		return ;
+	arg_idx = 1;
+	while (cmd->args[arg_idx])
 	{
-		if (ft_strncmp(cmd->envp[i], "=", ft_strlen(cmd->envp[i])))
-			printf("%s\n", cmd->envp[i]);
-		i++;
+		env = *env_ptr;
+		env_idx = get_env_i(env, cmd->args[arg_idx]);
+		if (env_idx != -1)
+		{
+			free(env[env_idx]);
+			while (env[env_idx])
+			{
+				env[env_idx] = env[env_idx + 1];
+				env_idx++;
+			}
+		}
+		arg_idx++;
 	}
-}
-
-char	*exec_pwd(void)
-{
-	char	tmp[PATH_MAX];
-	char	*path;
-
-	if (getcwd(tmp, PATH_MAX) != NULL)
-	{
-		path = ft_strdup(tmp);
-		if (!path)
-			return (NULL);
-		return (path);
-	}
-	return (perror("minishell: pwd"), NULL);
 }
