@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:51:44 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/13 14:05:03 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/15 12:09:55 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,37 @@ static void	read_stdin(int fd, char *eof)
 	}
 }
 
+static char	*create_random_name(char *base)
+{
+	int				fd;
+	unsigned char	value;
+
+	fd = open("/dev/urandom", O_RDONLY);
+	if (fd < 0)
+		return (NULL);
+	if (read(fd, &value, sizeof(value)) < 0)
+		return (close(fd), NULL);
+	close(fd);
+	return (ft_strjoin_classic(base, ft_itoa(value)));
+}
+
 static int	handle_heredoc(t_redirection *redir)
 {
-	int	fd;
+	int		fd;
+	char	*filename;
 
-	fd = open("/tmp/.pipex_heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	filename = create_random_name("/tmp/.pipex_heredoc");
+	if (!filename)
+		return (perror("unistd.h"), -1);
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-		return (perror("/tmp/.pipex_heredoc"), -1);
+		return (perror(filename), -1);
 	read_stdin(fd, redir->filename);
 	close(fd);
-	fd = open("/tmp/.pipex_heredoc", O_RDONLY);
+	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return (perror("/tmp/.pipex_heredoc"), -1);
+		return (perror(filename), -1);
+	unlink(filename);
 	return (fd);
 }
 
@@ -61,6 +80,11 @@ int	open_input_file(t_redirection *redir)
 			input_fd = open(redir->filename, O_RDONLY);
 		else if (redir->heredoc_or_append)
 			input_fd = handle_heredoc(redir);
+		if (input_fd < 0)
+		{
+			perror(redir->filename);
+			return (-1);
+		}
 		redir = redir->next;
 	}
 	dup2(input_fd, STDIN_FILENO);
