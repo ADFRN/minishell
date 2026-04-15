@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:51:44 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/15 13:03:23 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/15 16:25:53 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int	open_input_file(t_redirection *redir)
 	input_fd = STDIN_FILENO;
 	while (redir)
 	{
-		if (!redir->heredoc_or_append && !redir->next)
+		if (!1 && !redir->next)
 			input_fd = open(redir->filename, O_RDONLY);
-		else if (redir->heredoc_or_append)
+		else if (1)
 			input_fd = handle_heredoc(redir);
 		redir = redir->next;
 	}
@@ -72,7 +72,7 @@ int	open_output_file(t_redirection *redir)
 
 	while (redir)
 	{
-		if (redir->heredoc_or_append)
+		if (1)
 			fd = open(redir->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else
 			fd = open(redir->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/13 16:10:30 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:31:31 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ t_cmd	*ft_cmd_new(void)
 		exit(EXIT_FAILURE);
 	}
 	cmd->args = NULL;
-	cmd->redir_in = NULL;
-	cmd->redir_out = NULL;
+	cmd->redir = NULL;
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -75,7 +74,8 @@ static char	*remove_quotes(char *str)
 
 // TODO : AJOUTER les word et pas ecraser ceux deja ecrit
 //			(exemple echo < in cat < in ---> doit ajouter cat sans ecraser echo)
-char	**ft_token_to_args(t_token **start)
+
+char	**get_cmd_args(t_token **start)
 {
 	t_token	*curr;
 	int		i;
@@ -83,24 +83,27 @@ char	**ft_token_to_args(t_token **start)
 
 	curr = *start;
 	i = 0;
-	while (curr && curr->type == WORD)
+	while (curr && curr->type != PIPE)
 	{
+		if (curr->type == WORD && (curr->prev == WORD || !curr->prev))
+			i++;
 		curr = curr->next;
-		i++;
 	}
 	args = ft_malloc(sizeof(char *) * (i + 1));
 	if (!args)
 		exit((ft_free(), EXIT_FAILURE));
 	curr = *start;
 	i = -1;
-	while (curr && curr->type == WORD)
+	while (curr && curr->type != PIPE)
 	{
-		args[++i] = ft_strdup(curr->content);
-		args[i] = remove_quotes(curr->content);
+		if (curr->type == WORD && (curr->prev == WORD || !curr->prev))
+		{
+			args[++i] = ft_strdup(curr->content);
+			args[i] = remove_quotes(curr->content);
+		}
 		curr = curr->next;
 	}
 	args[i + 1] = NULL;
-	*start = curr;
 	return (args);
 }
 
@@ -126,10 +129,17 @@ static void	print_redir(t_redirection **lst) // DEBUG
 	}
 	printf("NULL]\n");
 	current = *lst;
-	printf("\t%-15s [", "HERE/APP :");
+	printf("\t%-15s [", "TYPE :");
 	while (current)
 	{
-		printf("\"%s\", ", current->heredoc_or_append ? "yes" : "no");
+		if (current->redir_type == REDIR_IN)
+			printf("\"redir_in\", ");
+		else if (current->redir_type == REDIR_OUT)
+			printf("\"redir_out\", ");
+		else if (current->redir_type == REDIR_APPEND)
+			printf("\"redir_append\", ");
+		else if (current->redir_type == REDIR_HEREDOC)
+			printf("\"redir_heredoc\", ");
 		current = current->next;
 	}
 	printf("NULL]\n");
@@ -152,10 +162,8 @@ void	ft_print_lst_cmd(t_cmd **lst_cmd) // DEBUG
 			print_split(current->args);
 		else
 			printf("NULL\n");
-		printf("redir_in	= \n");
-		print_redir(&current->redir_in);
-		printf("redir_out	= \n");
-		print_redir(&current->redir_out);
+		printf("redir		= \n");
+		print_redir(&current->redir);
 		printf("next		= %s\n", current->next ? "yes" : "no");
 		current = current->next;
 	}

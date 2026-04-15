@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/15 15:30:24 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/15 16:26:25 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static void	child_process(t_cmd *cmd, int from, int to)
 	reset_signals_child();
 	if (dup2(from, STDIN_FILENO) == -1 || dup2(to, STDOUT_FILENO) == -1)
 		exit(EXIT_FAILURE);
-	if (open_input_file(cmd->redir_in) == -1)
+	if (open_input_file(NULL) == -1)
 		exit(EXIT_FAILURE);
-	if (open_output_file(cmd->redir_out) == -1)
+	if (open_output_file(NULL) == -1)
 		exit(EXIT_FAILURE);
 	close_all_fd();
 	if (cmd->args)

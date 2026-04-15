@@ -6,7 +6,7 @@
 #    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/04/15 13:10:50 by ttiprez          ###   ########.fr        #
+#    Updated: 2026/04/15 16:25:11 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,6 @@ SRCS        =	$(SRC_DIR)/builtins/builtins.c			\
 				$(SRC_DIR)/builtins/echo.c				\
 				$(SRC_DIR)/env/env_utils.c				\
 				$(SRC_DIR)/expander/expand.c			\
-				$(SRC_DIR)/lexer/token_utils.c			\
             	$(SRC_DIR)/lexer/lexer_utils.c			\
 				$(SRC_DIR)/lexer/lexer.c				\
 				$(SRC_DIR)/parser/parser.c				\
@@ -59,9 +58,10 @@ SRCS        =	$(SRC_DIR)/builtins/builtins.c			\
 				$(SRC_DIR)/signals/signals.c			\
 				$(SRC_DIR)/struct/cmd_utils.c			\
 				$(SRC_DIR)/struct/redirection_utils.c	\
+				$(SRC_DIR)/struct/token_utils.c			\
 				$(SRC_DIR)/utils/utils.c				\
-			  	$(SRC_DIR)/exec/parsing/path_parsing.c	\
 			  	$(SRC_DIR)/exec/utils/cleanup.c			\
+			  	$(SRC_DIR)/exec/parsing/path_parsing.c	\
 			  	$(SRC_DIR)/exec/execution/child_exec.c	\
 			  	$(SRC_DIR)/exec/execution/pipe_exec.c	\
 			  	$(SRC_DIR)/exec/files/file_manager.c	\

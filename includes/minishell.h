@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/15 15:31:06 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/15 16:22:11 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ typedef enum e_redir_type
 
 typedef struct s_redirection
 {
-	//t_redir_type			redir_type;
 	char					*filename;
-	bool					heredoc_or_append;
+	t_redir_type			redir_type;
+	//bool					heredoc_or_append;
 	struct s_redirection	*next;
 }	t_redirection;
 
@@ -85,8 +85,9 @@ typedef struct s_cmd
 	char					**envp;
 	char					*cmd_with_path;
 	char					**args;
-	t_redirection			*redir_in;
-	t_redirection			*redir_out;
+	//t_redirection			*redir_in;
+	//t_redirection			*redir_out;
+	t_redirection			*redir;
 	struct s_cmd			*next;
 }	t_cmd;
 
@@ -145,13 +146,11 @@ void						ignore_signals_parent(void);
 t_cmd						*ft_cmd_new(void);
 void						ft_cmd_add_back(t_cmd **lst, t_cmd *new);
 void						ft_print_lst_cmd(t_cmd **lst_cmd);
-char						**ft_token_to_args(t_token **start);
+char						**get_cmd_args(t_token **start);
 // redirection_utils.c
-t_redirection				*ft_redir_new(char *filename,
-								bool heredoc_or_append);
+t_redirection				*ft_redir_new();
 void						ft_redir_add_back(t_redirection **lst,
 								t_redirection *new);
-t_redirection				*ft_redir_get_last(t_redirection **lst);
 
 // Utils
 char						*get_envp(char **envp, char *to_find);
