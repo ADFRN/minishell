@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:10:33 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/13 16:13:22 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/15 12:54:00 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	shell_prompt(char **envcpy)
 		if (!lst_token)
 			continue ;
 		lst_cmd = parser(&lst_token, envcpy);
+		//ft_print_lst_cmd(&lst_cmd);
 		pipex(&lst_cmd);
 		ft_free();
 		close_all_fd();

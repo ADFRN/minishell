@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/13 12:57:18 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/15 12:53:46 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static void	child_process(t_cmd *cmd, int from, int to)
 	if (open_output_file(cmd->redir_out) == -1)
 		exit(EXIT_FAILURE);
 	close_all_fd();
-	exec_cmd(cmd);
+	if (cmd->args)
+		exec_cmd(cmd);
 	exit(EXIT_FAILURE);
 }
 
@@ -80,8 +81,7 @@ int	pipex(t_cmd **lst_cmd)
 	while (current)
 	{
 		prepare_fds(current, &output_fd, pipe_fd);
-		if (current->args)
-			last_pid = child_action(current, input_fd, output_fd);
+		last_pid = child_action(current, input_fd, output_fd);
 		if (input_fd != STDIN_FILENO)
 			close(input_fd);
 		if (output_fd != STDOUT_FILENO)
