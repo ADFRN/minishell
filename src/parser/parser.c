@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:25 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/15 16:35:59 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/16 11:12:04 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,16 @@ static t_redirection	*get_cmd_redir(t_token **start)
 	return (redir_lst);
 }
 
-static	t_token	*go_to_next_cmd(t_token	**start)
+static t_token *go_to_next_cmd(t_token **start)
 {
-	t_token	*current;
+    t_token *current;
 
-	current = *start;
-	while (current->next && current->type != PIPE)
-		current = current->next;
-	return (current->next);
+    current = *start;
+    while (current && current->type != PIPE)
+        current = current->next;
+    if (!current)
+        return (NULL);
+    return (current->next);
 }
 
 t_cmd	*parser(t_token **token_lst, char **env)
@@ -136,12 +138,17 @@ t_cmd	*parser(t_token **token_lst, char **env)
 		printf("current_token = %s\n", current_token->content);
 		current_cmd->envp = env;
 		current_cmd->args = get_cmd_args(&current_token);
-		current_cmd->cmd_with_path = \
-			get_cmd_with_path(current_cmd->args[0], get_path(env));
+		current_cmd->cmd_with_path = NULL;
+		if (current_cmd->args && current_cmd->args[0])
+			current_cmd->cmd_with_path = \
+				get_cmd_with_path(current_cmd->args[0], get_path(env));
 		current_cmd->redir = get_cmd_redir(&current_token);
-		current_cmd = current_cmd->next;
-		current_cmd = ft_cmd_new();
 		current_token = go_to_next_cmd(&current_token);
+		if (current_token)
+		{
+			current_cmd->next = ft_cmd_new();
+			current_cmd = current_cmd->next;
+		}
 	}
 	return (lst_cmd);
 }

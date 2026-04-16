@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/15 16:31:31 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/16 11:06:18 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ char	**get_cmd_args(t_token **start)
 	i = 0;
 	while (curr && curr->type != PIPE)
 	{
-		if (curr->type == WORD && (curr->prev == WORD || !curr->prev))
+		if (curr->type == WORD && (!curr->prev || \
+			curr->prev->type == WORD || curr->prev->type == PIPE))
 			i++;
 		curr = curr->next;
 	}
@@ -96,7 +97,8 @@ char	**get_cmd_args(t_token **start)
 	i = -1;
 	while (curr && curr->type != PIPE)
 	{
-		if (curr->type == WORD && (curr->prev == WORD || !curr->prev))
+		if (curr->type == WORD && (!curr->prev || \
+			curr->prev->type == WORD || curr->prev->type == PIPE))
 		{
 			args[++i] = ft_strdup(curr->content);
 			args[i] = remove_quotes(curr->content);
