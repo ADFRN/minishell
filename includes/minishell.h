@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/15 16:22:11 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/16 12:03:03 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ typedef struct s_redirection
 {
 	char					*filename;
 	t_redir_type			redir_type;
-	//bool					heredoc_or_append;
 	struct s_redirection	*next;
 }	t_redirection;
 
@@ -85,8 +84,6 @@ typedef struct s_cmd
 	char					**envp;
 	char					*cmd_with_path;
 	char					**args;
-	//t_redirection			*redir_in;
-	//t_redirection			*redir_out;
 	t_redirection			*redir;
 	struct s_cmd			*next;
 }	t_cmd;
@@ -186,8 +183,12 @@ void						close_all_fd(void);
 /*****************************/
 /*       file_manager.c      */
 /*****************************/
-int							open_input_file(t_redirection *redir);
-int							open_output_file(t_redirection *redir);
+bool						open_files(t_redirection **redir);
+
+/*****************************/
+/*     heredoc_manager.c     */
+/*****************************/
+bool						preprocess_heredocs(t_cmd **lst_cmd);
 
 /*****************************/
 /*        cleanup.c          */

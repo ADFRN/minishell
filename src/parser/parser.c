@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:25 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/16 11:12:04 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/16 12:06:28 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,11 @@ t_cmd	*parser(t_token **token_lst, char **env)
 	if (!check_syntax(*token_lst, env))
 		return (ft_token_clear(token_lst), NULL);
 	lst_cmd = ft_cmd_new();
+	free((current_cmd = lst_cmd, current_token = *token_lst, NULL));
 	current_cmd = lst_cmd;
 	current_token = *token_lst;
 	while (current_token)
 	{
-		printf("current_token = %s\n", current_token->content);
 		current_cmd->envp = env;
 		current_cmd->args = get_cmd_args(&current_token);
 		current_cmd->cmd_with_path = NULL;
