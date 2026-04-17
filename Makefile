@@ -6,7 +6,7 @@
 #    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/04/16 11:54:11 by ttiprez          ###   ########.fr        #
+#    Updated: 2026/04/17 13:29:26 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,9 @@ INC_DIR     = includes
 # --- SOURCES (Liste explicite pour la norme) ---
 SRCS        =	$(SRC_DIR)/builtins/builtins.c			\
 				$(SRC_DIR)/builtins/echo.c				\
+				$(SRC_DIR)/builtins/cd.c				\
+				$(SRC_DIR)/builtins/export.c			\
+				$(SRC_DIR)/builtins/unset.c				\
 				$(SRC_DIR)/env/env_utils.c				\
 				$(SRC_DIR)/expander/expand.c			\
             	$(SRC_DIR)/lexer/lexer_utils.c			\
