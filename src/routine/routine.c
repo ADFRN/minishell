@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:10:33 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/17 12:16:09 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/17 13:23:59 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,10 @@ void	shell_prompt(char **envcpy)
 		if (!lst_token)
 			continue ;
 		lst_cmd = parser(&lst_token, envcpy);
-		if (!preprocess_heredocs(&lst_cmd))
-		{
-			ft_free();
-			close_all_fd();
-			continue;
-		}
 		ignore_signals_parent();
 		pipex(&lst_cmd);
-		delete_heredocs_files(&lst_cmd);
-		close_all_fd();
 		ft_free();
+		close_all_fd();
 	}
 	close_all_fd();
 	ft_free();
