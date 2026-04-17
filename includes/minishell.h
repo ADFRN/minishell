@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/17 12:10:06 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/17 13:26:57 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,6 @@ int							wait_for_children(pid_t last_pid);
 /*****************************/
 void						cmd_not_found(char *cmd);
 void						close_all_fd(void);
-// int			child_action(t_lstcmd *lst, t_lstcmd *cmd, int from, int to);
 
 /*****************************/
 /*       file_manager.c      */
