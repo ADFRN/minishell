@@ -6,20 +6,28 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/17 13:29:17 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/17 13:52:50 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define _POSIX_C_SOURCE 200809L
-# define CMD_NOT_FOUND 127
-# define CMD_EXEC_ERROR 126
-# define HEREDOC_LIMITS 16
-
-/* --- RETURN_CODE --- */
-# define HERE_DOC_EXCEED 2
+/* --- CONSTANTS --- */
+# define _POSIX_C_SOURCE	200809L	// Pour signal.h
+# define HEREDOC_LIMITS		16
+	/* --- RETURN_CODE --- */
+# define HERE_DOC_EXCEED	2
+# define CMD_NOT_FOUND		127
+# define CMD_EXEC_ERROR		126
+	/* --- BUILTINS --- */
+# define CD					"cd"
+# define ECHO				"echo"
+# define PWD				"pwd"
+# define ENV				"env"
+# define EXPORT				"export"
+# define UNSET				"unset"
+# define EXIT				"exit"
 
 /* --- LIBRARIES --- */
 # include "libft.h"
@@ -36,7 +44,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-extern volatile sig_atomic_t g_sig;
+extern volatile sig_atomic_t	g_sig;
 
 /* --- ENUMS & STRUCTS --- */
 typedef enum e_state
@@ -149,8 +157,9 @@ t_cmd						*ft_cmd_new(void);
 void						ft_cmd_add_back(t_cmd **lst, t_cmd *new);
 void						ft_print_lst_cmd(t_cmd **lst_cmd);
 char						**get_cmd_args(t_token **start);
+
 // redirection_utils.c
-t_redirection				*ft_redir_new();
+t_redirection				*ft_redir_new(void);
 void						ft_redir_add_back(t_redirection **lst,
 								t_redirection *new);
 
@@ -158,7 +167,7 @@ void						ft_redir_add_back(t_redirection **lst,
 char						*get_envp(char **envp, char *to_find);
 int							get_env_i(char **envcpy, char *s);
 char						*add_equal(char *to_find);
-
+void						free_split(char **splitted_words);
 
 int							pipex(t_cmd **lst_cmd);
 void						shell_prompt(char **envcpy);
@@ -174,20 +183,21 @@ char						*get_path(char **envp);
 char						*get_cmd_with_path(char *cmd, char *path);
 
 /*****************************/
-/*        pipe_exec.c        */
+/*       builtins_exec.c     */
 /*****************************/
-int							wait_for_children(pid_t last_pid);
+void						exec_builtins(t_cmd *cmd);
 
 /*****************************/
 /*          child_exec.c     */
 /*****************************/
-void						cmd_not_found(char *cmd);
-void						close_all_fd(void);
+int							child_action(t_cmd *cmd, int from, int to);
 
 /*****************************/
 /*       file_manager.c      */
 /*****************************/
 bool						open_files(t_redirection **redir);
+void						prepare_fds(t_cmd *cmd, int *output_fd, \
+										int pipe_fd[2]);
 
 /*****************************/
 /*     heredoc_manager.c     */
@@ -196,8 +206,11 @@ bool						preprocess_heredocs(t_cmd **lst_cmd);
 void						delete_heredocs_files(t_cmd **lst_cmd);
 
 /*****************************/
-/*        cleanup.c          */
+/*     		utils.c		     */
 /*****************************/
-void						free_split(char **splitted_words);
+int							wait_for_children(pid_t last_pid);
+bool						is_builtins(t_cmd *cmd);
+void						cmd_not_found(char *cmd);
+void						close_all_fd(void);
 
 #endif

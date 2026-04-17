@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_exec.c                                        :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/10 19:49:01 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/15 14:50:24 by ttiprez          ###   ########.fr       */
+/*   Created: 2026/04/17 13:40:56 by ttiprez           #+#    #+#             */
+/*   Updated: 2026/04/17 13:50:43 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,27 @@ int	wait_for_children(pid_t last_pid)
 		pid = wait(&status);
 	}
 	return (exit_code);
+}
+
+bool	is_builtins(t_cmd *cmd)
+{
+	return (!ft_strcmp(cmd->args[0], EXIT) || !ft_strcmp(cmd->args[0], ECHO) ||\
+			!ft_strcmp(cmd->args[0], PWD) || !ft_strcmp(cmd->args[0], ENV) ||  \
+			!ft_strcmp(cmd->args[0], EXPORT) || !ft_strcmp(cmd->args[0], CD) ||\
+			!ft_strcmp(cmd->args[0], UNSET));
+}
+
+void	cmd_not_found(char *cmd)
+{
+	ft_putstr_fd(cmd, 2);
+	ft_putendl_fd(": command not found", 2);
+}
+
+void	close_all_fd(void)
+{
+	int	fd;
+
+	fd = 3;
+	while (fd < 1024)
+		close(fd++);
 }

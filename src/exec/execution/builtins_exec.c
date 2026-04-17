@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   builtins_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/10 19:52:29 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/15 13:09:42 by ttiprez          ###   ########.fr       */
+/*   Created: 2026/04/17 13:35:05 by ttiprez           #+#    #+#             */
+/*   Updated: 2026/04/17 13:54:28 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_split(char **splitted_words)
+void	exec_bui(t_cmd *cmd)
 {
-	int	i;
-
-	i = -1;
-	while (splitted_words[++i])
-		free(splitted_words[i]);
-	free(splitted_words);
+	if (!cmd->cmd_with_path)
+	{
+		cmd_not_found(cmd->args[0]);
+		exit((free_env(cmd->envp), ft_free(), EXIT_FAILURE));
+	}
+	execve(cmd->cmd_with_path, cmd->args, cmd->envp);
+	perror(cmd->args[0]);
+	exit((free_env(cmd->envp), ft_free(), EXIT_FAILURE));
 }

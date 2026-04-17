@@ -6,13 +6,13 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:43:16 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/03 18:43:58 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/17 13:42:05 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_pathlen(char *str)
+static int	ft_pathlen(char *str)
 {
 	int	i;
 
@@ -58,4 +58,14 @@ int	get_env_i(char **envcpy, char *s)
 		if (ft_strncmp(envcpy[i], s, ft_strlen(s)) == 0)
 			return (i);
 	return (-1);
+}
+
+void	free_split(char **splitted_words)
+{
+	int	i;
+
+	i = -1;
+	while (splitted_words[++i])
+		free(splitted_words[i]);
+	free(splitted_words);
 }

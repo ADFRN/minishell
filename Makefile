@@ -6,7 +6,7 @@
 #    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/04/17 13:29:26 by ttiprez          ###   ########.fr        #
+#    Updated: 2026/04/17 13:48:32 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,33 +46,31 @@ LIBFT_DIR   = libft
 INC_DIR     = includes
 
 # --- SOURCES (Liste explicite pour la norme) ---
-SRCS        =	$(SRC_DIR)/builtins/builtins.c			\
-				$(SRC_DIR)/builtins/echo.c				\
-				$(SRC_DIR)/builtins/cd.c				\
-				$(SRC_DIR)/builtins/export.c			\
-				$(SRC_DIR)/builtins/unset.c				\
-				$(SRC_DIR)/env/env_utils.c				\
-				$(SRC_DIR)/expander/expand.c			\
-            	$(SRC_DIR)/lexer/lexer_utils.c			\
-				$(SRC_DIR)/lexer/lexer.c				\
-				$(SRC_DIR)/parser/parser.c				\
-				$(SRC_DIR)/parser/syntax_error.c		\
-				$(SRC_DIR)/main/main.c					\
-				$(SRC_DIR)/signals/signals.c			\
-				$(SRC_DIR)/struct/cmd_utils.c			\
-				$(SRC_DIR)/struct/redirection_utils.c	\
-				$(SRC_DIR)/struct/token_utils.c			\
-				$(SRC_DIR)/utils/utils.c				\
-			  	$(SRC_DIR)/exec/utils/cleanup.c			\
-			  	$(SRC_DIR)/exec/parsing/path_parsing.c	\
-			  	$(SRC_DIR)/exec/execution/child_exec.c	\
-			  	$(SRC_DIR)/exec/execution/pipe_exec.c	\
-			  	$(SRC_DIR)/exec/files/file_manager.c	\
-			  	$(SRC_DIR)/exec/files/heredoc_manager.c	\
-			  	$(SRC_DIR)/exec/pipex.c					\
-			  	$(SRC_DIR)/routine/routine.c			\
-
-
+SRCS        =	$(SRC_DIR)/builtins/builtins.c				\
+				$(SRC_DIR)/builtins/echo.c					\
+				$(SRC_DIR)/builtins/cd.c					\
+				$(SRC_DIR)/builtins/export.c				\
+				$(SRC_DIR)/builtins/unset.c					\
+				$(SRC_DIR)/env/env_utils.c					\
+				$(SRC_DIR)/expander/expand.c				\
+            	$(SRC_DIR)/lexer/lexer_utils.c				\
+				$(SRC_DIR)/lexer/lexer.c					\
+				$(SRC_DIR)/parser/parser.c					\
+				$(SRC_DIR)/parser/syntax_error.c			\
+				$(SRC_DIR)/main/main.c						\
+				$(SRC_DIR)/signals/signals.c				\
+				$(SRC_DIR)/struct/cmd_utils.c				\
+				$(SRC_DIR)/struct/redirection_utils.c		\
+				$(SRC_DIR)/struct/token_utils.c				\
+				$(SRC_DIR)/utils/utils.c					\
+			  	$(SRC_DIR)/exec/utils/exec_utils.c			\
+			  	$(SRC_DIR)/exec/parsing/path_parsing.c		\
+			  	$(SRC_DIR)/exec/execution/builtins_exec.c	\
+			  	$(SRC_DIR)/exec/execution/child_exec.c		\
+			  	$(SRC_DIR)/exec/files/file_manager.c		\
+			  	$(SRC_DIR)/exec/files/heredoc_manager.c		\
+			  	$(SRC_DIR)/exec/pipex.c						\
+			  	$(SRC_DIR)/routine/routine.c				\
 
 OBJS        = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 LIBFT       = $(LIBFT_DIR)/libft.a

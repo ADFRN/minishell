@@ -6,61 +6,11 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/17 11:55:05 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/17 13:47:04 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	exec_cmd(t_cmd *cmd)
-{
-	if (!cmd->cmd_with_path)
-	{
-		cmd_not_found(cmd->args[0]);
-		exit((free_env(cmd->envp), ft_free(), EXIT_FAILURE));
-	}
-	execve(cmd->cmd_with_path, cmd->args, cmd->envp);
-	perror(cmd->args[0]);
-	exit((free_env(cmd->envp), ft_free(), EXIT_FAILURE));
-}
-
-static void	child_process(t_cmd *cmd, int from, int to)
-{
-	reset_signals_child();
-	if (dup2(from, STDIN_FILENO) == -1 || dup2(to, STDOUT_FILENO) == -1)
-		exit(EXIT_FAILURE);
-	if (!open_files(&cmd->redir))
-		exit(EXIT_FAILURE);
-	if (cmd->args && cmd->args[0])
-		exec_cmd(cmd);
-	exit(EXIT_FAILURE);
-}
-
-static int	child_action(t_cmd *cmd, int from, int to)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-		exit((perror("fork"), \
-			close_all_fd(), free_env(cmd->envp), ft_free(), EXIT_FAILURE));
-	if (pid == 0)
-		child_process(cmd, from, to);
-	return (pid);
-}
-
-static void	prepare_fds(t_cmd *cmd, int *output_fd, int pipe_fd[2])
-{
-	if (cmd->next)
-	{
-		if (pipe(pipe_fd) == -1)
-			exit((perror("pipe"), \
-				close_all_fd(), free_env(cmd->envp), ft_free(), EXIT_FAILURE));
-		*output_fd = pipe_fd[1];
-	}
-	else
-		*output_fd = STDOUT_FILENO;
-}
 
 int	pipex(t_cmd **lst_cmd)
 {
