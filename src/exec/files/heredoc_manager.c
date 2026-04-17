@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 11:53:02 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/16 11:53:22 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/17 12:15:16 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,32 @@ bool    preprocess_heredocs(t_cmd **lst_cmd)
                 curr_redir->filename = run_heredoc(curr_redir);
 				if (!curr_redir->filename)
 					return (false);
-                curr_redir->redir_type = REDIR_IN;
             }
             curr_redir = curr_redir->next;
         }
         curr_cmd = curr_cmd->next;
     }
     return (true);
+}
+
+void	delete_heredocs_files(t_cmd **lst_cmd)
+{
+	t_cmd           *curr_cmd;
+    t_redirection   *curr_redir;
+
+    curr_cmd = *lst_cmd;
+    while (curr_cmd)
+    {
+        curr_redir = curr_cmd->redir;
+        while (curr_redir)
+        {
+            if (curr_redir->redir_type == REDIR_HEREDOC)
+			{
+                if (unlink(curr_redir->filename) == -1)
+					perror("unlink");
+			}
+            curr_redir = curr_redir->next;
+        }
+        curr_cmd = curr_cmd->next;
+    }
 }

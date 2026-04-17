@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/16 12:04:30 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/17 11:55:05 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ static void	child_process(t_cmd *cmd, int from, int to)
 		exit(EXIT_FAILURE);
 	if (!open_files(&cmd->redir))
 		exit(EXIT_FAILURE);
-	close_all_fd();
-	if (cmd->args)
+	if (cmd->args && cmd->args[0])
 		exec_cmd(cmd);
 	exit(EXIT_FAILURE);
 }

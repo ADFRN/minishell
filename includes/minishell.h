@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/16 12:03:03 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/17 12:10:06 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ bool						open_files(t_redirection **redir);
 /*     heredoc_manager.c     */
 /*****************************/
 bool						preprocess_heredocs(t_cmd **lst_cmd);
+void						delete_heredocs_files(t_cmd **lst_cmd);
 
 /*****************************/
 /*        cleanup.c          */
