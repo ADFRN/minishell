@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/20 15:23:41 by ttiprez          ###   ########.fr       */
+/*   Created: 2026/04/20 16:09:12 by ttiprez           #+#    #+#             */
+/*   Updated: 2026/04/20 16:11:48 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
+void	cleaning(t_cmd *cmd)
 {
-	char	**envcpy;
-
-	(void)ac;
-	(void)av;
-	g_sig = 0;
-	envcpy = env_cpy(envp);
-	shell_prompt(envcpy);
-	free_env(envcpy);
-	return (EXIT_SUCCESS);
+	free_env(cmd->envp);
+	ft_free();
+	close_all_fd();
 }

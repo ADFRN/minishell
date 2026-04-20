@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/17 13:47:04 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/17 14:36:24 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ int	pipex(t_cmd **lst_cmd)
 
 	current = *lst_cmd;
 	input_fd = STDIN_FILENO;
+	if (is_builtins(current) && !current->next)
+	{
+		last_pid = 0;		// TEMPORAIRE
+		exec_builtins(current);
+		return (last_pid);
+	}
 	while (current)
 	{
 		prepare_fds(current, &output_fd, pipe_fd);

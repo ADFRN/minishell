@@ -6,7 +6,7 @@
 #    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/04/17 13:48:32 by ttiprez          ###   ########.fr        #
+#    Updated: 2026/04/20 16:09:43 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SRCS        =	$(SRC_DIR)/builtins/builtins.c				\
 				$(SRC_DIR)/struct/redirection_utils.c		\
 				$(SRC_DIR)/struct/token_utils.c				\
 				$(SRC_DIR)/utils/utils.c					\
+				$(SRC_DIR)/utils/utils2.c					\
 			  	$(SRC_DIR)/exec/utils/exec_utils.c			\
 			  	$(SRC_DIR)/exec/parsing/path_parsing.c		\
 			  	$(SRC_DIR)/exec/execution/builtins_exec.c	\

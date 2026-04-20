@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/17 13:52:50 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/20 16:10:55 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,13 +134,12 @@ char						*get_envp(char **envp, char *to_find);
 // Env
 void						free_env(char **env);
 char						**env_cpy(char **envp);
-void						realloc_env(char ***old_env, char *new_var);
 int							count_env_vars(char **envp);
 
 // Exec & Builtins
 // void				exec_cmd(char *rl);
 char						*exec_pwd(void);
-void						exec_cd(t_cmd *cmd);
+int							exec_cd(t_cmd *cmd);
 void						exec_env(t_cmd *cmd);
 void						exec_echo(t_cmd *cmd);
 void						exec_export(t_cmd *cmd, char ***envcpy);
@@ -168,6 +167,7 @@ char						*get_envp(char **envp, char *to_find);
 int							get_env_i(char **envcpy, char *s);
 char						*add_equal(char *to_find);
 void						free_split(char **splitted_words);
+void						cleaning(t_cmd *cmd);
 
 int							pipex(t_cmd **lst_cmd);
 void						shell_prompt(char **envcpy);

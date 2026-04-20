@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 13:25:55 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/15 16:05:10 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/20 15:06:00 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*exec_pwd(void)
 	char	tmp[PATH_MAX];
 	char	*path;
 
+	printf("getcwd = %s\n", getcwd(tmp, PATH_MAX));
+	printf("tmp = %s\n", tmp);
 	if (getcwd(tmp, PATH_MAX) != NULL)
 	{
 		path = ft_strdup(tmp);
