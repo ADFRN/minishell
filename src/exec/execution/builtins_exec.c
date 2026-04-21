@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:35:05 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/21 16:00:06 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/21 16:58:37 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	exec_builtins(t_cmd *cmd)
 	if (!ft_strcmp(cmd->args[0], CD))
 		exec_cd(cmd);
 	else if (!ft_strcmp(cmd->args[0], ECHO))
-		exec_echo(cmd);
+		exec_echo(cmd);	
 	else if (!ft_strcmp(cmd->args[0], ENV))
 		exec_env(cmd);
 	else if (!ft_strcmp(cmd->args[0], PWD))
 		exec_pwd();
 	else if (!ft_strcmp(cmd->args[0], EXPORT))
-		exec_export(cmd, &cmd->envp);
+		exec_export(cmd, cmd->envp);
 	else if (!ft_strcmp(cmd->args[0], UNSET))
 		exec_unset(cmd, &cmd->envp);
 	else if (!ft_strcmp(cmd->args[0], EXIT))

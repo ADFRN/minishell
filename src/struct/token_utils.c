@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 11:29:34 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/21 16:20:28 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/21 16:26:54 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,4 @@ t_token_type	get_operator_type(char *str)
 	if (str[0] == '<')
 		return (INPUT);
 	return (WORD);
-}
-
-char	*type_to_str(t_token_type type)
-{
-	if (type == PIPE)
-		return ("PIPE");
-	else if (type == HEREDOC)
-		return ("HEREDOC");
-	else if (type == APPEND)
-		return ("APPEND");
-	else if (type == OUTPUT)
-		return ("OUTPUT");
-	else if (type == INPUT)
-		return ("INPUT");
-	return ("WORD");
 }

@@ -6,22 +6,25 @@
 #    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/15 14:51:13 by ttiprez           #+#    #+#              #
-#    Updated: 2026/04/17 12:18:30 by ttiprez          ###   ########.fr        #
+#    Updated: 2026/04/21 17:01:05 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-X Résoudre tous les heredocs avant d'exécuter la moindre commande.
+X: Résoudre tous les heredocs avant d'exécuter la moindre commande.
 	Solution possible : Des que y'a une redir_in, faire un here_doc associé
 						et redir_in->filename = le fichier here_doc créé.
 
-X Réunir les listes chaînées redir_in et redir_out en une seule grosse liste
+X: Réunir les listes chaînées redir_in et redir_out en une seule grosse liste
   chaînée t_redirection. -> Pour qu'ils soient bien lu de GAUCHE a DROITE.
 
-X Crée une fonction unique handle_redirections(t_redirection *redirs) 
+X: Crée une fonction unique handle_redirections(t_redirection *redirs) 
   qui itère de gauche à droite.
 
-X < in
+X: < in
 	-> ": cmd not foudn"
 
-O << EOF + Ctrl+C
+O: << EOF + Ctrl+C
 	-> Ne marche pas
+
+O: export caca=prout > out + Ctrl+D
+	-> Leak (probablent la modif de envp qui est mal gerer)

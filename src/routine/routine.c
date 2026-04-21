@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:10:33 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/21 16:21:02 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/21 16:26:06 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	shell_prompt(char **envcpy)
 		rl = readline("Minishell-1.0$ ");
 		if (!rl)
 		{
+			cleaning(envcpy);
 			exit((printf("exit\n"), 0));
-			break ;
 		}
 		if (!handle_rl(&rl, envcpy))
 			continue ;

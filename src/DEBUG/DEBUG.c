@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 16:12:15 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/21 16:20:35 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/21 16:27:00 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,21 @@ void	ft_print_lst_cmd(t_cmd **lst_cmd)
 		printf("next		= %s\n", current->next ? "yes" : "no");
 		current = current->next;
 	}
+}
+
+static char	*type_to_str(t_token_type type)
+{
+	if (type == PIPE)
+		return ("PIPE");
+	else if (type == HEREDOC)
+		return ("HEREDOC");
+	else if (type == APPEND)
+		return ("APPEND");
+	else if (type == OUTPUT)
+		return ("OUTPUT");
+	else if (type == INPUT)
+		return ("INPUT");
+	return ("WORD");
 }
 
 void	print_tokens(t_token **lst)
