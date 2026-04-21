@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/20 16:10:55 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/21 16:22:41 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@
 # include "libft.h"
 # include <errno.h>
 # include <fcntl.h>
+# include <stdio.h>
 # include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -167,7 +167,7 @@ char						*get_envp(char **envp, char *to_find);
 int							get_env_i(char **envcpy, char *s);
 char						*add_equal(char *to_find);
 void						free_split(char **splitted_words);
-void						cleaning(t_cmd *cmd);
+void						cleaning(char **envp);
 
 int							pipex(t_cmd **lst_cmd);
 void						shell_prompt(char **envcpy);
@@ -190,14 +190,13 @@ void						exec_builtins(t_cmd *cmd);
 /*****************************/
 /*          child_exec.c     */
 /*****************************/
-int							child_action(t_cmd *cmd, int from, int to);
+int							child_action(t_cmd *cmd, int input_fd,
+								int pipe_fd[2]);
 
 /*****************************/
 /*       file_manager.c      */
 /*****************************/
 bool						open_files(t_redirection **redir);
-void						prepare_fds(t_cmd *cmd, int *output_fd, \
-										int pipe_fd[2]);
 
 /*****************************/
 /*     heredoc_manager.c     */
@@ -211,6 +210,6 @@ void						delete_heredocs_files(t_cmd **lst_cmd);
 int							wait_for_children(pid_t last_pid);
 bool						is_builtins(t_cmd *cmd);
 void						cmd_not_found(char *cmd);
-void						close_all_fd(void);
+void						safe_close(int	*fd);
 
 #endif

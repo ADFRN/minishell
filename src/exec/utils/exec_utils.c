@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:40:56 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/17 13:50:43 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/21 16:04:54 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ int	wait_for_children(pid_t last_pid)
 
 bool	is_builtins(t_cmd *cmd)
 {
-	return (!ft_strcmp(cmd->args[0], EXIT) || !ft_strcmp(cmd->args[0], ECHO) ||\
-			!ft_strcmp(cmd->args[0], PWD) || !ft_strcmp(cmd->args[0], ENV) ||  \
-			!ft_strcmp(cmd->args[0], EXPORT) || !ft_strcmp(cmd->args[0], CD) ||\
-			!ft_strcmp(cmd->args[0], UNSET));
+	return (!ft_strcmp(cmd->args[0], EXIT) || !ft_strcmp(cmd->args[0], ECHO)
+		|| !ft_strcmp(cmd->args[0], PWD) || !ft_strcmp(cmd->args[0], ENV)
+		|| !ft_strcmp(cmd->args[0], EXPORT) || !ft_strcmp(cmd->args[0], CD)
+		|| !ft_strcmp(cmd->args[0], UNSET));
 }
 
 void	cmd_not_found(char *cmd)
@@ -54,11 +54,11 @@ void	cmd_not_found(char *cmd)
 	ft_putendl_fd(": command not found", 2);
 }
 
-void	close_all_fd(void)
+void	safe_close(int	*fd)
 {
-	int	fd;
-
-	fd = 3;
-	while (fd < 1024)
-		close(fd++);
+	if (*fd >= 0)
+	{
+		close(*fd);
+		*fd = -1;
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 11:29:34 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/13 16:08:34 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/21 16:20:28 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,4 @@ char	*type_to_str(t_token_type type)
 	else if (type == INPUT)
 		return ("INPUT");
 	return ("WORD");
-}
-
-void	print_tokens(t_token **lst) // DEBUG
-{
-	t_token	*current;
-
-	current = *lst;
-	printf("WORD | TYPE\n");
-	while (current)
-	{
-		printf("%-60s | %s\n", current->content, type_to_str(current->type));
-		current = current->next;
-	}
 }

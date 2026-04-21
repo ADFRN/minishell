@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:51:44 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/17 13:44:17 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/21 16:02:36 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,17 @@ bool	open_files(t_redirection **redir)
 	curr_redir = *redir;
 	while (curr_redir)
 	{
-		if (curr_redir->redir_type == REDIR_IN || \
-			curr_redir->redir_type == REDIR_HEREDOC)
+		if (curr_redir->redir_type == REDIR_IN
+			|| curr_redir->redir_type == REDIR_HEREDOC)
 		{
 			if (open_input_file(curr_redir) == -1)
-				return (false);			
+				return (false);
 		}
-		else if (curr_redir->redir_type == REDIR_OUT || \
-				curr_redir->redir_type == REDIR_APPEND)
+		else if (curr_redir->redir_type == REDIR_OUT
+			|| curr_redir->redir_type == REDIR_APPEND)
 			if (open_output_file(curr_redir) == -1)
 				return (false);
 		curr_redir = curr_redir->next;
 	}
 	return (true);
-}
-void	prepare_fds(t_cmd *cmd, int *output_fd, int pipe_fd[2])
-{
-	if (cmd->next)
-	{
-		if (pipe(pipe_fd) == -1)
-			exit((perror("pipe"), \
-				close_all_fd(), free_env(cmd->envp), ft_free(), EXIT_FAILURE));
-		*output_fd = pipe_fd[1];
-	}
-	else
-		*output_fd = STDOUT_FILENO;
 }

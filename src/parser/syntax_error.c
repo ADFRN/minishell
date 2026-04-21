@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:14:20 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/13 16:10:13 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/21 16:05:46 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ static bool	report_syntax_error(char *token_content)
 static bool	report_heredoc_error(char **env)
 {
 	printf("minishell :maximum here-document count exceeded");
-	close_all_fd();
-	ft_free();
-	free_env(env);
+	cleaning(env);
 	exit(HERE_DOC_EXCEED);
 }
 
@@ -46,8 +44,9 @@ bool	check_syntax(t_token *token_lst, char **env)
 	current = token_lst;
 	while (current)
 	{
-		if (current->type == PIPE && \
-			(!current->prev || !current->next || current->next->type == PIPE))
+		if (current->type == PIPE
+			&& (!current->prev || !current->next
+				|| current->next->type == PIPE))
 			return (report_syntax_error("|"));
 		else if (is_redir(current->type))
 		{

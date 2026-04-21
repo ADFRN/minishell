@@ -6,13 +6,13 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 15:21:32 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/15 16:24:21 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/21 16:20:10 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_redirection	*ft_redir_new()
+t_redirection	*ft_redir_new(void)
 {
 	t_redirection	*redir;
 

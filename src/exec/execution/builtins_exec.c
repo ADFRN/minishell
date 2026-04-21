@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:35:05 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/20 16:16:49 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/21 16:00:06 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ static void	exec_exit(t_cmd *cmd)
 		ft_putstr_fd("bash: exit: ", STDERR_FILENO);
 		ft_putstr_fd(cmd->args[1], STDERR_FILENO);
 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-		exit((cleaning(cmd), 2));
+		exit((cleaning(cmd->envp), 2));
 	}
 	else if (!cmd->args[1])
-		exit((cleaning(cmd), 1));	
+		exit((cleaning(cmd->envp), 0));
 	else
-		exit((cleaning(cmd), ft_atoi(cmd->args[1])));
+		exit((cleaning(cmd->envp), ft_atoi(cmd->args[1])));
 }
 
 void	exec_builtins(t_cmd *cmd)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: afournie <afournie@student.42.fr>          +#+  +:+       +#+         #
+#    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/04/21 11:56:32 by afournie         ###   ########.fr        #
+#    Updated: 2026/04/21 16:13:46 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,7 @@ SRCS        =	$(SRC_DIR)/builtins/builtins.c				\
 			  	$(SRC_DIR)/exec/files/heredoc_manager.c		\
 			  	$(SRC_DIR)/exec/pipex.c						\
 			  	$(SRC_DIR)/routine/routine.c				\
+				$(SRC_DIR)/DEBUG/DEBUG.c					\
 
 OBJS        = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 LIBFT       = $(LIBFT_DIR)/libft.a

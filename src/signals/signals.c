@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:02 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/17 12:12:18 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/21 16:10:37 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ void	reset_signals_child(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void ignore_signals_parent(void)
+void	ignore_signals_parent(void)
 {
-    struct sigaction sa;
+	struct sigaction	sa;
 
-    ft_memset(&sa, 0, sizeof(sa));
-    sa.sa_handler = SIG_IGN;
-    sigemptyset(&sa.sa_mask);
-    sigaction(SIGINT, &sa, NULL);
-    sigaction(SIGQUIT, &sa, NULL);
+	ft_memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = SIG_IGN;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 }

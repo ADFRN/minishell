@@ -6,15 +6,14 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 16:09:12 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/20 16:11:48 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/21 15:34:45 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cleaning(t_cmd *cmd)
+void	cleaning(char **envp)
 {
-	free_env(cmd->envp);
 	ft_free();
-	close_all_fd();
+	free_env(envp);
 }

@@ -6,71 +6,11 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:25 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/16 12:06:28 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/21 16:08:59 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//static void	fill_redir_in(t_token **lst_token, t_cmd **cmd)
-//{
-//	t_redirection	*new;
-
-//	new = ft_redir_new(ft_strdup((*lst_token)->next->content),
-//			(*lst_token)->type == HEREDOC);
-//	ft_redir_add_back(&(*cmd)->redir_in, new);
-//}
-
-//static void	fill_redir_out(t_token **lst_token, t_cmd **cmd)
-//{
-//	t_redirection	*new;
-
-//	new = ft_redir_new(ft_strdup((*lst_token)->next->content),
-//			(*lst_token)->type == APPEND);
-//	ft_redir_add_back(&(*cmd)->redir_out, new);
-//}
-
-//static void	fill_cmd(t_token **lst_token, t_cmd **cmd)
-//{
-//	if ((*lst_token)->type == WORD)
-//	{
-//		(*cmd)->args = ft_token_to_args(lst_token);
-//		(*cmd)->cmd_with_path = get_cmd_with_path((*cmd)->args[0],
-//				get_path((*cmd)->envp));
-//		return ;
-//	}
-//	if ((*lst_token)->type == INPUT || (*lst_token)->type == HEREDOC)
-//		fill_redir_in(lst_token, cmd);
-//	else if ((*lst_token)->type == OUTPUT || (*lst_token)->type == APPEND)
-//		fill_redir_out(lst_token, cmd);
-//	(*lst_token) = (*lst_token)->next->next;
-//}
-
-//t_cmd	*parser(t_token **token_lst, char **env)
-//{
-//	t_token	*current_token;
-//	t_cmd	*current_cmd;
-//	t_cmd	*lst_cmd;
-
-//	if (!check_syntax(*token_lst, env))
-//		return (ft_token_clear(token_lst), NULL); // TODO: Fake le here_doc
-//	lst_cmd = ft_cmd_new();
-//	current_cmd = lst_cmd;
-//	current_token = *token_lst;
-//	while (current_token)
-//	{
-//		current_cmd->envp = env;
-//		if (current_token->type == PIPE)
-//		{
-//			current_cmd->next = ft_cmd_new();
-//			current_cmd = current_cmd->next;
-//			current_token = current_token->next;
-//		}
-//		else
-//			fill_cmd(&current_token, &current_cmd);
-//	}
-//	return (ft_token_clear(token_lst), lst_cmd);
-//}
 
 static t_redir_type	get_redir_type(t_token_type token_type)
 {
@@ -88,17 +28,15 @@ static t_redir_type	get_redir_type(t_token_type token_type)
 static t_redirection	*get_cmd_redir(t_token **start)
 {
 	t_token			*curr;
-	int				redir_len;
 	t_redirection	*redir_lst;
 	t_redirection	*redir;
 
 	curr = *start;
-	redir_len = 0;
 	redir_lst = NULL;
 	while (curr && curr->type != PIPE)
 	{
-		if (curr->type == INPUT || curr->type == HEREDOC || \
-			curr->type == OUTPUT || curr->type == APPEND)
+		if (curr->type == INPUT || curr->type == HEREDOC
+			|| curr->type == OUTPUT || curr->type == APPEND)
 		{
 			redir = ft_redir_new();
 			redir->filename = curr->next->content;
@@ -110,44 +48,41 @@ static t_redirection	*get_cmd_redir(t_token **start)
 	return (redir_lst);
 }
 
-static t_token *go_to_next_cmd(t_token **start)
+static t_token	*go_to_next_cmd(t_token **start)
 {
-    t_token *current;
+	t_token	*current;
 
-    current = *start;
-    while (current && current->type != PIPE)
-        current = current->next;
-    if (!current)
-        return (NULL);
-    return (current->next);
+	current = *start;
+	while (current && current->type != PIPE)
+		current = current->next;
+	if (!current)
+		return (NULL);
+	return (current->next);
 }
 
 t_cmd	*parser(t_token **token_lst, char **env)
 {
-	t_token	*current_token;
-	t_cmd	*current_cmd;
+	t_token	*c_token;
+	t_cmd	*c_cmd;
 	t_cmd	*lst_cmd;
 
 	if (!check_syntax(*token_lst, env))
 		return (ft_token_clear(token_lst), NULL);
 	lst_cmd = ft_cmd_new();
-	free((current_cmd = lst_cmd, current_token = *token_lst, NULL));
-	current_cmd = lst_cmd;
-	current_token = *token_lst;
-	while (current_token)
+	free((c_cmd = lst_cmd, c_token = *token_lst, NULL));
+	while (c_token)
 	{
-		current_cmd->envp = env;
-		current_cmd->args = get_cmd_args(&current_token);
-		current_cmd->cmd_with_path = NULL;
-		if (current_cmd->args && current_cmd->args[0])
-			current_cmd->cmd_with_path = \
-				get_cmd_with_path(current_cmd->args[0], get_path(env));
-		current_cmd->redir = get_cmd_redir(&current_token);
-		current_token = go_to_next_cmd(&current_token);
-		if (current_token)
+		free((c_cmd->envp = env, c_cmd->args = get_cmd_args(&c_token), NULL));
+		c_cmd->cmd_with_path = NULL;
+		if (c_cmd->args && c_cmd->args[0])
+			c_cmd->cmd_with_path
+				= get_cmd_with_path(c_cmd->args[0], get_path(env));
+		c_cmd->redir = get_cmd_redir(&c_token);
+		c_token = go_to_next_cmd(&c_token);
+		if (c_token)
 		{
-			current_cmd->next = ft_cmd_new();
-			current_cmd = current_cmd->next;
+			c_cmd->next = ft_cmd_new();
+			c_cmd = c_cmd->next;
 		}
 	}
 	return (lst_cmd);
