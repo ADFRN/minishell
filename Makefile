@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
+#    By: afournie <afournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/04/20 16:09:43 by ttiprez          ###   ########.fr        #
+#    Updated: 2026/04/21 11:56:32 by afournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,27 +80,27 @@ LIBFT       = $(LIBFT_DIR)/libft.a
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	@echo "$(YELLOW)Linking $(NAME)...$(RESET)"
+	@printf "$(YELLOW)Linking $(NAME)...$(RESET)\n"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
-	@echo "$$MINISHELL_ART"
-	@echo "$(GREEN)Minishell est prêt à l'emploi !$(RESET)"
+	@printf "%b\n""$$MINISHELL_ART"
+	@printf "\n\n$(GREEN)Minishell est prêt à l'emploi !$(RESET)\n"
 
 $(LIBFT):
-	@echo "$(MAGENTA)Construction de la Libft...$(RESET)"
+	@printf "$(MAGENTA)Construction de la Libft...$(RESET)\n"
 	@make -C $(LIBFT_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFT_DIR) -c $< -o $@
-	@echo "$(BLUE)Compiling:$(RESET) $(notdir $<)"
+	@printf "$(BLUE)Compiling:$(RESET)%s\n" "$(notdir $<)"
 
 clean:
-	@echo "$(RED)Nettoyage des objets...$(RESET)"
+	@printf "$(RED)Nettoyage des objets...$(RESET)\n"
 	@make clean -C $(LIBFT_DIR)
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@echo "$(RED)Suppression de l'exécutable...$(RESET)"
+	@printf "$(RED)Suppression de l'exécutable...$(RESET)\n"
 	@make fclean -C $(LIBFT_DIR)
 	@rm -f $(NAME)
 

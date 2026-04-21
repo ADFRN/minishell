@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
+#    By: afournie <afournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/05 15:56:04 by afournie          #+#    #+#              #
-#    Updated: 2026/04/09 14:28:47 by ttiprez          ###   ########.fr        #
+#    Updated: 2026/04/21 11:57:12 by afournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(AR) $(NAME) $(OBJS)
-	@echo "$(GREEN)$(NAME) est compilé avec succès !           $(RESET)"
+	@printf "$(GREEN)$(NAME) est compilé avec succès !           $(RESET)\n"
 
 %.o: %.c
 	@$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE) + 1))))
@@ -61,11 +61,11 @@ $(NAME): $(OBJS)
 
 clean:
 	@$(RM) $(OBJS)
-	@echo "$(RED)Objets nettoyés.$(RESET)"
+	@printf "$(RED)Objets nettoyés.$(RESET)\n"
 
 fclean: clean
 	@$(RM) $(NAME)
-	@echo "$(RED)$(NAME) supprimé.$(RESET)"
+	@printf "$(RED)$(NAME) supprimé.$(RESET)\n"
 
 re: fclean all
 
