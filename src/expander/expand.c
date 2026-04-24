@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 15:26:37 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/10 14:55:34 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/24 16:49:12 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	add_var(char **new_str, char *var_name, char *var_val)
 	return (len);
 }
 
-static void	expand_str(char **str, char **envp, t_state *state)
+static void	expand_str(char **str, t_env *env, t_state *state)
 {
 	char	*new;
 	char	*tmp;
@@ -52,7 +52,7 @@ static void	expand_str(char **str, char **envp, t_state *state)
 		{
 			i++;
 			tmp = extract_var_name(&(*str)[i]);
-			i += add_var(&new, tmp, get_envp(envp, tmp));
+			i += add_var(&new, tmp, get_envp(env, tmp));
 		}
 		else
 		{
@@ -64,10 +64,10 @@ static void	expand_str(char **str, char **envp, t_state *state)
 	*str = new;
 }
 
-void	expand(char **str, char **envp)
+void	expand(char **str, t_env *env)
 {
 	t_state	state;
 
 	state = DEFAULT;
-	expand_str(str, envp, &state);
+	expand_str(str, env, &state);
 }

@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/21 16:59:45 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/24 18:45:36 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 /* --- CONSTANTS --- */
 # define _POSIX_C_SOURCE	200809L	// Pour signal.h
+# define DEFAULT_PATH		"/usr/local/bin:/usr/local/sbin:\
+/usr/bin:/usr/sbin:/bin:/sbin"
 # define HEREDOC_LIMITS		16
 	/* --- RETURN_CODE --- */
 # define HERE_DOC_EXCEED	2
@@ -96,6 +98,21 @@ typedef struct s_cmd
 	struct s_cmd			*next;
 }	t_cmd;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+	struct s_env	*prev;
+}	t_env;
+
+typedef struct s_mini
+{
+	t_env	*env;
+	t_cmd	*cmds;
+	int		last_exit;
+}	t_mini;
+
 typedef struct s_lstcmd
 {
 	char					**cmd_split;
@@ -115,35 +132,21 @@ int							get_operator_len(char *str);
 int							get_word_len(char *str);
 void						set_state(char c, t_state *state);
 
-//	token_utils.c
-t_token						*ft_token_new(char *content, t_token_type type);
-void						ft_token_add_back(t_token **lst, t_token *new);
-void						ft_token_clear(t_token **lst);
-t_token_type				get_operator_type(char *str);
-void						print_tokens(t_token **lst);
-
 //	parser.c
-t_cmd						*parser(t_token **token_lst, char **env);
+t_cmd						*parser(t_token **token_lst, t_env **env);
 //	syntax_error.c
-bool						check_syntax(t_token *token_lst, char **env);
+bool						check_syntax(t_token *token_lst, t_env **env);
 
 // Expander
-void						expand(char **str, char **envp);
-char						*get_envp(char **envp, char *to_find);
-
-// Env
-void						free_env(char **env);
-char						**env_cpy(char **envp);
-int							count_env_vars(char **envp);
+void						expand(char **str, t_env *env);
 
 // Exec & Builtins
-// void				exec_cmd(char *rl);
 char						*exec_pwd(void);
-int							exec_cd(t_cmd *cmd);
-void						exec_env(t_cmd *cmd);
+int							exec_cd(t_cmd *cmd, t_env **env);
+void						exec_env(t_env *env);
 void						exec_echo(t_cmd *cmd);
-void						exec_export(t_cmd *cmd, char ***envcpy);
-void						exec_unset(t_cmd *cmd, char ***env_ptr);
+void						exec_export(t_cmd *cmd, t_env **env);
+int							exec_unset(t_cmd *cmd, t_env **env);
 
 // Signals
 void						init_signal(void);
@@ -157,40 +160,56 @@ void						ft_cmd_add_back(t_cmd **lst, t_cmd *new);
 void						ft_print_lst_cmd(t_cmd **lst_cmd);
 char						**get_cmd_args(t_token **start);
 
-// redirection_utils.c
+//	env_utils.c
+t_env						*ft_env_new(void);
+void						ft_env_add_back(t_env **lst, t_env *new);
+void						ft_env_remove(t_env **lst, char *key);
+void						ft_env_free(t_env **lst);
+t_env						*ft_env_get(t_env **env, char *key);
+t_env						*init_env(char **envp);
+char						**env_to_char_tab(t_env *env);
+char						*ft_env_get_val(t_env *env, char *key);
+void						ft_env_update(t_env **env, char *key, char *value);
+
+//	mini_utils.c
+t_mini						ft_mini_new(void);
+
+//	redirection_utils.c
 t_redirection				*ft_redir_new(void);
 void						ft_redir_add_back(t_redirection **lst,
 								t_redirection *new);
 
+//	token_utils.c
+t_token						*ft_token_new(char *content, t_token_type type);
+void						ft_token_add_back(t_token **lst, t_token *new);
+void						ft_token_clear(t_token **lst);
+t_token_type				get_operator_type(char *str);
+void						print_tokens(t_token **lst);
+
 // Utils
-char						*get_envp(char **envp, char *to_find);
-int							get_env_i(char **envcpy, char *s);
+char						*get_envp(t_env *env, char *key);
 char						*add_equal(char *to_find);
 void						free_split(char **splitted_words);
-void						cleaning(char **envp);
+void						cleaning(t_env **env);
 
-int							pipex(t_cmd **lst_cmd);
-void						shell_prompt(char **envcpy);
+int							pipex(t_mini *mini);
+void						shell_prompt(t_mini *mini);
 void						exec_echo(t_cmd *cmd);
-
-/* --- PIPEX --- */
-int							pipex(t_cmd **lst_cmd);
 
 /*****************************/
 /*       path_parsing.c      */
 /*****************************/
-char						*get_path(char **envp);
 char						*get_cmd_with_path(char *cmd, char *path);
 
 /*****************************/
 /*       builtins_exec.c     */
 /*****************************/
-void						exec_builtins(t_cmd *cmd);
+void						exec_builtins(t_mini *mini, t_cmd *cmd);
 
 /*****************************/
 /*          child_exec.c     */
 /*****************************/
-int							child_action(t_cmd *cmd, int input_fd,
+int							child_action(t_mini *mini, t_cmd *cmd, int input_fd,
 								int pipe_fd[2]);
 
 /*****************************/

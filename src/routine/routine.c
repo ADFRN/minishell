@@ -6,24 +6,24 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:10:33 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/21 16:26:06 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/24 17:54:08 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	handle_rl(char **rl, char **envcpy)
+static bool	handle_rl(char **rl, t_env *env)
 {
 	if (!(*rl)[0])
 		return (free(*rl), false);
 	add_history(*rl);
 	if (!have_valid_quotes(*rl))
 		return (printf("error: unclosed quote\n"), free(*rl), false);
-	expand(rl, envcpy);
+	expand(rl, env);
 	return (true);
 }
 
-t_cmd	*lexer_parser(char *rl, char **env)
+static t_cmd	*lexer_parser(char *rl, t_env **env)
 {
 	t_token	*lst_token;
 	t_cmd	*lst_cmd;
@@ -40,31 +40,27 @@ t_cmd	*lexer_parser(char *rl, char **env)
 	return (lst_cmd);
 }
 
-void	shell_prompt(char **envcpy)
+void	shell_prompt(t_mini *mini)
 {
 	char	*rl;
-	t_cmd	*lst_cmd;
 
-	while (1)
+	while (1)	
 	{
 		init_signal();
 		rl = readline("Minishell-1.0$ ");
 		if (!rl)
-		{
-			cleaning(envcpy);
-			exit((printf("exit\n"), 0));
-		}
-		if (!handle_rl(&rl, envcpy))
+			exit((cleaning(&mini->env), printf("exit\n"), 0));
+		if (!handle_rl(&rl, mini->env))
 			continue ;
-		lst_cmd = lexer_parser(rl, envcpy);
-		if (!lst_cmd)
+		mini->cmds = lexer_parser(rl, &mini->env);
+		if (!mini->cmds)
 			continue ;
-		if (!preprocess_heredocs(&lst_cmd))
+		if (!preprocess_heredocs(&mini->cmds))
 			continue ;
 		ignore_signals_parent();
-		pipex(&lst_cmd);
-		delete_heredocs_files(&lst_cmd);
+		pipex(mini);
+		delete_heredocs_files(&mini->cmds);
 		ft_free();
 	}
-	cleaning(envcpy);
+	cleaning(&mini->env);
 }

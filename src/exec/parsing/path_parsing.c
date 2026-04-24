@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:36:03 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/09 12:16:33 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/24 17:41:15 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,4 @@ char	*get_cmd_with_path(char *cmd, char *path)
 			return (free_split(splitted_path), full_cmd);
 	}
 	return (free_split(splitted_path), NULL);
-}
-
-/****************************************/
-/* 		Renvoie le path depuis envp		*/
-/****************************************/
-char	*get_path(char **envp)
-{
-	int	i;
-
-	i = -1;
-	while (envp[++i])
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-			return (&envp[i][5]);
-	return (NULL);
 }

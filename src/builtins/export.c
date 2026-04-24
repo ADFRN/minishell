@@ -6,70 +6,54 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:55:47 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/21 17:00:02 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/24 18:00:17 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	realloc_env(char ***env_ptr, char *new_var)
+void	print_export(t_env	*env)
 {
-	char	**new_env;
-	char	**old_env;
-	int		i;
-	int		size;
+	t_env	*curr;
 
-	old_env = *env_ptr;
-	size = count_env_vars(old_env);
-	new_env = malloc(sizeof(char *) * (size + 2));
-	if (!new_env)
-		return ;
-	i = 0;
-	while (i < size)
+	curr = env;
+	while (curr)
 	{
-		new_env[i] = old_env[i];
-		i++;
+		if (!curr->value)
+			printf("export %s\n", curr->key);
+		else
+			printf("export %s=%s\n", curr->key, curr->value);
+		curr = curr->next;
 	}
-	new_env[i] = ft_strdup_classic(new_var);
-	new_env[i + 1] = NULL;
-	free(old_env);
-	*env_ptr = new_env;
 }
 
-static void	print_export(char **env)
+static bool	add_var(char *s, t_env **env)
 {
-	int	i;
+	char	*separator;
+	t_env	*new_node;
 
-	i = -1;
-	while (env[++i])
-		printf("export %s\n", env[i]);
-}
-
-static void	add_var(char *s, char ***env)
-{
-	char	*ptr;
-	char	*key;
-	int		env_index;
-
-	ptr = ft_strchr(s, '=');
-	if (ptr)
-		key = ft_substr(s, 0, ptr - s);
-	else
-		key = ft_strdup(s);
-	env_index = get_env_i(*env, key);
-	if (env_index != -1)
+	separator = ft_strchr(s, '=');
+	if (separator)
+	new_node = ft_env_new();
+	if (!new_node)
+		return (NULL);
+	if (separator)
 	{
-		if (ptr)
-		{
-			free((*env)[env_index]);
-			(*env)[env_index] = ft_strdup_classic(s);
-		}
+		new_node->key = ft_substr_classic(s, 0, separator - s);
+		new_node->value = ft_strdup_classic(separator + 1);
 	}
 	else
-		realloc_env(env, s);
+	{
+		new_node->key = ft_strdup_classic(s);
+		new_node->value = NULL;
+	}
+	if (!new_node->key || !new_node->value)
+		return (false);
+	ft_env_add_back(env, new_node);
+	return (true);
 }
 
-void	exec_export(t_cmd *cmd, char ***envcpy)
+void	exec_export(t_cmd *cmd, t_env **env)
 {
 	int	i;
 
@@ -77,8 +61,9 @@ void	exec_export(t_cmd *cmd, char ***envcpy)
 	{
 		i = 0;
 		while (cmd->args[++i])
-			add_var(cmd->args[i], envcpy);
+			if (!add_var(cmd->args[i], env))
+				exit((ft_free(), ft_env_free(env), EXIT_FAILURE));
 	}
 	else
-		print_export(*envcpy);
+		print_export(*env);
 }

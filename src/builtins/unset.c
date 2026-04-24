@@ -3,37 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 15:59:55 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/15 16:06:17 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/24 17:36:02 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_unset(t_cmd *cmd, char ***env_ptr)
+int	exec_unset(t_cmd *cmd, t_env **env)
 {
-	int		arg_idx;
-	int		env_idx;
-	char	**env;
+	int		i;
 
-	if (!cmd->args[1] || !env_ptr || !*env_ptr)
-		return ;
-	arg_idx = 1;
-	while (cmd->args[arg_idx])
-	{
-		env = *env_ptr;
-		env_idx = get_env_i(env, cmd->args[arg_idx]);
-		if (env_idx != -1)
-		{
-			free(env[env_idx]);
-			while (env[env_idx])
-			{
-				env[env_idx] = env[env_idx + 1];
-				env_idx++;
-			}
-		}
-		arg_idx++;
-	}
+	if (!cmd->args[1] || !env)
+		return (1);
+	i = 0;
+	while (cmd->args[++i])
+		ft_env_remove(env, cmd->args[i]);
+	return (2);
 }

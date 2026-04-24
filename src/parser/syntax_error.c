@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:14:20 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/21 16:05:46 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/24 17:38:11 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static bool	report_syntax_error(char *token_content)
 	return (false);
 }
 
-static bool	report_heredoc_error(char **env)
+static bool	report_heredoc_error(t_env **env)
 {
 	printf("minishell :maximum here-document count exceeded");
 	cleaning(env);
@@ -35,7 +35,7 @@ static bool	is_redir(int type)
 		|| type == APPEND);
 }
 
-bool	check_syntax(t_token *token_lst, char **env)
+bool	check_syntax(t_token *token_lst, t_env **env)
 {
 	t_token	*current;
 	int		nb_heredoc;

@@ -6,22 +6,27 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 13:25:55 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/21 11:47:12 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/24 17:57:24 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_env(t_cmd *cmd)
+void	exec_env(t_env	*env)
 {
-	int	i;
+	t_env	*curr;
 
-	i = 0;
-	while (cmd->envp[i])
+	curr = env;
+	while (curr)
 	{
-		if (ft_strncmp(cmd->envp[i], "=", ft_strlen(cmd->envp[i])))
-			printf("%s\n", cmd->envp[i]);
-		i++;
+		if (curr->key && curr->value)
+		{
+			ft_putstr(curr->key);
+			ft_putstr("=");
+			ft_putstr(curr->value);
+			ft_putstr("\n");
+		}
+		curr = curr->next;
 	}
 }
 

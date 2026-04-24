@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   mini_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/20 16:09:12 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/24 17:37:07 by ttiprez          ###   ########.fr       */
+/*   Created: 2026/04/24 14:23:06 by ttiprez           #+#    #+#             */
+/*   Updated: 2026/04/24 14:44:15 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cleaning(t_env **env)
+t_mini	ft_mini_new(void)
 {
-	ft_env_free(env);
-	ft_free();
+	t_mini	mini;
+
+	mini.env = NULL;
+	mini.cmds = NULL;
+	mini.last_exit = 0;
+	return (mini);
 }

@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:25 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/21 16:08:59 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/24 18:35:53 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static t_token	*go_to_next_cmd(t_token **start)
 	return (current->next);
 }
 
-t_cmd	*parser(t_token **token_lst, char **env)
+t_cmd	*parser(t_token **token_lst, t_env **env)
 {
 	t_token	*c_token;
 	t_cmd	*c_cmd;
@@ -72,11 +72,13 @@ t_cmd	*parser(t_token **token_lst, char **env)
 	free((c_cmd = lst_cmd, c_token = *token_lst, NULL));
 	while (c_token)
 	{
-		free((c_cmd->envp = env, c_cmd->args = get_cmd_args(&c_token), NULL));
+		c_cmd->args = get_cmd_args(&c_token);
 		c_cmd->cmd_with_path = NULL;
 		if (c_cmd->args && c_cmd->args[0])
-			c_cmd->cmd_with_path
-				= get_cmd_with_path(c_cmd->args[0], get_path(env));
+		{
+			c_cmd->cmd_with_path = get_cmd_with_path(c_cmd->args[0],
+				ft_env_get_val(*env, "PATH"));
+		}
 		c_cmd->redir = get_cmd_redir(&c_token);
 		c_token = go_to_next_cmd(&c_token);
 		if (c_token)

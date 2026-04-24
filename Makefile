@@ -6,7 +6,7 @@
 #    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/04/21 16:13:46 by ttiprez          ###   ########.fr        #
+#    Updated: 2026/04/24 18:31:19 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,6 @@ SRCS        =	$(SRC_DIR)/builtins/builtins.c				\
 				$(SRC_DIR)/builtins/cd.c					\
 				$(SRC_DIR)/builtins/export.c				\
 				$(SRC_DIR)/builtins/unset.c					\
-				$(SRC_DIR)/env/env_utils.c					\
 				$(SRC_DIR)/expander/expand.c				\
             	$(SRC_DIR)/lexer/lexer_utils.c				\
 				$(SRC_DIR)/lexer/lexer.c					\
@@ -62,6 +61,10 @@ SRCS        =	$(SRC_DIR)/builtins/builtins.c				\
 				$(SRC_DIR)/struct/cmd_utils.c				\
 				$(SRC_DIR)/struct/redirection_utils.c		\
 				$(SRC_DIR)/struct/token_utils.c				\
+				$(SRC_DIR)/struct/mini_utils.c				\
+				$(SRC_DIR)/struct/env_utils.c				\
+				$(SRC_DIR)/struct/env_utils2.c				\
+				$(SRC_DIR)/struct/env_utils3.c				\
 				$(SRC_DIR)/utils/utils.c					\
 				$(SRC_DIR)/utils/utils2.c					\
 			  	$(SRC_DIR)/exec/utils/exec_utils.c			\

@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:48:40 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/21 16:25:15 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/24 18:32:43 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	char	**envcpy;
+	t_mini	mini;
 
 	(void)ac;
 	(void)av;
 	g_sig = 0;
-	envcpy = env_cpy(envp);
-	shell_prompt(envcpy);
+	mini = ft_mini_new();
+	mini.env = init_env(envp);
+	shell_prompt(&mini);
 	return (EXIT_SUCCESS);
 }

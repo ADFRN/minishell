@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/21 16:19:17 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/24 15:16:44 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ t_cmd	*ft_cmd_new(void)
 
 	cmd = ft_malloc(sizeof(t_cmd));
 	if (!cmd)
-	{
-		ft_free();
-		exit(EXIT_FAILURE);
-	}
+		return (NULL);
 	cmd->cmd_with_path = NULL;
 	cmd->envp = NULL;
 	cmd->args = NULL;

@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:40:56 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/21 16:04:54 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/24 18:03:47 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	wait_for_children(pid_t last_pid)
 
 bool	is_builtins(t_cmd *cmd)
 {
+	if (!cmd->args[0])
+		return (false);
 	return (!ft_strcmp(cmd->args[0], EXIT) || !ft_strcmp(cmd->args[0], ECHO)
 		|| !ft_strcmp(cmd->args[0], PWD) || !ft_strcmp(cmd->args[0], ENV)
 		|| !ft_strcmp(cmd->args[0], EXPORT) || !ft_strcmp(cmd->args[0], CD)

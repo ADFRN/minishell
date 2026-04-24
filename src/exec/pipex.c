@@ -6,13 +6,13 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/21 16:53:15 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/24 17:42:25 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	exec_solo_builtin(t_cmd *cmd)
+static int	exec_solo_builtin(t_mini *mini, t_cmd *cmd)
 {
 	int	saved_stdin;
 	int	saved_stdout;
@@ -22,7 +22,7 @@ static int	exec_solo_builtin(t_cmd *cmd)
 	saved_stdout = dup(STDOUT_FILENO);
 	if (open_files(&cmd->redir))
 	{
-		exec_builtins(cmd);
+		exec_builtins(mini, cmd);
 		exit_status = 0;
 	}
 	else
@@ -34,27 +34,27 @@ static int	exec_solo_builtin(t_cmd *cmd)
 	return (exit_status);
 }
 
-int	pipex(t_cmd **lst_cmd)
+int	pipex(t_mini *mini)
 {
-	t_cmd	*current;
+	t_cmd	*c_cmds;
 	int		pipe_fd[2];
 	int		input_fd;
 	int		last_pid;
 
-	current = *lst_cmd;
+	c_cmds = mini->cmds;
 	input_fd = -1;
 	last_pid = 0;
-	if (is_builtins(current) && !current->next)
-		return (exec_solo_builtin(current));
-	while (current)
+	if (is_builtins(c_cmds) && !c_cmds->next)
+		return (exec_solo_builtin(mini, c_cmds));
+	while (c_cmds)
 	{
 		free((pipe_fd[0] = -1, pipe_fd[1] = -1, NULL));
-		if (current->next && pipe(pipe_fd) == -1)
-			exit((perror("pipe"), cleaning(current->envp), EXIT_FAILURE));
-		last_pid = child_action(current, input_fd, pipe_fd);
+		if (c_cmds->next && pipe(pipe_fd) == -1)
+			exit((perror("pipe"), cleaning(&mini->env), EXIT_FAILURE));
+		last_pid = child_action(mini, c_cmds, input_fd, pipe_fd);
 		free((safe_close(&input_fd), safe_close(&pipe_fd[1]), NULL));
 		input_fd = pipe_fd[0];
-		current = current->next;
+		c_cmds = c_cmds->next;
 	}
 	safe_close(&input_fd);
 	return (wait_for_children(last_pid));
