@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 10:25:43 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/24 17:47:40 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 11:15:12 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,8 @@ void					*ft_realloc(void *ptr, size_t newsize);
 void					*ft_malloc(int size);
 char					*ft_strdup_classic(const char *s);
 void					*ft_calloc_classic(size_t nmemb, size_t size);
-char					*ft_substr_classic(const char *s, unsigned int start, size_t len);
+char					*ft_substr_classic(const char *s, unsigned int start,
+							size_t len);
 void					ft_free(void);
 
 #endif
