@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/27 12:37:18 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 19:47:36 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,14 +139,15 @@ t_cmd			*parser(t_token **token_lst, t_env **env);
 bool			check_syntax(t_token *token_lst, t_env **env);
 
 // Expander
-void			expand(char **str, t_env *env);
+void			expand(char **str, t_mini *mini);
 
 // Exec & Builtins
-char			*exec_pwd(void);
 int				exec_cd(t_cmd *cmd, t_env **env);
-void			exec_env(t_env *env);
-void			exec_echo(t_cmd *cmd);
-void			exec_export(t_cmd *cmd, t_env **env);
+int				exec_echo(t_cmd *cmd);
+int				exec_env(t_env *env);
+int				exec_exit(t_cmd *cmd, t_env **env);
+int				exec_export(t_cmd *cmd, t_env **env);
+char			*exec_pwd(void);
 int				exec_unset(t_cmd *cmd, t_env **env);
 
 // Signals
@@ -196,17 +197,11 @@ void			cleaning(t_env **env);
 
 int				pipex(t_mini *mini);
 void			shell_prompt(t_mini *mini);
-void			exec_echo(t_cmd *cmd);
 
 /*****************************/
 /*       path_parsing.c      */
 /*****************************/
 char			*get_cmd_with_path(char *cmd, char *path);
-
-/*****************************/
-/*       builtins_exec.c     */
-/*****************************/
-void			exec_builtins(t_mini *mini, t_cmd *cmd);
 
 /*****************************/
 /*          child_exec.c     */

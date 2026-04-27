@@ -6,20 +6,20 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:10:33 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/27 12:38:53 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 19:25:02 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	handle_rl(char **rl, t_env *env)
+static bool	handle_rl(char **rl, t_mini *mini)
 {
 	if (!(*rl)[0])
 		return (free(*rl), false);
 	add_history(*rl);
 	if (!have_valid_quotes(*rl))
 		return (printf("error: unclosed quote\n"), free(*rl), false);
-	expand(rl, env);
+	expand(rl, mini);
 	return (true);
 }
 
@@ -49,8 +49,8 @@ void	shell_prompt(t_mini *mini)
 		init_signal();
 		rl = readline("Minishell-1.0$ ");
 		if (!rl)
-			exit((cleaning(&mini->env), printf("exit\n"), 0));
-		if (!handle_rl(&rl, mini->env))
+			exit((cleaning(&mini->env), printf("exit\n"), mini->last_exit));
+		if (!handle_rl(&rl, mini))
 			continue ;
 		mini->cmds = lexer_parser(rl, &mini->env);
 		if (!mini->cmds)
@@ -58,7 +58,7 @@ void	shell_prompt(t_mini *mini)
 		if (!preprocess_heredocs(&mini->cmds, mini))
 			continue ;
 		ignore_signals_parent();
-		pipex(mini);
+		mini->last_exit = pipex(mini);
 		delete_heredocs_files(&mini->cmds);
 		ft_free();
 	}

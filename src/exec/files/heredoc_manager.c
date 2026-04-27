@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 11:53:02 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/27 12:42:04 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 19:22:40 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static char	*generate_filename(char *base)
 	close(fd);
 	to_add = ft_itoa(value);
 	res = ft_strjoin(base, to_add);
-	free(to_add);
 	return (res);
 }
 

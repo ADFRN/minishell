@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/10 15:10:50 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/27 19:38:30 by ttiprez          ###   ########.fr       */
+/*   Created: 2026/04/27 19:39:30 by ttiprez           #+#    #+#             */
+/*   Updated: 2026/04/27 19:45:36 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_echo(t_cmd *cmd)
+char	*exec_pwd(void)
 {
-	bool	has_option;
-	int		i;
+	char	tmp[PATH_MAX];
+	char	*path;
 
-	i = 1;
-	if (!cmd->args[1])
-		has_option = false;
-	else
-		has_option = !ft_strcmp(cmd->args[1], "-n");
-	while (cmd->args[i + has_option])
+	if (getcwd(tmp, PATH_MAX) != NULL)
 	{
-		printf("%s", cmd->args[i + has_option]);
-		if (cmd->args[i + has_option + 1])
-			printf(" ");
-		i++;
+		path = ft_strdup(tmp);
+		if (!path)
+			return (NULL);
+		return (path);
 	}
-	if (!has_option)
-		printf("\n");
-	return (EXIT_SUCCESS);
+	return (perror("minishell: pwd"), NULL);
 }
