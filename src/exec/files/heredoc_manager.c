@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 11:53:02 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/21 16:03:36 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 11:36:30 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,31 @@ static char	*generate_filename(char *base)
 
 static char	*run_heredoc(t_redirection *redir)
 {
-	char	*line;
+	char	buf[100000];
+	int		nb_read;
 	char	*filename;
 	int		fd;
+	char	*other_eof;
 
 	filename = generate_filename("/tmp/.ms_heredoc_");
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	other_eof = ft_strjoin(redir->filename, "\n");
+	if (!other_eof)
+		return (close(fd), NULL);
 	if (fd < 0)
 		return (NULL);
 	while (1)
 	{
-		line = readline("> ");
-		if (!line || g_sig == SIGINT || ft_strcmp(line, redir->filename) == 0)
-		{
-			free(line);
+		free((ft_putstr("> "), nb_read = read(0, buf, sizeof(buf)), NULL));
+		if (nb_read <= 0)
 			break ;
-		}
-		free((ft_putendl_fd(line, fd), free(line), NULL));
+		buf[nb_read] = 0;
+		if (!ft_strcmp(buf, redir->filename)
+			|| !ft_strcmp(buf, other_eof))
+			break ;
+		write(fd, buf, nb_read);
 	}
-	close(fd);
-	if (g_sig == SIGINT)
-		return (NULL);
-	return (filename);
+	return (close(fd), filename);
 }
 
 bool	preprocess_heredocs(t_cmd **lst_cmd)

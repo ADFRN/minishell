@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 15:54:54 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/24 18:18:13 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 11:50:27 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static t_env	*add_node(char *key, char *value)
 	return (node);
 }
 
-static t_env	*minimum_env()
+static t_env	*minimum_env(void)
 {
 	t_env	*head;
 	t_env	*node;
@@ -107,7 +107,7 @@ char	**env_to_char_tab(t_env *env)
 		env_tab[i] = ft_strjoin(tmp, env->value);
 		free(tmp);
 		if (!env_tab[i])
-			return (free_split(env_tab), NULL);		
+			return (free_split(env_tab), NULL);
 		env = env->next;
 		i++;
 	}

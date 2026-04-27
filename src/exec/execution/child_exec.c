@@ -6,13 +6,13 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:50:19 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/24 18:32:38 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 11:41:01 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void exit_child(t_mini *mini)
+static void	exit_child(t_mini *mini)
 {
 	cleaning(&mini->env);
 	close(STDIN_FILENO);
@@ -33,15 +33,15 @@ static void	exec_cmd(t_mini *mini, t_cmd *cmd)
 	exit_child((mini->last_exit = CMD_EXEC_ERROR, mini));
 }
 
-static void	child_process(t_mini *mini, t_cmd *cmd, int input_fd, int pipe_fd[2])
+static void	child_process(t_mini *mini, t_cmd *cmd, int fd_in, int pipe_fd[2])
 {
 	reset_signals_child();
 	safe_close(&pipe_fd[0]);
-	if (input_fd != -1)
+	if (fd_in != -1)
 	{
-		if (dup2(input_fd, STDIN_FILENO) == -1)
+		if (dup2(fd_in, STDIN_FILENO) == -1)
 			exit((cleaning(&mini->env), EXIT_FAILURE));
-		safe_close(&input_fd);
+		safe_close(&fd_in);
 	}
 	if (pipe_fd[1] != -1)
 	{
@@ -61,7 +61,7 @@ static void	child_process(t_mini *mini, t_cmd *cmd, int input_fd, int pipe_fd[2]
 	exit_child((mini->last_exit = EXIT_SUCCESS, mini));
 }
 
-int	child_action(t_mini *mini, t_cmd *cmd,int input_fd, int pipe_fd[2])
+int	child_action(t_mini *mini, t_cmd *cmd, int fd_in, int pipe_fd[2])
 {
 	pid_t	pid;
 
@@ -69,6 +69,6 @@ int	child_action(t_mini *mini, t_cmd *cmd,int input_fd, int pipe_fd[2])
 	if (pid == -1)
 		exit((perror("fork"), cleaning(&mini->env), EXIT_FAILURE));
 	if (pid == 0)
-		child_process(mini, cmd, input_fd, pipe_fd);
+		child_process(mini, cmd, fd_in, pipe_fd);
 	return (pid);
 }

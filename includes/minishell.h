@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/24 18:45:36 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 11:39:37 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,111 +124,111 @@ typedef struct s_lstcmd
 /* --- PROTOTYPES --- */
 
 // Lexer
-t_token						*lexer(char *line);
+t_token			*lexer(char *line);
 //	lexer_utils.c
-bool						have_valid_quotes(char *str);
-bool						is_metachar(char c);
-int							get_operator_len(char *str);
-int							get_word_len(char *str);
-void						set_state(char c, t_state *state);
+bool			have_valid_quotes(char *str);
+bool			is_metachar(char c);
+int				get_operator_len(char *str);
+int				get_word_len(char *str);
+void			set_state(char c, t_state *state);
 
 //	parser.c
-t_cmd						*parser(t_token **token_lst, t_env **env);
+t_cmd			*parser(t_token **token_lst, t_env **env);
 //	syntax_error.c
-bool						check_syntax(t_token *token_lst, t_env **env);
+bool			check_syntax(t_token *token_lst, t_env **env);
 
 // Expander
-void						expand(char **str, t_env *env);
+void			expand(char **str, t_env *env);
 
 // Exec & Builtins
-char						*exec_pwd(void);
-int							exec_cd(t_cmd *cmd, t_env **env);
-void						exec_env(t_env *env);
-void						exec_echo(t_cmd *cmd);
-void						exec_export(t_cmd *cmd, t_env **env);
-int							exec_unset(t_cmd *cmd, t_env **env);
+char			*exec_pwd(void);
+int				exec_cd(t_cmd *cmd, t_env **env);
+void			exec_env(t_env *env);
+void			exec_echo(t_cmd *cmd);
+void			exec_export(t_cmd *cmd, t_env **env);
+int				exec_unset(t_cmd *cmd, t_env **env);
 
 // Signals
-void						init_signal(void);
-void						reset_signals_child(void);
-void						ignore_signals_parent(void);
+void			init_signal(void);
+void			reset_signals_child(void);
+void			ignore_signals_parent(void);
 
 // Struct
 //	cmd_utils.c
-t_cmd						*ft_cmd_new(void);
-void						ft_cmd_add_back(t_cmd **lst, t_cmd *new);
-void						ft_print_lst_cmd(t_cmd **lst_cmd);
-char						**get_cmd_args(t_token **start);
+t_cmd			*ft_cmd_new(void);
+void			ft_cmd_add_back(t_cmd **lst, t_cmd *new);
+void			ft_print_lst_cmd(t_cmd **lst_cmd);
+char			**get_cmd_args(t_token **start);
 
 //	env_utils.c
-t_env						*ft_env_new(void);
-void						ft_env_add_back(t_env **lst, t_env *new);
-void						ft_env_remove(t_env **lst, char *key);
-void						ft_env_free(t_env **lst);
-t_env						*ft_env_get(t_env **env, char *key);
-t_env						*init_env(char **envp);
-char						**env_to_char_tab(t_env *env);
-char						*ft_env_get_val(t_env *env, char *key);
-void						ft_env_update(t_env **env, char *key, char *value);
+t_env			*ft_env_new(void);
+void			ft_env_add_back(t_env **lst, t_env *new);
+void			ft_env_remove(t_env **lst, char *key);
+void			ft_env_free(t_env **lst);
+t_env			*ft_env_get(t_env **env, char *key);
+t_env			*init_env(char **envp);
+char			**env_to_char_tab(t_env *env);
+char			*ft_env_get_val(t_env *env, char *key);
+void			ft_env_update(t_env **env, char *key, char *value);
 
 //	mini_utils.c
-t_mini						ft_mini_new(void);
+t_mini			ft_mini_new(void);
 
 //	redirection_utils.c
-t_redirection				*ft_redir_new(void);
-void						ft_redir_add_back(t_redirection **lst,
-								t_redirection *new);
+t_redirection	*ft_redir_new(void);
+void			ft_redir_add_back(t_redirection **lst,
+					t_redirection *new);
 
 //	token_utils.c
-t_token						*ft_token_new(char *content, t_token_type type);
-void						ft_token_add_back(t_token **lst, t_token *new);
-void						ft_token_clear(t_token **lst);
-t_token_type				get_operator_type(char *str);
-void						print_tokens(t_token **lst);
+t_token			*ft_token_new(char *content, t_token_type type);
+void			ft_token_add_back(t_token **lst, t_token *new);
+void			ft_token_clear(t_token **lst);
+t_token_type	get_operator_type(char *str);
+void			print_tokens(t_token **lst);
 
 // Utils
-char						*get_envp(t_env *env, char *key);
-char						*add_equal(char *to_find);
-void						free_split(char **splitted_words);
-void						cleaning(t_env **env);
+char			*get_envp(t_env *env, char *key);
+char			*add_equal(char *to_find);
+void			free_split(char **splitted_words);
+void			cleaning(t_env **env);
 
-int							pipex(t_mini *mini);
-void						shell_prompt(t_mini *mini);
-void						exec_echo(t_cmd *cmd);
+int				pipex(t_mini *mini);
+void			shell_prompt(t_mini *mini);
+void			exec_echo(t_cmd *cmd);
 
 /*****************************/
 /*       path_parsing.c      */
 /*****************************/
-char						*get_cmd_with_path(char *cmd, char *path);
+char			*get_cmd_with_path(char *cmd, char *path);
 
 /*****************************/
 /*       builtins_exec.c     */
 /*****************************/
-void						exec_builtins(t_mini *mini, t_cmd *cmd);
+void			exec_builtins(t_mini *mini, t_cmd *cmd);
 
 /*****************************/
 /*          child_exec.c     */
 /*****************************/
-int							child_action(t_mini *mini, t_cmd *cmd, int input_fd,
-								int pipe_fd[2]);
+int				child_action(t_mini *mini, t_cmd *cmd, int fd_in,
+					int pipe_fd[2]);
 
 /*****************************/
 /*       file_manager.c      */
 /*****************************/
-bool						open_files(t_redirection **redir);
+bool			open_files(t_redirection **redir);
 
 /*****************************/
 /*     heredoc_manager.c     */
 /*****************************/
-bool						preprocess_heredocs(t_cmd **lst_cmd);
-void						delete_heredocs_files(t_cmd **lst_cmd);
+bool			preprocess_heredocs(t_cmd **lst_cmd);
+void			delete_heredocs_files(t_cmd **lst_cmd);
 
 /*****************************/
 /*     		utils.c		     */
 /*****************************/
-int							wait_for_children(pid_t last_pid);
-bool						is_builtins(t_cmd *cmd);
-void						cmd_not_found(char *cmd);
-void						safe_close(int	*fd);
+int				wait_for_children(pid_t last_pid);
+bool			is_builtins(t_cmd *cmd);
+void			cmd_not_found(char *cmd);
+void			safe_close(int	*fd);
 
 #endif

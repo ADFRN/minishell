@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:25 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/24 18:35:53 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 11:42:19 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,12 @@ t_cmd	*parser(t_token **token_lst, t_env **env)
 		if (c_cmd->args && c_cmd->args[0])
 		{
 			c_cmd->cmd_with_path = get_cmd_with_path(c_cmd->args[0],
-				ft_env_get_val(*env, "PATH"));
+					ft_env_get_val(*env, "PATH"));
 		}
 		c_cmd->redir = get_cmd_redir(&c_token);
 		c_token = go_to_next_cmd(&c_token);
 		if (c_token)
-		{
-			c_cmd->next = ft_cmd_new();
-			c_cmd = c_cmd->next;
-		}
+			free((c_cmd->next = ft_cmd_new(), c_cmd = c_cmd->next, NULL));
 	}
 	return (lst_cmd);
 }

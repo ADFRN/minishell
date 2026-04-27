@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:10:33 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/24 17:54:08 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 11:51:50 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	shell_prompt(t_mini *mini)
 {
 	char	*rl;
 
-	while (1)	
+	while (1)
 	{
 		init_signal();
 		rl = readline("Minishell-1.0$ ");

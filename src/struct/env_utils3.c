@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 18:28:50 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/24 18:48:09 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 11:51:09 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_env_update(t_env **env, char *key, char *value)
 	new->key = ft_strdup_classic(key);
 	new->value = ft_strdup_classic(value);
 	if (!new->key || !new->value)
-		exit((free(new->key), free(new->value), free(new), 
-			ft_free(), ft_env_free(env), EXIT_FAILURE));
+		exit((free(new->key), free(new->value), free(new),
+				ft_free(), ft_env_free(env), EXIT_FAILURE));
 	ft_env_add_back(env, new);
 }

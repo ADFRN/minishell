@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 15:06:00 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/24 18:25:42 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 11:49:56 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_env_add_back(t_env **lst, t_env *new)
 	last->next = new;
 	new->prev = last;
 }
- 
+
 void	ft_env_remove(t_env **lst, char *key)
 {
 	t_env	*curr;
@@ -83,7 +83,7 @@ void	ft_env_free(t_env **lst)
 
 t_env	*ft_env_get(t_env **env, char *key)
 {
-	t_env *curr;
+	t_env	*curr;
 
 	curr = *env;
 	while (curr)
