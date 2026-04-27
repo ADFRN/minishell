@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
+#    By: afournie <afournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/04/24 18:31:19 by ttiprez          ###   ########.fr        #
+#    Updated: 2026/04/27 12:39:22 by afournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,8 @@ SRCS        =	$(SRC_DIR)/builtins/builtins.c				\
 				$(SRC_DIR)/builtins/echo.c					\
 				$(SRC_DIR)/builtins/cd.c					\
 				$(SRC_DIR)/builtins/export.c				\
+				$(SRC_DIR)/builtins/export_print.c			\
+				$(SRC_DIR)/builtins/export_utils.c			\
 				$(SRC_DIR)/builtins/unset.c					\
 				$(SRC_DIR)/expander/expand.c				\
             	$(SRC_DIR)/lexer/lexer_utils.c				\

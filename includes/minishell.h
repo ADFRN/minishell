@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/27 12:37:18 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 12:49:45 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,12 +142,19 @@ bool			check_syntax(t_token *token_lst, t_env **env);
 void			expand(char **str, t_env *env);
 
 // Exec & Builtins
-char			*exec_pwd(void);
-int				exec_cd(t_cmd *cmd, t_env **env);
-void			exec_env(t_env *env);
-void			exec_echo(t_cmd *cmd);
-void			exec_export(t_cmd *cmd, t_env **env);
-int				exec_unset(t_cmd *cmd, t_env **env);
+char						*exec_pwd(void);
+int							exec_cd(t_cmd *cmd, t_env **env);
+void						exec_env(t_env *env);
+void						exec_echo(t_cmd *cmd);
+int							exec_export(t_cmd *cmd, t_env **env);
+void						print_export(t_env *env);
+bool						create_var(t_env **env, char *key, char *value);
+int							is_valid_args(char *s);
+bool						parse_kv(char *s, char **key, char **value,
+								char **sep);
+bool						update_var(t_env *env, char *key, char *value,
+								char *sep);
+int							exec_unset(t_cmd *cmd, t_env **env);
 
 // Signals
 void			ctrlc_heredoc_handler(int sig);
