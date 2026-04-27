@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 11:53:02 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/27 11:36:30 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 12:42:04 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,32 @@ static char	*generate_filename(char *base)
 	return (res);
 }
 
+static void	heredoc_loop(t_redirection *redir, char *other_eof, int fd)
+{
+	int		nb_read;
+	char	buf[100000];
+
+	while (1)
+	{
+		free((ft_putstr("> "), nb_read = read(0, buf, sizeof(buf)), NULL));
+		if (nb_read < 0)
+			break ;
+		if (nb_read == 0)
+		{
+			printf("\nMinishell: warning: here-document delimited \
+by end-of-file (wanted `%s')\n", redir->filename);
+			break ;
+		}
+		buf[nb_read] = 0;
+		if (!ft_strcmp(buf, redir->filename)
+			|| !ft_strcmp(buf, other_eof))
+			break ;
+		write(fd, buf, nb_read);
+	}
+}
+
 static char	*run_heredoc(t_redirection *redir)
 {
-	char	buf[100000];
-	int		nb_read;
 	char	*filename;
 	int		fd;
 	char	*other_eof;
@@ -46,26 +68,16 @@ static char	*run_heredoc(t_redirection *redir)
 		return (close(fd), NULL);
 	if (fd < 0)
 		return (NULL);
-	while (1)
-	{
-		free((ft_putstr("> "), nb_read = read(0, buf, sizeof(buf)), NULL));
-		if (nb_read <= 0)
-			break ;
-		buf[nb_read] = 0;
-		if (!ft_strcmp(buf, redir->filename)
-			|| !ft_strcmp(buf, other_eof))
-			break ;
-		write(fd, buf, nb_read);
-	}
+	heredoc_loop(redir, other_eof, fd);
 	return (close(fd), filename);
 }
 
-bool	preprocess_heredocs(t_cmd **lst_cmd)
+bool	preprocess_heredocs(t_cmd **lst_cmd, t_mini *mini)
 {
 	t_cmd			*curr_cmd;
 	t_redirection	*curr_redir;
 
-	curr_cmd = *lst_cmd;
+	free((curr_cmd = *lst_cmd, signal(SIGINT, ctrlc_heredoc_handler), NULL));
 	while (curr_cmd)
 	{
 		curr_redir = curr_cmd->redir;
@@ -81,7 +93,10 @@ bool	preprocess_heredocs(t_cmd **lst_cmd)
 		}
 		curr_cmd = curr_cmd->next;
 	}
-	return (true);
+	init_signal();
+	if (g_sig == SIGINT)
+		return (mini->last_exit = EXIT_SIGNAL_BASE + g_sig, g_sig = 0, false);
+	return (mini->last_exit = EXIT_SUCCESS, true);
 }
 
 void	delete_heredocs_files(t_cmd **lst_cmd)

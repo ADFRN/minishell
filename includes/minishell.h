@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/27 11:39:37 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 12:37:18 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define HEREDOC_LIMITS		16
 	/* --- RETURN_CODE --- */
 # define HERE_DOC_EXCEED	2
+# define EXIT_SIGNAL_BASE	128
 # define CMD_NOT_FOUND		127
 # define CMD_EXEC_ERROR		126
 	/* --- BUILTINS --- */
@@ -149,6 +150,7 @@ void			exec_export(t_cmd *cmd, t_env **env);
 int				exec_unset(t_cmd *cmd, t_env **env);
 
 // Signals
+void			ctrlc_heredoc_handler(int sig);
 void			init_signal(void);
 void			reset_signals_child(void);
 void			ignore_signals_parent(void);
@@ -220,7 +222,7 @@ bool			open_files(t_redirection **redir);
 /*****************************/
 /*     heredoc_manager.c     */
 /*****************************/
-bool			preprocess_heredocs(t_cmd **lst_cmd);
+bool			preprocess_heredocs(t_cmd **lst_cmd, t_mini *mini);
 void			delete_heredocs_files(t_cmd **lst_cmd);
 
 /*****************************/

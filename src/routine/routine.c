@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:10:33 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/27 11:51:50 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 12:38:53 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	shell_prompt(t_mini *mini)
 		mini->cmds = lexer_parser(rl, &mini->env);
 		if (!mini->cmds)
 			continue ;
-		if (!preprocess_heredocs(&mini->cmds))
+		if (!preprocess_heredocs(&mini->cmds, mini))
 			continue ;
 		ignore_signals_parent();
 		pipex(mini);
