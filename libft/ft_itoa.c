@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 14:25:08 by afournie          #+#    #+#             */
-/*   Updated: 2025/11/10 14:38:19 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/27 19:22:21 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_itoa(int num)
 	if (sign)
 		number = -number;
 	len = count_size(number) + sign;
-	dst = malloc((len + 1) * sizeof(char));
+	dst = ft_malloc((len + 1) * sizeof(char));
 	if (!dst)
 		return (NULL);
 	dst[len] = '\0';

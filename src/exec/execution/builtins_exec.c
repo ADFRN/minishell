@@ -6,58 +6,28 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:35:05 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/24 17:37:40 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 19:46:01 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	ft_isnumber(char *str)
-{
-	int	i;
-
-	i = -1;
-	if (!ft_isdigit(str[++i]) && str[i] != '-' && str[i] != '+')
-		return (false);
-	while (str[++i])
-		if (!ft_isdigit(str[i]))
-			return (false);
-	return (true);
-}
-
-static void	exec_exit(t_cmd *cmd, t_env **env)
-{
-	if (!cmd->next)
-		ft_putendl_fd("exit", STDIN_FILENO);
-	if (cmd->args[1] && ft_isnumber(cmd->args[1]) && cmd->args[2])
-		ft_putendl_fd("bash: exit: too many arguments", STDERR_FILENO);
-	else if (cmd->args[1] && !ft_isnumber(cmd->args[1]))
-	{
-		ft_putstr_fd("bash: exit: ", STDERR_FILENO);
-		ft_putstr_fd(cmd->args[1], STDERR_FILENO);
-		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-		exit((cleaning(env), 2));
-	}
-	else if (!cmd->args[1])
-		exit((cleaning(env), 0));
-	else
-		exit((cleaning(env), ft_atoi(cmd->args[1])));
-}
-
-void	exec_builtins(t_mini *mini, t_cmd *cmd)
+int	exec_builtins(t_mini *mini, t_cmd *cmd)
 {
 	if (!ft_strcmp(cmd->args[0], CD))
-		exec_cd(cmd, &mini->env);
+		return (exec_cd(cmd, &mini->env));
 	else if (!ft_strcmp(cmd->args[0], ECHO))
-		exec_echo(cmd);	
+		return (exec_echo(cmd));	
 	else if (!ft_strcmp(cmd->args[0], ENV))
-		exec_env(mini->env);
+		return (exec_env(mini->env));
 	else if (!ft_strcmp(cmd->args[0], PWD))
-		exec_pwd();
+		return (exec_pwd(), EXIT_SUCCESS);
 	else if (!ft_strcmp(cmd->args[0], EXPORT))
-		exec_export(cmd, &mini->env);
+		return (exec_export(cmd, &mini->env));
 	else if (!ft_strcmp(cmd->args[0], UNSET))
-		exec_unset(cmd, &mini->env);
+		return (exec_unset(cmd, &mini->env));
 	else if (!ft_strcmp(cmd->args[0], EXIT))
-		exec_exit(cmd, &mini->env);
+		return (exec_exit(cmd, &mini->env));
+	else
+		return (-1);
 }

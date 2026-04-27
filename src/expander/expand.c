@@ -6,19 +6,22 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 15:26:37 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/27 12:41:57 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 19:37:35 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*extract_var_name(char *str)
+static char	*extract_var_name(char *str, t_mini *mini)
 {
 	int	i;
 
 	i = 0;
 	if (str[i] == '?' || ft_isdigit(str[i]))
-		return (ft_substr(str, 0, 1));
+	{
+		printf("$? = %d\n", mini->last_exit);
+		return (ft_itoa(mini->last_exit));
+	}
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;
 	return (ft_substr(str, 0, i));
@@ -37,7 +40,7 @@ static int	add_var(char **new_str, char *var_name, char *var_val)
 	return (len);
 }
 
-static void	expand_str(char **str, t_env *env, t_state *state)
+static void	expand_str(char **str, t_state *state, t_mini *mini)
 {
 	char	*new;
 	char	*tmp;
@@ -51,8 +54,8 @@ static void	expand_str(char **str, t_env *env, t_state *state)
 		if ((*str)[i] == '$' && (*state != IN_SINGLE_QUOTE))
 		{
 			i++;
-			tmp = extract_var_name(&(*str)[i]);
-			i += add_var(&new, tmp, get_envp(env, tmp));
+			tmp = extract_var_name(&(*str)[i], mini);
+			i += add_var(&new, tmp, get_envp(mini->env, tmp));
 		}
 		else
 		{
@@ -64,10 +67,10 @@ static void	expand_str(char **str, t_env *env, t_state *state)
 	*str = new;
 }
 
-void	expand(char **str, t_env *env)
+void	expand(char **str, t_mini *mini)
 {
 	t_state	state;
 
 	state = DEFAULT;
-	expand_str(str, env, &state);
+	expand_str(str, &state, mini);
 }

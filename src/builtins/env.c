@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/10 15:10:50 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/27 19:38:30 by ttiprez          ###   ########.fr       */
+/*   Created: 2026/04/27 19:39:13 by ttiprez           #+#    #+#             */
+/*   Updated: 2026/04/27 19:39:23 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_echo(t_cmd *cmd)
+int	exec_env(t_env	*env)
 {
-	bool	has_option;
-	int		i;
+	t_env	*curr;
 
-	i = 1;
-	if (!cmd->args[1])
-		has_option = false;
-	else
-		has_option = !ft_strcmp(cmd->args[1], "-n");
-	while (cmd->args[i + has_option])
+	curr = env;
+	while (curr)
 	{
-		printf("%s", cmd->args[i + has_option]);
-		if (cmd->args[i + has_option + 1])
-			printf(" ");
-		i++;
+		if (curr->key && curr->value)
+		{
+			ft_putstr(curr->key);
+			ft_putstr("=");
+			ft_putstr(curr->value);
+			ft_putstr("\n");
+		}
+		curr = curr->next;
 	}
-	if (!has_option)
-		printf("\n");
 	return (EXIT_SUCCESS);
 }
