@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:55:47 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/27 19:46:42 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 20:20:31 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,5 @@ int	exec_export(t_cmd *cmd, t_env **env)
 	}
 	else
 		print_export(*env);
+	return (0);
 }

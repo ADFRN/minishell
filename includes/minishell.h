@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/27 19:47:36 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/27 20:20:48 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ bool			check_syntax(t_token *token_lst, t_env **env);
 void			expand(char **str, t_mini *mini);
 
 // Exec & Builtins
+int				exec_builtins(t_mini *mini, t_cmd *cmd);
 int				exec_cd(t_cmd *cmd, t_env **env);
 int				exec_echo(t_cmd *cmd);
 int				exec_env(t_env *env);
