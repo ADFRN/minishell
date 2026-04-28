@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 15:54:54 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/27 11:50:27 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 14:51:26 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	**env_to_char_tab(t_env *env)
 	char	*tmp;
 	int		i;
 
-	env_tab = malloc(sizeof(char *) * (env_size(env) + 1));
+	env_tab = ft_malloc(sizeof(char *) * (env_size(env) + 1));
 	if (!env_tab)
 		return (NULL);
 	i = 0;
@@ -105,7 +105,6 @@ char	**env_to_char_tab(t_env *env)
 		if (!tmp)
 			return (free_split(env_tab), NULL);
 		env_tab[i] = ft_strjoin(tmp, env->value);
-		free(tmp);
 		if (!env_tab[i])
 			return (free_split(env_tab), NULL);
 		env = env->next;

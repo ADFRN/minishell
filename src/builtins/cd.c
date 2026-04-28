@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 15:04:04 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/27 19:45:01 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 14:47:16 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	cd(t_cmd *cmd, t_env **env, char *current_dir)
 {
 	if (chdir(cmd->args[1]) == -1)
 	{
-		printf("Minishell: cd: ");
+		write(STDOUT_FILENO, "Minishell: cd: ", 15);
 		perror(cmd->args[1]);
 		return (EXIT_FAILURE);
 	}
@@ -37,7 +37,7 @@ static int	back_home(t_env **env, char *current_dir)
 		return (printf("Minishell: cd: HOME not set\n"), EXIT_FAILURE);
 	if (chdir(home_value) == -1)
 	{
-		printf("Minishell: cd: ");
+		write(STDOUT_FILENO, "Minishell: cd: ", 15);
 		perror(home_value);
 		return (EXIT_FAILURE);
 	}

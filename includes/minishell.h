@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 11:19:22 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/28 16:04:27 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define DEFAULT_PATH		"/usr/local/bin:/usr/local/sbin:\
 /usr/bin:/usr/sbin:/bin:/sbin"
 # define HEREDOC_LIMITS		16
+# define FD_LIMITS			1024
 	/* --- RETURN_CODE --- */
 # define HERE_DOC_EXCEED	2
 # define EXIT_SIGNAL_BASE	128
@@ -237,6 +238,7 @@ void			delete_heredocs_files(t_cmd **lst_cmd);
 int				wait_for_children(pid_t last_pid);
 bool			is_builtins(t_cmd *cmd);
 void			cmd_not_found(char *cmd);
-void			safe_close(int	*fd);
+void			close_all_fd();
+//void			safe_close(int	*fd);
 
 #endif

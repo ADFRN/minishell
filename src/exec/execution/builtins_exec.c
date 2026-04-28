@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:35:05 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 10:09:41 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/28 15:32:29 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	exec_builtins(t_mini *mini, t_cmd *cmd)
 	else if (!ft_strcmp(cmd->args[0], ENV))
 		return (exec_env(mini->env));
 	else if (!ft_strcmp(cmd->args[0], PWD))
-		return (exec_pwd(), EXIT_SUCCESS);
+		return (printf("%s\n", exec_pwd()), EXIT_SUCCESS);
 	else if (!ft_strcmp(cmd->args[0], EXPORT))
 		return (exec_export(cmd, &mini->env));
 	else if (!ft_strcmp(cmd->args[0], UNSET))

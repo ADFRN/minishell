@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:10:33 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/28 13:32:00 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 15:42:49 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,12 @@ void	shell_prompt(t_mini *mini)
 
 	while (1)
 	{
-		init_signal();
-		rl = readline("Minishell-1.0$ ");
+		free((init_signal(), g_sig = 0, rl = readline("Minishell$ "), NULL));
+		if (g_sig == SIGINT)
+		{
+			free((free(rl), mini->last_exit = EXIT_SIGNAL_BASE + SIGINT, NULL));
+			continue;
+		}
 		if (!rl)
 			exit((ft_free(), cleaning(&mini->env), printf("exit\n"),
 					mini->last_exit));
@@ -60,8 +64,7 @@ void	shell_prompt(t_mini *mini)
 			continue ;
 		ignore_signals_parent();
 		mini->last_exit = pipex(mini);
-		delete_heredocs_files(&mini->cmds);
-		ft_free();
+		free((delete_heredocs_files(&mini->cmds), ft_free(), NULL));
 	}
 	cleaning(&mini->env);
 }

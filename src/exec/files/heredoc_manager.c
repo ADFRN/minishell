@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 11:53:02 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/27 19:22:40 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 15:31:34 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,7 @@ void	delete_heredocs_files(t_cmd **lst_cmd)
 		while (curr_redir)
 		{
 			if (curr_redir->redir_type == REDIR_HEREDOC)
-			{
-				if (unlink(curr_redir->filename) == -1)
-					perror("unlink");
-			}
+				unlink(curr_redir->filename);
 			curr_redir = curr_redir->next;
 		}
 		curr_cmd = curr_cmd->next;

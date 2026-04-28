@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 15:26:37 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 13:42:40 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 15:42:09 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,24 @@ static int	add_var(char **new_str, char *var_name, char *var_val, t_mini *mini)
 		var_val = "";
 	tmp = ft_strjoin(*new_str, var_val);
 	if (!tmp)
-		exit((ft_free(), cleaning(&mini->env), ENOMEM));
+		exit((cleaning(&mini->env), ENOMEM));
 	*new_str = tmp;
 	len = ft_strlen(var_name);
 	return (len);
+}
+
+static void	handle_dollar(char **new, char *str, int *i, t_mini *mini)
+{
+	char	*tmp;
+
+	(*i)++;
+	tmp = extract_var_name(&str[*i]);
+	if (!tmp)
+		exit((cleaning(&mini->env), ENOMEM));
+	if (str[*i] == '?')
+		*i += add_var(new, tmp, ft_itoa(mini->last_exit), mini);
+	else
+		*i += add_var(new, tmp, get_envp(mini->env, tmp), mini);
 }
 
 static void	expand_str(char **str, t_state *state, t_mini *mini)
@@ -50,26 +64,17 @@ static void	expand_str(char **str, t_state *state, t_mini *mini)
 	while ((*str)[i])
 	{
 		set_state((*str)[i], state);
-		if ((*str)[i] == '$' && (*state != IN_SINGLE_QUOTE))
-		{
-			i++;
-			tmp = extract_var_name(&(*str)[i]);
-			if (!tmp)
-				exit((ft_free(), cleaning(&mini->env), ENOMEM));
-			if ((*str)[i] == '?')
-				i += add_var(&new, tmp, ft_itoa(mini->last_exit), mini);
-			else
-				i += add_var(&new, tmp, get_envp(mini->env, tmp), mini);
-		}
+		if ((*str)[i] == '$' && *state != IN_SINGLE_QUOTE)
+			handle_dollar(&new, *str, &i, mini);
 		else
 		{
-			tmp = ft_strnjoin(new, &(*str)[i], 1);
+			tmp = ft_strnjoin(new, &(*str)[i++], 1);
 			if (!tmp)
-				exit((ft_free(), cleaning(&mini->env), ENOMEM));
+				exit((cleaning(&mini->env), ENOMEM));
 			new = tmp;
-			i++;
 		}
 	}
+	free(*str);
 	*str = new;
 }
 

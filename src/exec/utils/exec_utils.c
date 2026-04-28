@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:40:56 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 13:39:00 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 16:00:20 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ void	cmd_not_found(char *cmd)
 	ft_putendl_fd(": command not found", 2);
 }
 
-void	safe_close(int	*fd)
-{
-	if (*fd >= 0)
-	{
-		close(*fd);
-		*fd = -1;
-	}
-}
+//void	safe_close(int	*fd)
+//{
+//	if (*fd >= 0)
+//	{
+//		close(*fd);
+//		*fd = -1;
+//	}
+//}
