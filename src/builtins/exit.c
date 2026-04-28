@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 19:29:52 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 10:07:31 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/28 13:47:14 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static bool	ft_isnumber(char *str)
 
 int	exec_exit(t_cmd *cmd, t_env **env)
 {
+	int	exit_code;
+
 	if (!cmd->next)
 		ft_putendl_fd("exit", STDIN_FILENO);
 	if (cmd->args[1] && ft_isnumber(cmd->args[1]) && cmd->args[2])
@@ -44,6 +46,9 @@ int	exec_exit(t_cmd *cmd, t_env **env)
 	else if (!cmd->args[1])
 		exit((cleaning(env), EXIT_SUCCESS));
 	else
-		exit((cleaning(env), ft_atoi(cmd->args[1])));
+	{
+		exit_code = ft_atoi((cmd->args[1]));
+		exit((cleaning(env), exit_code));
+	}
 	return (-1);
 }

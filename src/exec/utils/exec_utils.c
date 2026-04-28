@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:40:56 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/27 19:20:00 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 13:39:00 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int	wait_for_children(pid_t last_pid)
 	int		exit_code;
 	pid_t	pid;
 
-	exit_code = 0;
-	pid = wait(&status);
+	free((exit_code = 0, pid = waitpid(-1, &status, 0), NULL));
 	while (pid > 0)
 	{
 		if (pid == last_pid)
@@ -32,10 +31,10 @@ int	wait_for_children(pid_t last_pid)
 				else if (WTERMSIG(status) == SIGQUIT)
 					write(1, "Quit (core dumped)\n", 19);
 			}
-			else
+			else if (WIFEXITED(status))
 				exit_code = WEXITSTATUS(status);
 		}
-		pid = wait(&status);
+		pid = waitpid(-1, &status, 0);
 	}
 	return (exit_code);
 }
