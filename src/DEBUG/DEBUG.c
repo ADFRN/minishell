@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   DEBUG.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 16:12:15 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/21 16:27:00 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 10:09:22 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ static void	print_split(char **str)
 
 static void	print_redir(t_redirection **lst)
 {
-	t_redirection *current = *lst;
+	t_redirection	*current;
 
+	current = *lst;
 	printf("\t%-15s [", "FILENAME :");
 	while (current)
 	{
@@ -52,8 +53,8 @@ static void	print_redir(t_redirection **lst)
 
 void	ft_print_lst_cmd(t_cmd **lst_cmd)
 {
-	t_cmd *current;
-	int i;
+	t_cmd	*current;
+	int		i;
 
 	current = *lst_cmd;
 	i = 0;

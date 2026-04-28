@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/27 19:25:55 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 10:07:21 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ static int	exec_solo_builtin(t_mini *mini, t_cmd *cmd)
 	int	saved_stdout;
 	int	exit_status;
 
-	if (ft_strcmp(cmd->args[0], "exit")) 
+	if (ft_strcmp(cmd->args[0], "exit"))
 	{
 		saved_stdin = dup(STDIN_FILENO);
 		saved_stdout = dup(STDOUT_FILENO);
 	}
 	if (open_files(&cmd->redir))
 		exit_status = exec_builtins(mini, cmd);
-	if (ft_strcmp(cmd->args[0], "exit")) 
+	if (ft_strcmp(cmd->args[0], "exit"))
 	{
 		dup2(saved_stdin, STDIN_FILENO);
 		dup2(saved_stdout, STDOUT_FILENO);

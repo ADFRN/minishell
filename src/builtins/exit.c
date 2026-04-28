@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 19:29:52 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/27 19:44:43 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 10:07:31 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool	ft_isnumber(char *str)
 	return (true);
 }
 
-int		exec_exit(t_cmd *cmd, t_env **env)
+int	exec_exit(t_cmd *cmd, t_env **env)
 {
 	if (!cmd->next)
 		ft_putendl_fd("exit", STDIN_FILENO);
