@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:10:33 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/27 19:25:02 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 10:50:15 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	shell_prompt(t_mini *mini)
 		init_signal();
 		rl = readline("Minishell-1.0$ ");
 		if (!rl)
-			exit((cleaning(&mini->env), printf("exit\n"), mini->last_exit));
+			exit((ft_free(), cleaning(&mini->env), printf("exit\n"),
+					mini->last_exit));
 		if (!handle_rl(&rl, mini))
 			continue ;
 		mini->cmds = lexer_parser(rl, &mini->env);

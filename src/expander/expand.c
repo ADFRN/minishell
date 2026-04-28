@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 15:26:37 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/27 19:37:35 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 10:45:00 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ static void	expand_str(char **str, t_state *state, t_mini *mini)
 		else
 		{
 			tmp = ft_strnjoin(new, &(*str)[i], 1);
+			if (!tmp)
+				exit((ft_free(), cleaning(&mini->env), EXIT_FAILURE));
 			new = tmp;
 			i++;
 		}
