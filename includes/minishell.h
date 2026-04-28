@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 10:08:33 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/28 11:19:22 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ int				exec_echo(t_cmd *cmd);
 int				exec_env(t_env *env);
 int				exec_exit(t_cmd *cmd, t_env **env);
 int				exec_export(t_cmd *cmd, t_env **env);
-char			*exec_pwd(void);
 int				exec_unset(t_cmd *cmd, t_env **env);
 
 // Signals
