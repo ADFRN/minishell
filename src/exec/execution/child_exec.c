@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:50:19 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 16:07:14 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 16:09:28 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 static void	exit_child(t_mini *mini)
 {
 	cleaning(&mini->env);
-	//close(STDIN_FILENO);
-	//close(STDOUT_FILENO);
-	//close(STDERR_FILENO);
 	exit(mini->last_exit);
 }
 
@@ -36,18 +33,15 @@ static void	exec_cmd(t_mini *mini, t_cmd *cmd)
 static void	child_process(t_mini *mini, t_cmd *cmd, int fd_in, int pipe_fd[2])
 {
 	reset_signals_child();
-	//safe_close(&pipe_fd[0]);
 	if (fd_in != -1)
 	{
 		if (dup2(fd_in, STDIN_FILENO) == -1)
 			exit((cleaning(&mini->env), EXIT_FAILURE));
-		//safe_close(&fd_in);
 	}
 	if (pipe_fd[1] != -1)
 	{
 		if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
 			exit((cleaning(&mini->env), EXIT_FAILURE));
-		//safe_close(&pipe_fd[1]);
 	}
 	if (!open_files(&cmd->redir))
 		exit_child((mini->last_exit = EXIT_FAILURE, mini));

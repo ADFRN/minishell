@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 16:04:27 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 16:11:10 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,10 +149,8 @@ int				exec_export(t_cmd *cmd, t_env **env);
 void			print_export(t_env *env);
 bool			create_var(t_env **env, char *key, char *value);
 int				is_valid_args(char *s);
-bool			parse_kv(char *s, char **key, char **value,
-					char **sep);
-bool			update_var(t_env *env, char *key, char *value,
-					char *sep);
+bool			parse_kv(char *s, char **key, char **value, char **sep);
+bool			update_var(t_env *env, char *key, char *value, char *sep);
 int				exec_unset(t_cmd *cmd, t_env **env);
 int				exec_builtins(t_mini *mini, t_cmd *cmd);
 int				exec_cd(t_cmd *cmd, t_env **env);
@@ -238,7 +236,6 @@ void			delete_heredocs_files(t_cmd **lst_cmd);
 int				wait_for_children(pid_t last_pid);
 bool			is_builtins(t_cmd *cmd);
 void			cmd_not_found(char *cmd);
-void			close_all_fd();
-//void			safe_close(int	*fd);
+void			close_all_fd(void);
 
 #endif

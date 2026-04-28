@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:51:44 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 16:07:43 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 16:09:37 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ static int	open_input_file(t_redirection *redir)
 	if (fd < 0)
 		return (perror(redir->filename), -1);
 	if (dup2(fd, STDIN_FILENO) == -1)
-		return (/*safe_close(&fd),*/ -1);
-	//safe_close(&fd);
+		return (-1);
 	return (0);
 }
 
@@ -36,8 +35,7 @@ static int	open_output_file(t_redirection *redir)
 	if (fd < 0)
 		return (perror(redir->filename), -1);
 	if (dup2(fd, STDOUT_FILENO) == -1)
-		return (/*safe_close(&fd),*/ -1);
-	//safe_close(&fd);
+		return (-1);
 	return (0);
 }
 

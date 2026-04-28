@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:10:33 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/28 15:42:49 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 16:11:29 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	shell_prompt(t_mini *mini)
 		if (g_sig == SIGINT)
 		{
 			free((free(rl), mini->last_exit = EXIT_SIGNAL_BASE + SIGINT, NULL));
-			continue;
+			continue ;
 		}
 		if (!rl)
 			exit((ft_free(), cleaning(&mini->env), printf("exit\n"),

@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 16:08:32 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 16:09:15 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,8 @@ int	pipex(t_mini *mini)
 		if (c_cmds->next && pipe(pipe_fd) == -1)
 			exit((perror("pipe"), cleaning(&mini->env), EXIT_FAILURE));
 		last_pid = child_action(mini, c_cmds, input_fd, pipe_fd);
-		//free((safe_close(&input_fd), safe_close(&pipe_fd[1]), NULL));
 		input_fd = pipe_fd[0];
 		c_cmds = c_cmds->next;
 	}
-	//safe_close(&input_fd);
 	return (wait_for_children(last_pid));
 }

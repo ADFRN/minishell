@@ -6,13 +6,13 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 16:09:12 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 16:04:00 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/28 16:11:15 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	close_all_fd()
+void	close_all_fd(void)
 {
 	int	i;
 
