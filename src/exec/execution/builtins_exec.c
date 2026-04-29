@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:35:05 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/29 16:24:55 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/29 16:57:42 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	exec_builtins(t_mini *mini, t_cmd *cmd)
 	{
 		pwd_result = exec_pwd();
 		if (!pwd_result)
-			return (perror("Minishelle: pwd : error retrieving current directory: getcwd: cannot \
-access parent directories"), EXIT_FAILURE);
-		return (printf("%s\n", pwd_result), free(pwd_result), EXIT_SUCCESS);
+			return (perror("Minishelle: pwd : error retrieving current \
+directory: getcwd: cannot access parent directories"), EXIT_FAILURE);
+		return (printf("%s\n", pwd_result), EXIT_SUCCESS);
 	}
 	else if (!ft_strcmp(cmd->args[0], EXPORT))
 		return (exec_export(cmd, &mini->env));

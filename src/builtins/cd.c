@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 15:04:04 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/29 16:32:47 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/29 16:48:38 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,6 @@ int	exec_cd(t_cmd *cmd, t_env **env)
 	char	*current_dir;
 
 	current_dir = exec_pwd();
-	if (!current_dir)
-		return (perror("Minishell: chdir: error retrieving current directory: \
-getcwd: cannot access parent directories"), EXIT_FAILURE);
 	if (cmd->args[1])
 		return (cd(cmd, env, current_dir));
 	else
