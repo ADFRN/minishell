@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:35:05 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 15:32:29 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/29 16:24:55 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	exec_builtins(t_mini *mini, t_cmd *cmd)
 {
+	char	*pwd_result;
+
 	if (!ft_strcmp(cmd->args[0], CD))
 		return (exec_cd(cmd, &mini->env));
 	else if (!ft_strcmp(cmd->args[0], ECHO))
@@ -21,7 +23,13 @@ int	exec_builtins(t_mini *mini, t_cmd *cmd)
 	else if (!ft_strcmp(cmd->args[0], ENV))
 		return (exec_env(mini->env));
 	else if (!ft_strcmp(cmd->args[0], PWD))
-		return (printf("%s\n", exec_pwd()), EXIT_SUCCESS);
+	{
+		pwd_result = exec_pwd();
+		if (!pwd_result)
+			return (perror("Minishelle: pwd : error retrieving current directory: getcwd: cannot \
+access parent directories"), EXIT_FAILURE);
+		return (printf("%s\n", pwd_result), free(pwd_result), EXIT_SUCCESS);
+	}
 	else if (!ft_strcmp(cmd->args[0], EXPORT))
 		return (exec_export(cmd, &mini->env));
 	else if (!ft_strcmp(cmd->args[0], UNSET))

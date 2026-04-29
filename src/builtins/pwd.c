@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 19:39:30 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/27 20:27:54 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/29 16:24:27 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ char	*exec_pwd(void)
 			return (NULL);
 		return (path);
 	}
-	return (perror("minishell: pwd"), NULL);
+	return (NULL);
 }
