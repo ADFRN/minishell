@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/30 15:21:48 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/30 17:06:08 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ typedef enum e_redir_type
 
 typedef struct s_redirection
 {
-	int						heredoc_fd;
 	char					*filename;
 	t_redir_type			redir_type;
 	struct s_redirection	*next;

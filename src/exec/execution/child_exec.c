@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:50:19 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 16:09:28 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/30 17:18:27 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,16 @@ static void	child_process(t_mini *mini, t_cmd *cmd, int fd_in, int pipe_fd[2])
 	{
 		if (dup2(fd_in, STDIN_FILENO) == -1)
 			exit((cleaning(&mini->env), EXIT_FAILURE));
+		close(fd_in);
 	}
 	if (pipe_fd[1] != -1)
 	{
 		if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
 			exit((cleaning(&mini->env), EXIT_FAILURE));
+		close(pipe_fd[1]);
 	}
+	if (pipe_fd[0] != -1)
+		close(pipe_fd[0]);
 	if (!open_files(&cmd->redir))
 		exit_child((mini->last_exit = EXIT_FAILURE, mini));
 	if (is_builtins(cmd))

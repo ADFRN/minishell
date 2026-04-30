@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/30 17:04:15 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/30 17:12:07 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,15 @@ int	pipex(t_mini *mini)
 		return (exec_solo_builtin(mini, c_cmds));
 	while (c_cmds)
 	{
-		free((pipe_fd[0] = -1, pipe_fd[1] = -1, NULL));
+		pipe_fd[0] = -1;
+		pipe_fd[1] = -1;
 		if (c_cmds->next && pipe(pipe_fd) == -1)
 			exit((perror("pipe"), cleaning(&mini->env), EXIT_FAILURE));
 		last_pid = child_action(mini, c_cmds, input_fd, pipe_fd);
+		if (pipe_fd[1] != -1)
+			close(pipe_fd[1]);
+		if (input_fd != -1)
+			close(input_fd);
 		input_fd = pipe_fd[0];
 		c_cmds = c_cmds->next;
 	}

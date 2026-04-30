@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 11:53:02 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/30 15:30:28 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/30 17:08:39 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ by end-of-file (wanted `%s')\n", redir->filename);
 	}
 }
 
-static int	run_heredoc(t_redirection *redir)
+static char *run_heredoc(t_redirection *redir)
 {
 	char	*filename;
 	int		fd;
@@ -62,14 +62,13 @@ static int	run_heredoc(t_redirection *redir)
 
 	filename = generate_filename("/tmp/.ms_heredoc_");
 	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	unlink(filename);
 	if (fd < 0)
-		return (-1);
+		return (NULL);
 	eof = ft_strjoin(redir->filename, "\n");
 	if (!eof)
-		return (close(fd), -1);
+		return (NULL);
 	heredoc_loop(redir, eof, fd);
-	return (fd);
+	return (filename);
 }
 
 bool	preprocess_heredocs(t_cmd **lst_cmd, t_mini *mini)
@@ -85,7 +84,7 @@ bool	preprocess_heredocs(t_cmd **lst_cmd, t_mini *mini)
 		{
 			if (curr_redir->redir_type == REDIR_HEREDOC)
 			{
-				curr_redir->heredoc_fd = run_heredoc(curr_redir);
+				curr_redir->filename = run_heredoc(curr_redir);
 				if (!curr_redir->filename)
 					return (ft_free(), false);
 			}

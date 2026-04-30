@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:10:33 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/30 15:23:37 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/30 17:05:30 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	shell_prompt(t_mini *mini)
 			continue ;
 		ignore_signals_parent();
 		mini->last_exit = pipex(mini);
-		ft_free();
+		free((delete_heredocs_files(&mini->cmds), ft_free(), NULL));
 	}
 	cleaning(&mini->env);
 }
