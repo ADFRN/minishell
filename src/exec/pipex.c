@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/30 17:12:07 by afournie         ###   ########.fr       */
+/*   Updated: 2026/04/30 17:28:29 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	exec_solo_builtin(t_mini *mini, t_cmd *cmd)
 {
 	int	exit_status;
 
+	exit_status = EXIT_FAILURE;
 	if (open_files(&cmd->redir))
 	{
 		if (!ft_strcmp(cmd->args[0], "exit"))
