@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 11:53:02 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 15:31:34 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/30 15:30:28 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*generate_filename(char *base)
 	return (res);
 }
 
-static void	heredoc_loop(t_redirection *redir, char *other_eof, int fd)
+static void	heredoc_loop(t_redirection *redir, char *eof, int fd)
 {
 	int		nb_read;
 	char	buf[100000];
@@ -48,27 +48,28 @@ by end-of-file (wanted `%s')\n", redir->filename);
 		}
 		buf[nb_read] = 0;
 		if (!ft_strcmp(buf, redir->filename)
-			|| !ft_strcmp(buf, other_eof))
+			|| !ft_strcmp(buf, eof))
 			break ;
 		write(fd, buf, nb_read);
 	}
 }
 
-static char	*run_heredoc(t_redirection *redir)
+static int	run_heredoc(t_redirection *redir)
 {
 	char	*filename;
 	int		fd;
-	char	*other_eof;
+	char	*eof;
 
 	filename = generate_filename("/tmp/.ms_heredoc_");
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	other_eof = ft_strjoin(redir->filename, "\n");
-	if (!other_eof)
-		return (close(fd), NULL);
+	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	unlink(filename);
 	if (fd < 0)
-		return (NULL);
-	heredoc_loop(redir, other_eof, fd);
-	return (close(fd), filename);
+		return (-1);
+	eof = ft_strjoin(redir->filename, "\n");
+	if (!eof)
+		return (close(fd), -1);
+	heredoc_loop(redir, eof, fd);
+	return (fd);
 }
 
 bool	preprocess_heredocs(t_cmd **lst_cmd, t_mini *mini)
@@ -84,7 +85,7 @@ bool	preprocess_heredocs(t_cmd **lst_cmd, t_mini *mini)
 		{
 			if (curr_redir->redir_type == REDIR_HEREDOC)
 			{
-				curr_redir->filename = run_heredoc(curr_redir);
+				curr_redir->heredoc_fd = run_heredoc(curr_redir);
 				if (!curr_redir->filename)
 					return (ft_free(), false);
 			}

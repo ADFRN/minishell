@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 15:21:32 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/24 15:15:08 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/30 15:21:57 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_redirection	*ft_redir_new(void)
 		ft_free();
 		exit(EXIT_FAILURE);
 	}
+	redir->heredoc_fd = -1;
 	redir->filename = NULL;
 	redir->redir_type = -1;
 	redir->next = NULL;

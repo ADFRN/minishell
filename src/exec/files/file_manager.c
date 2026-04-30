@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_manager.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:51:44 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 16:09:37 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/04/30 15:27:37 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,14 @@ bool	open_files(t_redirection **redir)
 	curr_redir = *redir;
 	while (curr_redir)
 	{
-		if (curr_redir->redir_type == REDIR_IN
-			|| curr_redir->redir_type == REDIR_HEREDOC)
+		if (curr_redir->redir_type == REDIR_IN)
 		{
 			if (open_input_file(curr_redir) == -1)
+				return (false);
+		}
+		else if (curr_redir->redir_type == REDIR_HEREDOC)
+		{
+			if (dup2(curr_redir->heredoc_fd, STDIN_FILENO) == -1)
 				return (false);
 		}
 		else if (curr_redir->redir_type == REDIR_OUT
