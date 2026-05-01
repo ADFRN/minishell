@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:43 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 10:47:00 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/01 13:30:20 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_cmd_add_back(t_cmd **lst, t_cmd *new)
 	last->next = new;
 }
 
-static char	*remove_quotes(char *str)
+char	*remove_quotes(char *str)
 {
 	char	*result;
 	int		i;

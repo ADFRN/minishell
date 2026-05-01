@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/30 17:06:08 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/01 13:30:40 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void			ignore_signals_parent(void);
 //	cmd_utils.c
 t_cmd			*ft_cmd_new(void);
 void			ft_cmd_add_back(t_cmd **lst, t_cmd *new);
-void			ft_print_lst_cmd(t_cmd **lst_cmd);
+char			*remove_quotes(char *str);
 char			**get_cmd_args(t_token **start);
 
 //	env_utils.c

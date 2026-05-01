@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:25 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/28 10:46:34 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/01 13:34:01 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static t_redirection	*get_cmd_redir(t_token **start)
 			|| curr->type == OUTPUT || curr->type == APPEND)
 		{
 			redir = ft_redir_new();
-			redir->filename = curr->next->content;
+			redir->filename = remove_quotes(curr->next->content);
 			redir->redir_type = get_redir_type(curr->type);
 			ft_redir_add_back(&redir_lst, redir);
 		}
