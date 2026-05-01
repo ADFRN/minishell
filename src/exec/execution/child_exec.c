@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:50:19 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/30 17:27:54 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/01 15:07:34 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,25 @@ static void	exit_child(t_mini *mini)
 
 static void	exec_cmd(t_mini *mini, t_cmd *cmd)
 {
-	if (!cmd->cmd_with_path)
+	struct stat	st;
+
+	if (stat(cmd->cmd_with_path, &st) != 0)
+		exit_child((perror(cmd->args[0]),
+			mini->last_exit = CMD_NOT_FOUND, mini));
+	if (S_ISDIR(st.st_mode))
 	{
-		cmd_not_found(cmd->args[0]);
-		exit_child((mini->last_exit = CMD_NOT_FOUND, mini));
+		ft_putstr_fd(cmd->args[0], STDERR_FILENO);
+		ft_putendl_fd(": Is a directory", STDERR_FILENO);
+		exit_child((mini->last_exit = CMD_EXEC_ERROR, mini));
+	}
+	if (access(cmd->cmd_with_path, X_OK) != 0)
+	{
+		perror(cmd->args[0]);
+		exit_child((mini->last_exit = 126, mini));
 	}
 	execve(cmd->cmd_with_path, cmd->args, env_to_char_tab(mini->env));
 	perror(cmd->args[0]);
-	exit_child((mini->last_exit = CMD_EXEC_ERROR, mini));
+	exit_child((mini->last_exit = CMD_NOT_FOUND, mini));
 }
 
 static void	child_process(t_mini *mini, t_cmd *cmd, int fd_in, int pipe_fd[2])
