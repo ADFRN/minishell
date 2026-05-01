@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 11:58:18 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/30 17:30:32 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/01 13:24:07 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,29 @@
 
 static int	exec_solo_builtin(t_mini *mini, t_cmd *cmd)
 {
+	int	saved_stdin;
+	int	saved_stdout;
 	int	exit_status;
 
-	exit_status = EXIT_FAILURE;
-	open_files(&cmd->redir);
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	if (saved_stdin == -1 || saved_stdout == -1)
+		return (EXIT_FAILURE);
+	if (!open_files(&cmd->redir))
+	{
+		dup2(saved_stdin, STDIN_FILENO);
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdin);
+		close(saved_stdout);
+		return (EXIT_FAILURE);
+	}
 	if (!ft_strcmp(cmd->args[0], "exit"))
 		delete_heredocs_files(&mini->cmds);
 	exit_status = exec_builtins(mini, cmd);
+	dup2(saved_stdin, STDIN_FILENO);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdin);
+	close(saved_stdout);
 	return (exit_status);
 }
 
