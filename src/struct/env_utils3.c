@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 18:28:50 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/05/04 14:44:57 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/05/04 15:01:22 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_env_get_val(t_env *env, char *key)
 		env = env->next;
 	}
 	if (!ft_strcmp(key, "PATH"))
-		return (DEFAULT_PATH);
+		return (NULL);
 	return (NULL);
 }
 

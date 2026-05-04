@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 15:26:37 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/05/04 12:57:33 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/04 15:13:07 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	expand_str(char **str, t_state *state, t_mini *mini)
 		if ((*str)[i] == '$' && (*str)[i + 1] && (ft_isalnum((*str)[i + 1])
 				|| (*str)[i + 1] == '?') && *state != IN_SINGLE_QUOTE)
 			handle_dollar(&new, *str, &i, mini);
-		else if ((*str)[i] == '~')
+		else if ((*str)[i] == '~' && *state != IN_SINGLE_QUOTE)
 			handle_tilde(&new, &i, mini);
 		else
 		{
