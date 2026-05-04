@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/05/04 12:50:25 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/04 14:47:16 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void			handle_tilde(char **new, int *i, t_mini *mini);
 void			expand(char **str, t_mini *mini);
 
 // Exec & Builtins
-char			*exec_pwd(void);
+char			*exec_pwd(t_env **env);
 int				exec_cd(t_cmd *cmd, t_env **env);
 int				exec_export(t_cmd *cmd, t_env **env);
 void			print_export(t_env *env);

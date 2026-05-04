@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 18:28:50 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/05/04 13:05:07 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/04 14:44:57 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	*ft_env_get_val(t_env *env, char *key)
 	}
 	if (!ft_strcmp(key, "PATH"))
 		return (DEFAULT_PATH);
-
 	return (NULL);
 }
 
@@ -38,6 +37,8 @@ void	ft_env_update(t_env **env, char *key, char *value)
 		{
 			free(curr->value);
 			curr->value = ft_strdup_classic(value);
+			if (!curr->value)
+				exit((cleaning(env), EXIT_FAILURE));
 			return ;
 		}
 		curr = curr->next;
