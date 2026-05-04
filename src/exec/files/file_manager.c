@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:51:44 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/05/04 13:01:49 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/04 13:58:44 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 static int	open_input_file(t_redirection *redir)
 {
-	int	fd;
+	int		fd;
+	char	*tmp;
 
 	fd = open(redir->filename, O_RDONLY);
 	if (fd < 0)
-		return (perror(redir->filename), -1);
+	{
+		tmp = ft_strjoin("Minishell: ", redir->filename);
+		return (perror(tmp), -1);
+	}
 	if (dup2(fd, STDIN_FILENO) == -1)
-		return (-1);
+		return (close(fd), -1);
 	return (close(fd), 0);
 }
 
@@ -35,7 +39,7 @@ static int	open_output_file(t_redirection *redir)
 	if (fd < 0)
 		return (perror(redir->filename), -1);
 	if (dup2(fd, STDOUT_FILENO) == -1)
-		return (-1);
+		return (close(fd), -1);
 	return (close(fd), 0);
 }
 

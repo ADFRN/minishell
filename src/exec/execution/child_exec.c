@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:50:19 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/05/04 13:03:52 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/04 14:03:41 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,13 @@ static void	exec_cmd(t_mini *mini, t_cmd *cmd)
 {
 	struct stat	st;
 
+	if (!cmd->cmd_with_path || !cmd->args[0])
+	{
+		cmd_not_found(cmd->args[0]);
+		exit_child((mini->last_exit = CMD_NOT_FOUND, mini));
+	}
 	if (stat(cmd->cmd_with_path, &st) != 0)
-		exit_child((cmd_not_found(cmd->args[0]),
+		exit_child((perror(cmd->args[0]),
 				mini->last_exit = CMD_NOT_FOUND, mini));
 	if (S_ISDIR(st.st_mode))
 	{

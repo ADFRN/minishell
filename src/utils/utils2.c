@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 16:09:12 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/05/04 13:12:26 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/04 13:48:52 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	close_all_fd(void)
 {
 	int	i;
 
-	i = 0;
+	i = 3;
 	while (i < FD_LIMITS)
 		close(i++);
 }
