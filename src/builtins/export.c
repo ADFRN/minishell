@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:55:47 by afournie          #+#    #+#             */
-/*   Updated: 2026/05/01 13:41:01 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/05/04 10:50:18 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	exec_export(t_cmd *cmd, t_env **env)
 				exit_value = 1;
 				ft_putstr_fd("Minishelle: export: '", STDERR_FILENO);
 				ft_putstr_fd(cmd->args[i], STDERR_FILENO);
-				ft_putendl_fd("':not a valid identifier", STDERR_FILENO);
+				ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 				continue ;
 			}
 			if (!add_var(cmd->args[i], env))
