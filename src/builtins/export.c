@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:55:47 by afournie          #+#    #+#             */
-/*   Updated: 2026/05/04 10:50:18 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/04 13:03:00 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	exec_export(t_cmd *cmd, t_env **env)
 				continue ;
 			}
 			if (!add_var(cmd->args[i], env))
-				exit((ft_free(), ft_env_free(env), EXIT_FAILURE));
+				exit((cleaning(env), EXIT_FAILURE));
 		}
 	}
 	else

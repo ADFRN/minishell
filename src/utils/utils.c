@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 13:43:16 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/24 17:36:10 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/05/04 12:56:32 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_envp(t_env *env, char *key)
 			return (curr->value);
 		curr = curr->next;
 	}
-	return ("");
+	return (NULL);
 }
 
 void	free_split(char **splitted_words)

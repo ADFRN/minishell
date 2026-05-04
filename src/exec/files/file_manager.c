@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_manager.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:51:44 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/05/01 13:25:00 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/05/04 13:01:49 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	open_input_file(t_redirection *redir)
 		return (perror(redir->filename), -1);
 	if (dup2(fd, STDIN_FILENO) == -1)
 		return (-1);
-	return (0);
+	return (close(fd), 0);
 }
 
 static int	open_output_file(t_redirection *redir)
@@ -36,7 +36,7 @@ static int	open_output_file(t_redirection *redir)
 		return (perror(redir->filename), -1);
 	if (dup2(fd, STDOUT_FILENO) == -1)
 		return (-1);
-	return (0);
+	return (close(fd), 0);
 }
 
 bool	open_files(t_redirection **redir)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 10:28:25 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/05/01 13:34:01 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/05/04 13:03:29 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_cmd	*parser(t_token **token_lst, t_env **env)
 		return (ft_token_clear(token_lst), NULL);
 	lst_cmd = ft_cmd_new();
 	if (!lst_cmd)
-		exit((ft_free(), cleaning(env), EXIT_FAILURE));
+		exit((cleaning(env), EXIT_FAILURE));
 	free((c_cmd = lst_cmd, c_token = *token_lst, NULL));
 	while (c_token)
 	{

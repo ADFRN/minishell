@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/05/01 15:00:15 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/05/04 12:50:25 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ t_cmd			*parser(t_token **token_lst, t_env **env);
 bool			check_syntax(t_token *token_lst, t_env **env);
 
 // Expander
+void			handle_tilde(char **new, int *i, t_mini *mini);
 void			expand(char **str, t_mini *mini);
 
 // Exec & Builtins

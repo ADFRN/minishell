@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 15:04:04 by afournie          #+#    #+#             */
-/*   Updated: 2026/05/04 11:00:09 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/04 12:44:53 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,28 @@
 
 static int	cd(t_cmd *cmd, t_env **env, char *current_dir)
 {
-	if (chdir(cmd->args[1]) == -1)
-	{
-		write(STDOUT_FILENO, "Minishell: cd: ", 15);
-		perror(cmd->args[1]);
-		return (EXIT_FAILURE);
-	}
-	else
+	if (ft_strcmp(cmd->args[1], "-") == 0 && chdir(ft_env_get_val(*env,
+				"OLDPWD")) == 0)
 	{
 		ft_env_update(env, "OLDPWD", current_dir);
 		ft_env_update(env, "PWD", exec_pwd());
 		return (EXIT_SUCCESS);
+	}
+	else if (chdir(cmd->args[1]) == 0)
+	{
+		ft_env_update(env, "OLDPWD", current_dir);
+		ft_env_update(env, "PWD", exec_pwd());
+		return (EXIT_SUCCESS);
+	}
+	else
+	{
+		write(STDERR_FILENO, "Minishell: cd: ", 15);
+		if (ft_strcmp(cmd->args[1], "-") == 0 && !ft_env_get_val(*env,
+				"OLDPWD"))
+			ft_putendl_fd("OLDPWD not set", STDERR_FILENO);
+		else
+			perror(cmd->args[1]);
+		return (EXIT_FAILURE);
 	}
 }
 

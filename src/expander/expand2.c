@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   expand2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/20 16:09:12 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/05/04 13:12:26 by afournie         ###   ########.fr       */
+/*   Created: 2026/05/04 12:46:40 by afournie          #+#    #+#             */
+/*   Updated: 2026/05/04 12:56:46 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	close_all_fd(void)
+void	handle_tilde(char **new, int *i, t_mini *mini)
 {
-	int	i;
+	char	*home;
+	char	*tmp;
 
-	i = 0;
-	while (i < FD_LIMITS)
-		close(i++);
-}
-
-void	cleaning(t_env **env)
-{
-	ft_env_free(env);
-	ft_free();
-	close_all_fd();
+	home = get_envp(mini->env, "HOME");
+	if (!home)
+		tmp = ft_strjoin(*new, "~");
+	else
+		tmp = ft_strjoin(*new, home);
+	if (!tmp)
+		exit((cleaning(&mini->env), ENOMEM));
+	*new = tmp;
+	(*i)++;
 }

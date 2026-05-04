@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:50:19 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/05/04 12:06:57 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/04 13:03:52 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static void	exit_child(t_mini *mini)
 {
-	cleaning(&mini->env);
-	exit(mini->last_exit);
+	exit((cleaning(&mini->env), mini->last_exit));
 }
 
 static void	exec_cmd(t_mini *mini, t_cmd *cmd)

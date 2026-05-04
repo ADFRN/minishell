@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:14:20 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/24 17:38:11 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/05/04 13:03:45 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static bool	report_syntax_error(char *token_content)
 static bool	report_heredoc_error(t_env **env)
 {
 	printf("minishell :maximum here-document count exceeded");
-	cleaning(env);
-	exit(HERE_DOC_EXCEED);
+	exit((cleaning(env), HERE_DOC_EXCEED));
 }
 
 static bool	is_redir(int type)
