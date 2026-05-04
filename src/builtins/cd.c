@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 15:04:04 by afournie          #+#    #+#             */
-/*   Updated: 2026/04/29 17:18:06 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/05/04 11:00:09 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int	exec_cd(t_cmd *cmd, t_env **env)
 	char	*current_dir;
 
 	if (cmd->args[1] && cmd->args[2])
-		return (ft_putendl_fd("Minishell: cd: too many arguments", \
-			STDERR_FILENO), EXIT_FAILURE);
+		return (ft_putendl_fd("Minishell: cd: too many arguments",
+				STDERR_FILENO), EXIT_FAILURE);
 	current_dir = exec_pwd();
 	if (cmd->args[1])
 		return (cd(cmd, env, current_dir));

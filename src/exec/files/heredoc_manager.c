@@ -6,7 +6,7 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 11:53:02 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/04/30 17:08:39 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/04 11:00:51 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ by end-of-file (wanted `%s')\n", redir->filename);
 	}
 }
 
-static char *run_heredoc(t_redirection *redir)
+static char	*run_heredoc(t_redirection *redir)
 {
 	char	*filename;
 	int		fd;
