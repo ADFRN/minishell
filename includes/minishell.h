@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 15:23:51 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/05/04 14:47:16 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/05/04 17:14:37 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ bool			open_files(t_redirection **redir);
 /*****************************/
 /*     heredoc_manager.c     */
 /*****************************/
+char			*run_heredoc(t_redirection *redir);
 bool			preprocess_heredocs(t_cmd **lst_cmd, t_mini *mini);
 void			delete_heredocs_files(t_cmd **lst_cmd);
 

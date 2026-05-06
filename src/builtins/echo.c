@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 15:10:50 by afournie          #+#    #+#             */
-/*   Updated: 2026/05/04 14:08:25 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/05/06 13:57:01 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static bool	ft_has_option(t_cmd *cmd)
+{
+	int	i;
+
+	if (cmd->args[1] && cmd->args[1][0] == '-' && cmd->args[1][1] == 'n')
+	{
+		i = 1;
+		while (cmd->args[1][i])
+		{
+			if (cmd->args[1][i] != 'n')
+				return (false);
+			i++;
+		}
+		return (true);
+	}
+	return (false);
+}
 
 int	exec_echo(t_cmd *cmd)
 {
@@ -18,10 +36,7 @@ int	exec_echo(t_cmd *cmd)
 	int		i;
 
 	i = 1;
-	if (!cmd->args[1])
-		has_option = false;
-	else
-		has_option = !ft_strcmp(cmd->args[1], "-n");
+	has_option = ft_has_option(cmd);
 	while (cmd->args[i + has_option])
 	{
 		printf("%s", cmd->args[i + has_option]);

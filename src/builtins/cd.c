@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 15:04:04 by afournie          #+#    #+#             */
-/*   Updated: 2026/05/04 14:39:46 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/05/04 16:35:50 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	cd(t_cmd *cmd, t_env **env, char *current_dir)
 	else if (chdir(cmd->args[1]) == 0)
 	{
 		ft_env_update(env, "OLDPWD", current_dir);
-		return (ft_env_update(env, "PWD", exec_pwd(env)), EXIT_SUCCESS);
+		ft_env_update(env, "PWD", exec_pwd(env));
+		return (EXIT_SUCCESS);
 	}
 	else
 	{

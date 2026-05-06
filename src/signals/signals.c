@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:02 by afournie          #+#    #+#             */
-/*   Updated: 2026/05/04 14:47:01 by ttiprez          ###   ########.fr       */
+/*   Updated: 2026/05/06 13:46:48 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	ctrlc_heredoc_handler(int sig)
 	{
 		g_sig = SIGINT;
 		write(1, "\n", 1);
+		close(STDIN_FILENO);
 	}
 }
 

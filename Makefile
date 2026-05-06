@@ -6,7 +6,7 @@
 #    By: afournie <afournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/09 15:27:07 by ttiprez           #+#    #+#              #
-#    Updated: 2026/05/04 12:49:53 by afournie         ###   ########.fr        #
+#    Updated: 2026/05/04 17:14:20 by afournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,7 @@ SRCS		=	$(SRC_DIR)/builtins/cd.c					\
 			  	$(SRC_DIR)/exec/execution/child_exec.c		\
 			  	$(SRC_DIR)/exec/files/file_manager.c		\
 			  	$(SRC_DIR)/exec/files/heredoc_manager.c		\
+			  	$(SRC_DIR)/exec/files/heredoc_manager2.c	\
 			  	$(SRC_DIR)/exec/pipex.c						\
 			  	$(SRC_DIR)/routine/routine.c				\
 

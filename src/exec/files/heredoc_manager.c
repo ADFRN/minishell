@@ -6,77 +6,14 @@
 /*   By: afournie <afournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 11:53:02 by ttiprez           #+#    #+#             */
-/*   Updated: 2026/05/04 11:00:51 by afournie         ###   ########.fr       */
+/*   Updated: 2026/05/04 17:16:24 by afournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*generate_filename(char *base)
+static void	preoretesrww(t_cmd *curr_cmd, t_redirection *curr_redir)
 {
-	unsigned int	value;
-	int				fd;
-	char			*to_add;
-	char			*res;
-
-	fd = open("/dev/urandom", O_RDONLY);
-	if (fd < 0)
-		return (NULL);
-	if (read(fd, &value, sizeof(value)) < 0)
-		return (close(fd), NULL);
-	close(fd);
-	to_add = ft_itoa(value);
-	res = ft_strjoin(base, to_add);
-	return (res);
-}
-
-static void	heredoc_loop(t_redirection *redir, char *eof, int fd)
-{
-	int		nb_read;
-	char	buf[100000];
-
-	while (1)
-	{
-		free((ft_putstr("> "), nb_read = read(0, buf, sizeof(buf)), NULL));
-		if (nb_read < 0)
-			break ;
-		if (nb_read == 0)
-		{
-			printf("\nMinishell: warning: here-document delimited \
-by end-of-file (wanted `%s')\n", redir->filename);
-			break ;
-		}
-		buf[nb_read] = 0;
-		if (!ft_strcmp(buf, redir->filename)
-			|| !ft_strcmp(buf, eof))
-			break ;
-		write(fd, buf, nb_read);
-	}
-}
-
-static char	*run_heredoc(t_redirection *redir)
-{
-	char	*filename;
-	int		fd;
-	char	*eof;
-
-	filename = generate_filename("/tmp/.ms_heredoc_");
-	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0)
-		return (NULL);
-	eof = ft_strjoin(redir->filename, "\n");
-	if (!eof)
-		return (NULL);
-	heredoc_loop(redir, eof, fd);
-	return (filename);
-}
-
-bool	preprocess_heredocs(t_cmd **lst_cmd, t_mini *mini)
-{
-	t_cmd			*curr_cmd;
-	t_redirection	*curr_redir;
-
-	free((curr_cmd = *lst_cmd, signal(SIGINT, ctrlc_heredoc_handler), NULL));
 	while (curr_cmd)
 	{
 		curr_redir = curr_cmd->redir;
@@ -85,13 +22,30 @@ bool	preprocess_heredocs(t_cmd **lst_cmd, t_mini *mini)
 			if (curr_redir->redir_type == REDIR_HEREDOC)
 			{
 				curr_redir->filename = run_heredoc(curr_redir);
-				if (!curr_redir->filename)
-					return (ft_free(), false);
+				if (!curr_redir->filename || g_sig == SIGINT)
+					break ;
 			}
 			curr_redir = curr_redir->next;
 		}
+		if (g_sig == SIGINT)
+			break ;
 		curr_cmd = curr_cmd->next;
 	}
+}
+
+bool	preprocess_heredocs(t_cmd **lst_cmd, t_mini *mini)
+{
+	t_cmd			*curr_cmd;
+	t_redirection	*curr_redir;
+	int				saved_stdin;
+
+	saved_stdin = dup(STDIN_FILENO);
+	curr_cmd = *lst_cmd;
+	curr_redir = NULL;
+	signal(SIGINT, ctrlc_heredoc_handler);
+	preoretesrww(curr_cmd, curr_redir);
+	dup2(saved_stdin, 0);
+	close(saved_stdin);
 	init_signal();
 	if (g_sig == SIGINT)
 		return (mini->last_exit = EXIT_SIGNAL_BASE + g_sig, g_sig = 0, false);
