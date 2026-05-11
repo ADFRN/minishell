@@ -2,6 +2,8 @@
 
 # Minishell
 
+![result](./correction.png)
+
 ## Description
 
 Minishell is a minimal command-line interpreter (shell) developed in C, inspired by the behavior of **bash**. The goal of this project is to gain a deep understanding of the internal workings of a Unix shell: reading user input, lexical and syntactic analysis of commands, process management, redirections and pipes, and the implementation of built-in commands (builtins).
